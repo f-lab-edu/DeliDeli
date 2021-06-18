@@ -1,6 +1,5 @@
 package flab.delideli.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +13,7 @@ public class MemberDto {
     private String phone;
     private String address;
 
-    public MemberDto() {
+    public MemberDto(String userid, String password, String username, String phone, String address) {
         this.userid = userid;
         this.password = password;
         this.username = username;
