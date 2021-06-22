@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="flab.delideli.repository.MemberDAO">
-    <select id="selectMembers" parameterType="flab.delideli.repository.MemberDAO"
-            resultType="flab.delideli.repository.MemberDAO">
-        SELECT * FROM members
+<mapper namespace="flab.delideli.mapper.MemberMapper">
+
+    <!-- 회원 리스트 조회 -->
+    <select id="selectMemberList" resultType="flab.delideli.domain.MemberDTO">
+        SELECT user_id, user_name, user_password, user_phone, user_address
+        FROM members LIMIT 50
     </select>
+
+    <!-- 회원 조회 -->
+    <select id="selectMember" resultType="flab.delideli.domain.MemberDTO">
+        SELECT user_id, user_name, user_password, user_phone, user_address
+        FROM members WHERE id = #{id}
+    </select>
+
+    <!-- 회원 아이디 중복 체크 -->
+    <select id="userIdCheck" resultType="int">
+        SELECT COUNT(*) FROM members
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원 가입 -->
+    <insert id="joinMember">
+        INSERT INTO members(user_id, user_name, user_password, user_phone, user_address)
+        VALUES (#{userId}, #{userName},
+                #{userPassword}, #{userPhone}, #{userAddress})
+    </insert>
+
+    <!-- 회원 정보 수정 -->
+    <update id="updateMember">
+        UPDATE members SET user_address = #{userAddress}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember">
+        DELETE FROM members
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 반복 test를 위한 DB 초기화 -->
+<!--    <delete id="initMember">
+        DELETE FROM members;
+        ALTER TABLE members AUTO_INCREMENT = 1;
+    </delete> -->
+
 </mapper>
