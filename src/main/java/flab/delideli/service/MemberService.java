@@ -4,5 +4,6 @@ import flab.delideli.dto.MemberDto;
 
 public interface MemberService {
 
-    public void memberjoin(MemberDto member) throws Exception;
+    public void joinMember(MemberDto member);
+    public boolean isExistUserId(String userid);
 }

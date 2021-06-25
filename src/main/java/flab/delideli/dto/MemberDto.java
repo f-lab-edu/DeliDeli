@@ -1,18 +1,18 @@
 package flab.delideli.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
 public class MemberDto {
 
-    private String userid;
-    private String password;
-    private String username;
-    private String phone;
-    private String address;
+    @NotBlank
+    private final String userid, password, username, phone;
 
+    private final String address;
+
+    @Builder
     public MemberDto(String userid, String password, String username, String phone, String address) {
         this.userid = userid;
         this.password = password;
