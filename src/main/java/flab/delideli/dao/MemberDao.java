@@ -8,4 +8,5 @@ public interface MemberDao {
 
     public void joinMember(MemberDto member);
     public boolean isExistUserId(String userid);
+    
 }

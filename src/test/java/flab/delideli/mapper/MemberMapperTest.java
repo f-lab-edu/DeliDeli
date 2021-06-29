@@ -15,14 +15,14 @@ public class MemberMapperTest {
 
     @Test
     public void memberjoin() throws Exception{
-        MemberDto member = new MemberDto("ddaad","ddda","ddddda","0101","sdad");
+        MemberDto member = new MemberDto("ddaadaaaa","ddda","ddddda","0101","sdad");
         memberservice.joinMember(member);
     }
 
     @Test
     public void isExistUserId() throws Exception {
-        String userid1 = "ddaad";
-        String userid2 = "susu";
+        String userid1 = "ddaad"; //이미 있는 데이터
+        String userid2 = "susu"; //데이터베이스에 들어있지 않는 데이터
         Assertions.assertThat(memberservice.isExistUserId(userid1)).isTrue();
         Assertions.assertThat(memberservice.isExistUserId(userid2)).isFalse();
     }

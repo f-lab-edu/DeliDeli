@@ -2,15 +2,24 @@ package flab.delideli.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@NoArgsConstructor
 public class MemberDto {
 
     @NotBlank
-    private final String userid, password, username, phone;
+    private String userid;
+    @NotBlank
+    private String password;
+    @NotBlank
+    private String username;
+    @NotBlank
+    private String phone;
 
-    private final String address;
+    private String address;
 
     @Builder
     public MemberDto(String userid, String password, String username, String phone, String address) {
@@ -19,5 +28,9 @@ public class MemberDto {
         this.username = username;
         this.phone = phone;
         this.address = address;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
