@@ -8,8 +8,17 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class MemberDTO {
 
-    @NotBlank
-    private String userId, userName, userPassword, userPhone;
+    @NotBlank(message = "사용할 ID를 입력하세요.")
+    private String userId;
+
+    @NotBlank(message = "이름을 입력하세요.")
+    private String userName;
+
+    @NotBlank(message = "사용할 비밀번호를 입력하세요.")
+    private String userPassword;
+
+    @NotBlank(message = "전화번호를 입력하세요.")
+    private String userPhone;
 
     private String userAddress;
 
@@ -23,6 +32,10 @@ public class MemberDTO {
         this.userPhone = userPhone;
         this.userAddress = userAddress;
 
+    }
+
+    public void passwordEncoding(String hashPassword) {
+        this.userPassword = hashPassword;
     }
 
 }

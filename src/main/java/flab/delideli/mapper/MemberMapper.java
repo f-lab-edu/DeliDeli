@@ -3,19 +3,13 @@ package flab.delideli.mapper;
 import flab.delideli.domain.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
-@Mapper
 public interface MemberMapper {
-
-    // 회원 리스트 조회
-    List<MemberDTO> selectMemberList();
 
     // 회원 조회
     MemberDTO selectMember(Long id);
 
     // 회원 아이디 중복 체크
-    int userIdCheck(MemberDTO memberDTO);
+    int userIdCheck(String userId);
 
     // 회원 가입
     int joinMember(MemberDTO memberDTO);
@@ -26,7 +20,10 @@ public interface MemberMapper {
     // 회원 탈퇴
     int deleteMember(Long id);
 
-    // 반복 test를 위한 DB 초기화
-//    int initMember();
+    // (테스트) DB에 저장된 기본키인 id 값을 불러옴
+    Long getId(MemberDTO memberDTO);
+
+    // (테스트) 반복 테스트를 위한 DB 초기화
+    void initDB();
 
 }
