@@ -1,6 +1,6 @@
 package flab.delideli.mapper;
 
-import flab.delideli.dto.MemberDto;
+import flab.delideli.dto.MemberDTO;
 import flab.delideli.service.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class MemberMapperTest {
 
     @Test
     public void memberjoin() throws Exception{
-        MemberDto member = new MemberDto("ddaadaaaa","ddda","ddddda","0101","sdad");
+        MemberDTO member = new MemberDTO("ddaada111111aaa","ddda","ddddda","0101","sdad");
         memberservice.joinMember(member);
     }
 
@@ -26,4 +26,5 @@ public class MemberMapperTest {
         Assertions.assertThat(memberservice.isExistUserId(userid1)).isTrue();
         Assertions.assertThat(memberservice.isExistUserId(userid2)).isFalse();
     }
+
 }

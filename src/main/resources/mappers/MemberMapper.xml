@@ -10,4 +10,12 @@
     <select id="isExistUserId" resultType = "boolean">
        SELECT EXISTS (SELECT 1 FROM members WHERE userid = #{userid})
     </select>
+
+    <select id="checkUserId" resultType="flab.delideli.dto.MemberDTO">
+        SELECT userid FROM members WHERE userid = #{userid}
+    </select>
+
+    <select id="checkPassword" resultType="flab.delideli.dto.MemberDTO">
+        SELECT password FROM members WHERE password = #{password}
+    </select>
 </mapper>
