@@ -44,6 +44,7 @@
     <!-- 반복 테스트를 위한 DB 초기화 -->
     <delete id="initDB">
         DELETE FROM members
+        WHERE id = #{id}
     </delete>
 
 </mapper>

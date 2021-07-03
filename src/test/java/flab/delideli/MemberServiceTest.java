@@ -29,14 +29,16 @@ public class MemberServiceTest {
     @BeforeEach
     public void beforeEach() {
 
-        memberService.initDB();
-
         member1 = new MemberDTO("syw", "yeol",
                 "345ab", "010-1111-1111", "Busan");
         member2 = new MemberDTO("syw", "woo",
                 "234ac", "010-1234-1234", "Daegu");
         member3 = new MemberDTO("sje", "jeong",
                 "234ac", "010-2222-2222", "Seoul");
+
+        memberService.initDB(memberService.getId(member1));
+        memberService.initDB(memberService.getId(member2));
+        memberService.initDB(memberService.getId(member3));
 
     }
 

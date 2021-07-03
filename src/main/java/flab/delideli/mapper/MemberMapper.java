@@ -24,6 +24,6 @@ public interface MemberMapper {
     Long getId(MemberDTO memberDTO);
 
     // (테스트) 반복 테스트를 위한 DB 초기화
-    void initDB();
+    void initDB(Long id);
 
 }

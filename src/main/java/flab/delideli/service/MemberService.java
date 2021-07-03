@@ -25,7 +25,7 @@ public interface MemberService {
     Long getId(MemberDTO memberDTO);
 
     // (테스트) 반복 테스트를 위한 DB 초기화
-    void initDB();
+    void initDB(Long id);
 
     // (암호화) SHA-256과 salt 값을 사용한 해싱 반복 수행 후 String 타입으로 리턴
     String getHashing(String userPassword, String salt) throws

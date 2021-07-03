@@ -62,8 +62,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void initDB() {
-        memberMapper.initDB();
+    public void initDB(Long id) {
+        memberMapper.initDB(id);
     }
 
     @Override
