@@ -11,8 +11,8 @@
     </select>
 
     <!-- 회원 아이디 중복 체크 -->
-    <select id="userIdCheck" resultType="int">
-        SELECT COUNT(*) FROM members
+    <select id="userIdCheck" resultType="boolean">
+        SELECT IF(COUNT(*) > 0, 1, 0) FROM members
         WHERE user_id = #{userId}
     </select>
 
@@ -36,10 +36,10 @@
     </update>
 
     <!-- 회원 탈퇴 -->
-    <delete id="deleteMember">
-        DELETE FROM members
+    <update id="deleteMember">
+        UPDATE members SET delete_flag = 1
         WHERE id = #{id}
-    </delete>
+    </update>
 
     <!-- 반복 테스트를 위한 DB 초기화 -->
     <delete id="initDB">

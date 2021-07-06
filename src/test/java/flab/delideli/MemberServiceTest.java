@@ -2,6 +2,7 @@ package flab.delideli;
 
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.service.MemberService;
+import flab.delideli.util.PasswordEncryption;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class MemberServiceTest {
     private MemberDTO member3;
 
     private MemberService memberService;
+    private PasswordEncryption passwordEncryption;
 
     @Autowired
     public MemberServiceTest(MemberService memberService) {
@@ -28,6 +30,8 @@ public class MemberServiceTest {
 
     @BeforeEach
     public void beforeEach() {
+
+        passwordEncryption = new PasswordEncryption();
 
         member1 = new MemberDTO("syw", "yeol",
                 "345ab", "010-1111-1111", "Busan");
@@ -71,12 +75,12 @@ public class MemberServiceTest {
         String userPassword2 = member3.getUserPassword();
 
         // 비밀번호 암호화에 사용할 솔트 값을 각각 생성한다.
-        String salt1 = memberService.getSalt();
-        String salt2 = memberService.getSalt();
+        String salt1 = passwordEncryption.getSalt();
+        String salt2 = passwordEncryption.getSalt();
 
         // 해싱을 수행하여 비밀번호를 암호화한다.
-        String hashPassword1 = memberService.getHashing(userPassword1, salt1);
-        String hashPassword2 = memberService.getHashing(userPassword2, salt2);
+        String hashPassword1 = passwordEncryption.getHashing(userPassword1, salt1);
+        String hashPassword2 = passwordEncryption.getHashing(userPassword2, salt2);
 
         // 두 값이 다르다면 같은 비밀번호를 사용하더라도 해시값은 다르다는 것을 의미한다.
         assertThat(hashPassword1).isNotEqualTo(hashPassword2);

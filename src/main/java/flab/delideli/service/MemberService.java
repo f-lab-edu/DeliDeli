@@ -10,7 +10,7 @@ public interface MemberService {
     MemberDTO selectMember(Long id);
 
     // 회원 아이디 중복 체크
-    int userIdCheck(String userId);
+    boolean userIdCheck(String userId);
 
     // 회원 가입
     int joinMember(MemberDTO memberDTO) throws NoSuchAlgorithmException;
@@ -26,15 +26,5 @@ public interface MemberService {
 
     // (테스트) 반복 테스트를 위한 DB 초기화
     void initDB(Long id);
-
-    // (암호화) SHA-256과 salt 값을 사용한 해싱 반복 수행 후 String 타입으로 리턴
-    String getHashing(String userPassword, String salt) throws
-            NoSuchAlgorithmException;
-
-    // (암호화) 임의의 salt 값을 생성 후 String 타입으로 리턴
-    String getSalt();
-
-    // (암호화) 바이트를 16진수로 변환 후 String 타입으로 리턴
-    String byteToString(byte[] temp);
 
 }

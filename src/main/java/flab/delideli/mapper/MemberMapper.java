@@ -9,7 +9,7 @@ public interface MemberMapper {
     MemberDTO selectMember(Long id);
 
     // 회원 아이디 중복 체크
-    int userIdCheck(String userId);
+    boolean userIdCheck(String userId);
 
     // 회원 가입
     int joinMember(MemberDTO memberDTO);

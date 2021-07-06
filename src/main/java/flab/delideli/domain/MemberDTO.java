@@ -2,9 +2,12 @@ package flab.delideli.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
+@NoArgsConstructor
 @Getter
 public class MemberDTO {
 
@@ -32,10 +35,6 @@ public class MemberDTO {
         this.userPhone = userPhone;
         this.userAddress = userAddress;
 
-    }
-
-    public void passwordEncoding(String hashPassword) {
-        this.userPassword = hashPassword;
     }
 
 }
