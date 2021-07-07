@@ -11,12 +11,8 @@ public class ErrorResponse {
 
     private String message;
 
-    public ErrorResponse(StatusCode code) {
-        this.message = code.getMessage();
-    }
-
-    public static ErrorResponse of(StatusCode code) {
-        return new ErrorResponse(code);
+    public ErrorResponse(String message) {
+        this.message = message;
     }
 
 }
