@@ -14,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 public class MemberController {
 
     private MemberService memberService;
+    private final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.ACCEPTED);
+    private final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
 
     @RequestMapping(value ="/signup", method = RequestMethod.POST)
     public void joinMember(@RequestBody MemberDTO memberDto) throws NoSuchAlgorithmException {
@@ -24,9 +26,9 @@ public class MemberController {
     public ResponseEntity checkUserId(@RequestBody String userid) {
         boolean result = memberService.isExistUserId(userid);
         if (!result) { //아이디가 중복되지 않음
-            return new ResponseEntity(HttpStatus.ACCEPTED);
+            return acceptedResponseEntity;
         }
-        return new ResponseEntity(HttpStatus.CONFLICT);
+        return conflictResponseEntity;
     }
 
 }
