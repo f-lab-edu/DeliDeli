@@ -16,10 +16,15 @@ import static flab.delideli.util.error.StatusCode.OK_USERID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
     private MemberService memberService;
+
+    private final ResponseEntity<StatusCode> responseOK =
+            new ResponseEntity<>(OK_USERID, HttpStatus.OK);
+    private final ResponseEntity<StatusCode> responseConflict =
+            new ResponseEntity<>(CONFLICT_USERID, HttpStatus.CONFLICT);
 
     // 회원 가입
     @RequestMapping("/join")
@@ -32,19 +37,14 @@ public class MemberController {
     }
 
     // 사용자 아이디 중복 체크
-    @RequestMapping("/idCheck/{userId}")
+    @RequestMapping("/{userId}/checkId")
     public ResponseEntity<StatusCode> userIdCheck(@RequestBody @PathVariable("userId") String userId) {
 
-        ResponseEntity<StatusCode> responseEntity = null;
         boolean idDuplicated = memberService.userIdCheck(userId);
 
-        if (idDuplicated) {
-            responseEntity = new ResponseEntity<>(CONFLICT_USERID, HttpStatus.CONFLICT);
-        } else if (!idDuplicated) {
-            responseEntity = new ResponseEntity<>(OK_USERID, HttpStatus.OK);
-        }
+        if (idDuplicated) return responseConflict;
 
-        return responseEntity;
+        return responseOK;
 
     }
 

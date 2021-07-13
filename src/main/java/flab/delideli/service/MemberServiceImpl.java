@@ -2,7 +2,7 @@ package flab.delideli.service;
 
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.mapper.MemberMapper;
-import flab.delideli.util.PasswordEncryption;
+import flab.delideli.util.encryption.EncryptionSHA256;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
-    private final PasswordEncryption passwordEncryption;
+    private final EncryptionSHA256 encryptionSHA256;
 
     @Override
     public MemberDTO selectMember(Long id) {
@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
 
         MemberDTO copyMemberDTO = new
                 MemberDTO(memberDTO.getUserId(), memberDTO.getUserName(),
-                passwordEncryption.getHashing(memberDTO.getUserPassword(), passwordEncryption.getSalt()),
+                encryptionSHA256.getHashing(memberDTO.getUserPassword(), encryptionSHA256.getSalt()),
                 memberDTO.getUserPhone(), memberDTO.getUserAddress());
 
         return memberMapper.joinMember(copyMemberDTO);

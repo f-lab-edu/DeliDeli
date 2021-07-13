@@ -1,4 +1,4 @@
-package flab.delideli.util;
+package flab.delideli.util.encryption;
 
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 @Component
-public class PasswordEncryption {
+public class EncryptionSHA256 implements Encryption {
 
     private static final int SALT_SIZE = 16;
 
