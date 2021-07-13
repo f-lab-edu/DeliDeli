@@ -1,5 +1,6 @@
 package flab.delideli.service;
 
+import flab.delideli.domain.LoginDTO;
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.mapper.MemberMapper;
 import flab.delideli.util.encryption.EncryptionSHA256;
@@ -37,13 +38,37 @@ public class MemberServiceImpl implements MemberService {
     public int joinMember(MemberDTO memberDTO) throws NoSuchAlgorithmException {
 
         validateUserId(memberDTO.getUserId());
+        String salt = encryptionSHA256.getSalt();
 
         MemberDTO copyMemberDTO = new
                 MemberDTO(memberDTO.getUserId(), memberDTO.getUserName(),
-                encryptionSHA256.getHashing(memberDTO.getUserPassword(), encryptionSHA256.getSalt()),
+                encryptionSHA256.getHashing(memberDTO.getUserPassword(), salt),
                 memberDTO.getUserPhone(), memberDTO.getUserAddress());
 
+        addUserSalt(copyMemberDTO.getUserId(), salt);
+
         return memberMapper.joinMember(copyMemberDTO);
+
+    }
+
+    @Override
+    public int addUserSalt(String userId, String salt) {
+        return memberMapper.addUserSalt(userId, salt);
+    }
+
+    @Override
+    public String getUserSalt(String userId) {
+        return memberMapper.getUserSalt(userId);
+    }
+
+    @Override
+    public boolean loginCheck(LoginDTO loginDTO) throws NoSuchAlgorithmException {
+
+        String salt = getUserSalt(loginDTO.getUserId());
+        String userId = loginDTO.getUserId();
+        String hashPassword = encryptionSHA256.getHashing(loginDTO.getUserPassword(), salt);
+
+        return memberMapper.loginCheck(userId, hashPassword);
 
     }
 
@@ -58,8 +83,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long getId(MemberDTO memberDTO) {
-        return memberMapper.getId(memberDTO);
+    public Long getId(String userId) {
+        return memberMapper.getId(userId);
     }
 
     @Override

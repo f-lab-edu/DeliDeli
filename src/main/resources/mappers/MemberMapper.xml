@@ -12,8 +12,9 @@
 
     <!-- 회원 아이디 중복 체크 -->
     <select id="userIdCheck" resultType="boolean">
-        SELECT IF(COUNT(*) > 0, 1, 0) FROM members
-        WHERE user_id = #{userId}
+        SELECT IF(COUNT(*) > 0, 1, 0) FROM members, members_salt
+        WHERE members.user_id = #{userId}
+        AND members_salt.user_id = #{userId}
     </select>
 
     <!-- 테스트를 위해 DB에 저장된 기본키인 id 값을 불러옴 -->
@@ -21,6 +22,25 @@
         SELECT id FROM members
         WHERE user_id = #{userId}
     </select>
+
+    <!-- 로그인하려는 회원의 정보가 존재하는지 체크 -->
+    <select id="loginCheck" resultType="boolean">
+        SELECT IF(COUNT(*) = 1, 1, 0) FROM members
+        WHERE user_id = #{userId}
+          AND user_password = #{hashPassword}
+    </select>
+
+    <!-- 회원 고유의 솔트 값을 불러옴 -->
+    <select id="getUserSalt" resultType="String">
+        SELECT salt FROM members_salt
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원 고유의 솔트 값을 저장 -->
+    <insert id="addUserSalt" parameterType="map">
+        INSERT INTO members_salt(user_id, salt)
+        VALUES (#{userId}, #{salt})
+    </insert>
 
     <!-- 회원 가입 -->
     <insert id="joinMember">

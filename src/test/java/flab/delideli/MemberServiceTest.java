@@ -20,7 +20,8 @@ public class MemberServiceTest {
     private MemberDTO member2;
     private MemberDTO member3;
 
-    private MemberService memberService;
+    private final MemberService memberService;
+
     private EncryptionSHA256 encryptionSHA256;
 
     @Autowired
@@ -40,19 +41,21 @@ public class MemberServiceTest {
         member3 = new MemberDTO("sje", "jeong",
                 "234ac", "010-2222-2222", "Seoul");
 
-        memberService.initDB(memberService.getId(member1));
-        memberService.initDB(memberService.getId(member2));
-        memberService.initDB(memberService.getId(member3));
+        memberService.initDB(memberService.getId(member1.getUserId()));
+        memberService.initDB(memberService.getId(member2.getUserId()));
+        memberService.initDB(memberService.getId(member3.getUserId()));
 
     }
 
     @Test
     public void 회원_가입() throws NoSuchAlgorithmException {
 
-        memberService.joinMember(member1);
-        MemberDTO selectMember = memberService.selectMember(memberService.getId(member1));
 
-        assertThat(member1.getUserId()).isEqualTo(selectMember.getUserId());
+        memberService.joinMember(member1);
+        Long id = memberService.getId(member1.getUserId());
+        MemberDTO selectMember = memberService.selectMember(id);
+
+        System.out.println(memberService.selectMember(id));
 
     }
 
@@ -97,7 +100,7 @@ public class MemberServiceTest {
         memberService.joinMember(member1);
 
         // DB에 저장된 비밀번호 값을 hashPassword에 할당한다.
-        MemberDTO selectMember = memberService.selectMember(memberService.getId(member1));
+        MemberDTO selectMember = memberService.selectMember(memberService.getId(member1.getUserId()));
         String hashPassword = selectMember.getUserPassword();
 
         // 두 값이 다르다면 DB에 암호화된 비밀번호가 저장되었음을 의미한다.
