@@ -18,4 +18,13 @@
     <select id="checkPassword" resultType="flab.delideli.dto.MemberDTO">
         SELECT password FROM members WHERE password = #{password}
     </select>
+
+    <select id="findbyUserid" resultType="flab.delideli.dto.MemberDTO">
+        SELECT userid,password,username,phone,address FROM members WHERE userid = #{loginid};
+    </select>
+
+    <insert id="createSessionid" >
+        INSERT INTO membersession (userid,sessionid) VALUES (#{userid}, #{sessionid})
+    </insert>
+
 </mapper>

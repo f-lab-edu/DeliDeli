@@ -27,4 +27,5 @@ public class DelideliApplication {
 
 		return sessionFactory.getObject();
 	}
+
 }

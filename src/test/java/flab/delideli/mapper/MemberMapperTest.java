@@ -15,7 +15,7 @@ public class MemberMapperTest {
 
     @Test
     public void memberjoin() throws Exception{
-        MemberDTO member = new MemberDTO("ddaada1111111111111aaa","dd111d1111a","ddddda","0101","sdad");
+        MemberDTO member = new MemberDTO("dd","ddd","ddddda","0101","sdad");
         memberservice.joinMember(member);
     }
 

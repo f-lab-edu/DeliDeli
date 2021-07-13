@@ -1,5 +1,6 @@
 package flab.delideli.controller;
 
+import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 
 @RestController
@@ -31,4 +33,15 @@ public class MemberController {
         return conflictResponseEntity;
     }
 
+    @RequestMapping(value="/login", method = RequestMethod.POST)
+    public ResponseEntity loginUser(@RequestBody LoginDTO loginDTO, HttpSession session) throws NoSuchAlgorithmException {
+        boolean result = memberService.login(loginDTO);
+        if(result == true) {//아이디와 비밀번호 있음
+            //손님한테 세션아이디를 발급해주는 작업
+             session.setAttribute("sessionid",memberService.createSessionId(loginDTO.getLoginid()));
+            return acceptedResponseEntity;
+        }
+        else
+            return conflictResponseEntity;
+    }
 }
