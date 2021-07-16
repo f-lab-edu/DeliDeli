@@ -6,6 +6,6 @@ import java.security.NoSuchAlgorithmException;
 
 public interface MemberService {
 
-    public void joinMember(MemberDTO member) throws NoSuchAlgorithmException;
+    public void joinMember(MemberDTO member);
     public boolean isExistUserId(String userid);
 }
