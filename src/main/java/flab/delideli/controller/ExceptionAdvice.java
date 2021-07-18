@@ -14,10 +14,4 @@ public class ExceptionAdvice {
     public ResponseEntity illegalArgumentExceptionAdvice(IllegalArgumentException e) {
         return new ResponseEntity(HttpStatus.CONFLICT);
     }
-
-    @ExceptionHandler(NoSuchAlgorithmException.class)
-    public ResponseEntity noSuchAlgorithmExceptionAdvice(NoSuchAlgorithmException e) {
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
 }

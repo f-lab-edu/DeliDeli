@@ -17,15 +17,4 @@ public class DelideliApplication {
 
 		SpringApplication.run(DelideliApplication.class, args);
 	}
-	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource);
-
-		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*Mapper.xml");
-		sessionFactory.setMapperLocations(res);
-
-		return sessionFactory.getObject();
-	}
-
 }

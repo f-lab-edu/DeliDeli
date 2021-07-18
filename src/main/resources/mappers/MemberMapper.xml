@@ -20,11 +20,18 @@
     </select>
 
     <select id="findbyUserid" resultType="flab.delideli.dto.MemberDTO">
-        SELECT userid,password,username,phone,address FROM members WHERE userid = #{loginid};
+        SELECT userid,password,username,phone,address FROM members WHERE userid = #{loginid}
     </select>
 
     <insert id="createSessionid" >
         INSERT INTO membersession (userid,sessionid) VALUES (#{userid}, #{sessionid})
     </insert>
 
+    <select id="isExistUserSession" resultType="boolean">
+        SELECT EXISTS (SELECT 1 FROM membersession WHERE userid = #{userid})
+    </select>
+
+    <select id="getSessionId" resultType="double">
+        SELECT sessionid FROM membersession WHERE userid = #{userid}
+    </select>
 </mapper>
