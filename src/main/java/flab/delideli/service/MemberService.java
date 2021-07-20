@@ -1,8 +1,9 @@
 package flab.delideli.service;
 
-import flab.delideli.domain.LoginDTO;
+import flab.delideli.domain.RequestLoginDTO;
 import flab.delideli.domain.MemberDTO;
 
+import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 
 public interface MemberService {
@@ -23,7 +24,11 @@ public interface MemberService {
     String getUserSalt(String userId);
 
     // 로그인하려는 회원의 정보가 존재하는지 체크
-    boolean loginCheck(LoginDTO loginDTO) throws NoSuchAlgorithmException;
+    boolean loginCheck(RequestLoginDTO loginDTO);
+
+    void login(HttpSession session, String userId);
+
+    void logout(HttpSession session);
 
     // 회원 정보 수정
     int updateMember(MemberDTO memberDTO);

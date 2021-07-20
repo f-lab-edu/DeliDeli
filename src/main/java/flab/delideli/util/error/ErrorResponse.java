@@ -1,4 +1,4 @@
-package flab.delideli.util.error;
+package flab.delideli.practice;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

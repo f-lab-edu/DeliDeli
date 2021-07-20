@@ -13,17 +13,20 @@ public class EncryptionSHA256 implements Encryption {
     private static final int SALT_SIZE = 16;
 
     // SHA-256과 salt 값을 사용한 해싱 반복 수행 후 String 타입으로 리턴
-    public String getHashing(String userPassword, String salt) throws
-            NoSuchAlgorithmException {
+    public String getHashing(String userPassword, String salt) {
 
         byte[] password = null;
 
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-        for(int i = 0; i < 1000; i++) {
-            String temp = userPassword + salt;
-            md.update(temp.getBytes(StandardCharsets.UTF_8));
-            password = md.digest();
+            for (int i = 0; i < 1000; i++) {
+                String temp = userPassword + salt;
+                md.update(temp.getBytes(StandardCharsets.UTF_8));
+                password = md.digest();
+            }
+        } catch(NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
 
         return byteToString(password);

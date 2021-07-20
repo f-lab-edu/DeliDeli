@@ -1,6 +1,6 @@
 package flab.delideli.controller;
 
-import flab.delideli.domain.LoginDTO;
+import flab.delideli.domain.RequestLoginDTO;
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.service.MemberService;
 import flab.delideli.util.error.StatusCode;
@@ -22,14 +22,12 @@ public class MemberController {
 
     private MemberService memberService;
 
-    private final ResponseEntity<StatusCode> responseOK =
-            new ResponseEntity<>(OK_USERID, HttpStatus.OK);
+    private final ResponseEntity responseOK =
+            new ResponseEntity(HttpStatus.OK);
     private final ResponseEntity<StatusCode> responseConflict =
             new ResponseEntity<>(CONFLICT_USERID, HttpStatus.CONFLICT);
-    private final ResponseEntity<StatusCode> responseUnauthorized =
-            new ResponseEntity<>(UNAUTHORIZED_LOGIN, HttpStatus.UNAUTHORIZED);
-    private final ResponseEntity<StatusCode> responseLogin =
-            new ResponseEntity<>(OK_LOGIN, HttpStatus.OK);
+    private final ResponseEntity responseUnauthorized =
+            new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
     // 회원 가입
     @RequestMapping("/join")
@@ -55,17 +53,24 @@ public class MemberController {
 
     // 로그인
     @RequestMapping("/login")
-    public ResponseEntity<StatusCode> login(@RequestBody @Valid LoginDTO loginDTO, HttpSession httpSession)
-            throws NoSuchAlgorithmException {
+    public ResponseEntity login(@RequestBody @Valid RequestLoginDTO loginDTO, HttpSession session) {
 
         boolean loginCheck = memberService.loginCheck(loginDTO);
 
         if (!loginCheck) { return responseUnauthorized; }
 
-        httpSession.setAttribute("userId", loginDTO.getUserId());
-        httpSession.setMaxInactiveInterval(1800);
+        memberService.login(session, loginDTO.getUserId());
 
-        return responseLogin;
+        return responseOK;
+
+    }
+
+    @RequestMapping("/logout")
+    public ResponseEntity logout(HttpSession session) {
+
+        memberService.logout(session);
+
+        return responseOK;
 
     }
 

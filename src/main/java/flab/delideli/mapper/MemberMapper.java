@@ -21,7 +21,7 @@ public interface MemberMapper {
     String getUserSalt(String userId);
 
     // 로그인하려는 회원의 정보가 존재하는지 체크
-    boolean loginCheck(String userId, String hashPassword);
+    boolean loginCheck(@Param("userId") String userId, @Param("hashPassword") String hashPassword);
 
     // 회원 정보 수정
     int updateMember(MemberDTO memberDTO);
