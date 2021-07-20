@@ -2,8 +2,6 @@ package flab.delideli.service;
 
 import flab.delideli.domain.MemberDTO;
 
-import java.security.NoSuchAlgorithmException;
-
 public interface MemberService {
 
     // 회원 조회
@@ -13,7 +11,7 @@ public interface MemberService {
     boolean userIdCheck(String userId);
 
     // 회원 가입
-    int joinMember(MemberDTO memberDTO) throws NoSuchAlgorithmException;
+    int joinMember(MemberDTO memberDTO);
 
     // 회원 정보 수정
     int updateMember(MemberDTO memberDTO);

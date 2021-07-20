@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.security.NoSuchAlgorithmException;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,7 +45,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 회원_가입() throws NoSuchAlgorithmException {
+    public void 회원_가입() {
 
         memberService.joinMember(member1);
         MemberDTO selectMember = memberService.selectMember(memberService.getId(member1));
@@ -57,7 +55,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 중복_아이디_검사() throws NoSuchAlgorithmException, IllegalStateException {
+    public void 중복_아이디_검사() {
 
         memberService.joinMember(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class,
@@ -68,7 +66,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 비밀번호_암호화_테스트() throws NoSuchAlgorithmException {
+    public void 비밀번호_암호화_테스트() {
 
         // member2와 member3는 같은 비밀번호를 사용한다.
         String userPassword1 = member2.getUserPassword();
@@ -88,7 +86,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 비밀번호_암호화_DB저장_테스트() throws NoSuchAlgorithmException {
+    public void 비밀번호_암호화_DB저장_테스트() {
 
         // member1의 비밀번호 원본 값을 userPassword에 할당한다.
         String userPassword = member1.getUserPassword();

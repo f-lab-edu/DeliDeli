@@ -6,8 +6,6 @@ import flab.delideli.util.encryption.EncryptionSHA256;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
-
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -26,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     // 아이디 중복 체크
-    public void validateUserId(String userId) throws IllegalStateException {
+    public void validateUserId(String userId) {
         if (userIdCheck(userId)) {
             throw new IllegalStateException("이미 가입된 아이디입니다.");
         }
@@ -34,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 
     // 아이디 중복 체크와 비밀번호 암호화를 거친 후 회원 가입 진행
     @Override
-    public int joinMember(MemberDTO memberDTO) throws NoSuchAlgorithmException {
+    public int joinMember(MemberDTO memberDTO) {
 
         validateUserId(memberDTO.getUserId());
 
