@@ -35,27 +35,16 @@ public class MemberServiceImpl implements MemberService {
         if(checkMember == null)
             throw new IllegalArgumentException("존재하지 않은 회원입니다.");
         else {
-            if(checkMember.getPassword().equals(encryptPassword.encrypt(loginDTO.getLoginPassword()))) {
+            if(isEqualPassword(checkMember.getPassword(), loginDTO.getLoginPassword())) {
                 return true;
             }
         }
         return false;
     }
 
-    @Override
-    public String createSessionId(String userid) {
-        double sessionid = Math.random();
-        memberDao.createSessionid(userid, sessionid);
-        return Double.toString(sessionid);
+    private boolean isEqualPassword(String userPassword, String loginPassword) {
+        if (userPassword.equals(encryptPassword.encrypt(loginPassword)))
+            return true;
+        return false;
     }
-
-    @Override
-    public boolean isExistUserSession(String userid) {
-        return memberDao.isExistUserSession(userid);
-    }
-
-    @Override
-    public double getSessionId(String userid) {
-        return memberDao.getSessionId(userid);
-   }
 }

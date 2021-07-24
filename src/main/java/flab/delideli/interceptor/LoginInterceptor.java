@@ -15,10 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession httpSession = request.getSession();
         String sessionItem = (String) httpSession.getAttribute(Sessions.SESSION_ID);
 
-        if(sessionItem == null) {
-            return false;
-        }
-        return true;
+        return sessionItem != null;
     }
 
     @Override
