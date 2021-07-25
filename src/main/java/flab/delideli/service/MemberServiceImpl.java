@@ -4,6 +4,7 @@ import flab.delideli.domain.RequestLoginDTO;
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.mapper.MemberMapper;
 import flab.delideli.util.encryption.EncryptionSHA256;
+import flab.delideli.util.encryption.UserSalt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
     private final EncryptionSHA256 encryptionSHA256;
+    private final UserSalt userSalt;
 
     private static final String USER_ID = "userId";
 
@@ -48,26 +50,16 @@ public class MemberServiceImpl implements MemberService {
                 encryptionSHA256.getHashing(memberDTO.getUserPassword(), salt),
                 memberDTO.getUserPhone(), memberDTO.getUserAddress());
 
-        addUserSalt(copyMemberDTO.getUserId(), salt);
+        userSalt.addUserSalt(copyMemberDTO.getUserId(), salt);
 
         return memberMapper.joinMember(copyMemberDTO);
 
     }
 
     @Override
-    public int addUserSalt(String userId, String salt) {
-        return memberMapper.addUserSalt(userId, salt);
-    }
-
-    @Override
-    public String getUserSalt(String userId) {
-        return memberMapper.getUserSalt(userId);
-    }
-
-    @Override
     public boolean loginCheck(RequestLoginDTO loginDTO) {
 
-        String salt = getUserSalt(loginDTO.getUserId());
+        String salt = userSalt.getUserSalt(loginDTO.getUserId());
         String userId = loginDTO.getUserId();
         String hashPassword = encryptionSHA256.getHashing(loginDTO.getUserPassword(), salt);
 

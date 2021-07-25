@@ -51,7 +51,6 @@ public class MemberController {
 
     }
 
-    // 로그인
     @RequestMapping("/login")
     public ResponseEntity login(@RequestBody @Valid RequestLoginDTO loginDTO, HttpSession session) {
 
