@@ -56,7 +56,9 @@ public class MemberController {
 
         boolean loginCheck = memberService.loginCheck(loginDTO);
 
-        if (!loginCheck) { return responseUnauthorized; }
+        if (!loginCheck) {
+            return responseUnauthorized;
+        }
 
         memberService.login(session, loginDTO.getUserId());
 
