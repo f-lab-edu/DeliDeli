@@ -36,9 +36,11 @@ public class MemberController {
 
         boolean idDuplicated = memberService.userIdCheck(userId);
 
-        if (idDuplicated) return responseConflict;
-
-        return responseOK;
+        if (idDuplicated) {
+            return responseConflict;
+        } else {
+            return responseOK;
+        }
 
     }
 
