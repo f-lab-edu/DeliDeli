@@ -9,6 +9,9 @@ public interface MemberService {
 
     public boolean isExistUserId(String userid);
 
-    public boolean login(LoginDTO loginDTO);
+    public boolean isExistUserInfo(LoginDTO loginDTO);
+
+    //테스트케이스 작성을 위한 메소드
+    public void deleteData(MemberDTO memberDTO);
 
 }

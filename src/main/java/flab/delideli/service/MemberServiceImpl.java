@@ -29,8 +29,7 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.isExistUserId(userid);
     }
 
-    @Override
-    public boolean login(LoginDTO loginDTO){
+    public boolean isExistUserInfo(LoginDTO loginDTO){
         MemberDTO checkMember = memberDao.findbyUserid(loginDTO.getLoginid());
         if(checkMember == null)
             throw new IllegalArgumentException("존재하지 않은 회원입니다.");
@@ -46,5 +45,10 @@ public class MemberServiceImpl implements MemberService {
         if (userPassword.equals(encryptPassword.encrypt(loginPassword)))
             return true;
         return false;
+    }
+
+    @Override
+    public void deleteData(MemberDTO memberDTO) {
+        memberDao.clearData(memberDTO);
     }
 }

@@ -12,10 +12,7 @@ public interface MemberDao {
 
     public boolean isExistUserId(String userid);
 
-    public MemberDTO checkUserId(String userid);
-
-    public MemberDTO checkPassword(CharSequence password);
-
     public MemberDTO findbyUserid(String loginid);
 
+    public void clearData(MemberDTO memberDTO);
 }

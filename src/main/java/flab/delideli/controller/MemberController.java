@@ -15,9 +15,9 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private MemberService memberService;
-    private final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.ACCEPTED);
-    private final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
-    private final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    private static final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.ACCEPTED);
+    private static final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
+    private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
     @RequestMapping(value ="/users", method = RequestMethod.POST)
@@ -36,7 +36,7 @@ public class MemberController {
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public ResponseEntity loginUser(@RequestBody LoginDTO loginDTO, HttpSession session) {
-        boolean result = memberService.login(loginDTO);
+        boolean result = memberService.isExistUserInfo(loginDTO);
 
         if(result) {
             session.setAttribute(USER_ID, loginDTO.getLoginid());

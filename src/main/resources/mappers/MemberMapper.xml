@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="flab.delideli.dao.MemberDao" >
+
     <insert id="joinMember" >
         INSERT INTO members (userid , password , username , phone , address)
         VALUES (#{userid} , #{password}, #{username} , #{phone} , #{address})
@@ -11,16 +12,15 @@
        SELECT EXISTS (SELECT 1 FROM members WHERE userid = #{userid})
     </select>
 
-    <select id="checkUserId" resultType="flab.delideli.dto.MemberDTO">
-        SELECT userid FROM members WHERE userid = #{userid}
-    </select>
-
-    <select id="checkPassword" resultType="flab.delideli.dto.MemberDTO">
-        SELECT password FROM members WHERE password = #{password}
-    </select>
-
     <select id="findbyUserid" resultType="flab.delideli.dto.MemberDTO">
-        SELECT userid,password,username,phone,address FROM members WHERE userid = #{loginid}
+        SELECT userid, password, username, phone, address
+        FROM members
+        WHERE userid = #{loginid}
     </select>
 
+
+
+    <delete id="clearData" >
+        DELETE FROM members WHERE userid = #{userid}
+    </delete>
 </mapper>
