@@ -20,7 +20,7 @@ public class MemberController {
         memberService.joinMember(memberDto);
     }
 
-    @RequestMapping(value="/duplicated/{userid}",method = RequestMethod.POST)
+    @RequestMapping(value="/{userid}/duplicate",method = RequestMethod.POST)
     public ResponseEntity checkUserId(@RequestBody String userid) {
         boolean result = memberService.isExistUserId(userid);
         if (!result) { //아이디가 중복되지 않음
