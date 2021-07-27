@@ -2,7 +2,9 @@ package flab.delideli;
 
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.service.MemberService;
+import flab.delideli.util.encryption.Encryption;
 import flab.delideli.util.encryption.EncryptionSHA256;
+import flab.delideli.util.encryption.UserSalt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class MemberServiceTest {
 
     private final MemberService memberService;
 
-    private EncryptionSHA256 encryptionSHA256;
+    private Encryption encryption;
+    private UserSalt userSalt;
 
     @Autowired
     public MemberServiceTest(MemberService memberService) {
@@ -32,7 +35,7 @@ public class MemberServiceTest {
     @BeforeEach
     public void beforeEach() {
 
-        encryptionSHA256 = new EncryptionSHA256();
+        encryption = new EncryptionSHA256();
 
         member1 = new MemberDTO("syw", "yeol",
                 "345ab", "010-1111-1111", "Busan");
@@ -78,12 +81,12 @@ public class MemberServiceTest {
         String userPassword2 = member3.getUserPassword();
 
         // 비밀번호 암호화에 사용할 솔트 값을 각각 생성한다.
-        String salt1 = encryptionSHA256.getSalt();
-        String salt2 = encryptionSHA256.getSalt();
+        String salt1 = userSalt.getSalt();
+        String salt2 = userSalt.getSalt();
 
         // 해싱을 수행하여 비밀번호를 암호화한다.
-        String hashPassword1 = encryptionSHA256.getHashing(userPassword1, salt1);
-        String hashPassword2 = encryptionSHA256.getHashing(userPassword2, salt2);
+        String hashPassword1 = encryption.getHashing(userPassword1, salt1);
+        String hashPassword2 = encryption.getHashing(userPassword2, salt2);
 
         // 두 값이 다르다면 같은 비밀번호를 사용하더라도 해시값은 다르다는 것을 의미한다.
         assertThat(hashPassword1).isNotEqualTo(hashPassword2);

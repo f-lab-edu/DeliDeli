@@ -17,10 +17,9 @@ public interface MemberService {
     // 회원 가입
     int joinMember(MemberDTO memberDTO) throws NoSuchAlgorithmException;
 
-    // 로그인하려는 회원의 정보가 존재하는지 체크
-    boolean loginCheck(RequestLoginDTO loginDTO);
+    boolean isLoginCheck(RequestLoginDTO loginDTO);
 
-    void login(HttpSession session, String userId);
+    void login(HttpSession session, Long id);
 
     void logout(HttpSession session);
 

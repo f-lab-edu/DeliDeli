@@ -54,13 +54,15 @@ public class MemberController {
     @RequestMapping("/login")
     public ResponseEntity login(@RequestBody @Valid RequestLoginDTO loginDTO, HttpSession session) {
 
-        boolean loginCheck = memberService.loginCheck(loginDTO);
+        boolean loginCheck = memberService.isLoginCheck(loginDTO);
+        String userId = loginDTO.getUserId();
+        Long id = memberService.getId(userId);
 
         if (!loginCheck) {
             return responseUnauthorized;
         }
 
-        memberService.login(session, loginDTO.getUserId());
+        memberService.login(session, id);
 
         return responseOK;
 
