@@ -21,7 +21,6 @@ public class MemberController {
     private final ResponseEntity responseConflict =
             new ResponseEntity(HttpStatus.CONFLICT);
 
-    // 회원 가입
     @RequestMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
     public void joinMember(@RequestBody @Valid MemberDTO memberDTO) {
@@ -30,11 +29,10 @@ public class MemberController {
 
     }
 
-    // 사용자 아이디 중복 체크
-    @RequestMapping("/{userId}/duplicateid")
+    @RequestMapping("/{userId}/duplicate")
     public ResponseEntity userIdCheck(@RequestBody @PathVariable("userId") String userId) {
 
-        boolean idDuplicated = memberService.userIdCheck(userId);
+        boolean idDuplicated = memberService.isUserIdCheck(userId);
 
         if (idDuplicated) {
             return responseConflict;

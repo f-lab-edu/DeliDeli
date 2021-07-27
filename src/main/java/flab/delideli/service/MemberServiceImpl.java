@@ -19,18 +19,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean userIdCheck(String userId) {
+    public boolean isUserIdCheck(String userId) {
         return memberMapper.userIdCheck(userId);
     }
 
-    // 아이디 중복 체크
     public void validateUserId(String userId) {
-        if (userIdCheck(userId)) {
+        if (isUserIdCheck(userId)) {
             throw new IllegalStateException("이미 가입된 아이디입니다.");
         }
     }
 
-    // 아이디 중복 체크와 비밀번호 암호화를 거친 후 회원 가입 진행
     @Override
     public int joinMember(MemberDTO memberDTO) {
 
