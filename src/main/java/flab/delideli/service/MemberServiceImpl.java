@@ -46,9 +46,4 @@ public class MemberServiceImpl implements MemberService {
             return true;
         return false;
     }
-
-    @Override
-    public void deleteData(MemberDTO memberDTO) {
-        memberDao.clearData(memberDTO);
-    }
 }

@@ -18,9 +18,4 @@
         WHERE userid = #{loginid}
     </select>
 
-
-
-    <delete id="clearData" >
-        DELETE FROM members WHERE userid = #{userid}
-    </delete>
 </mapper>

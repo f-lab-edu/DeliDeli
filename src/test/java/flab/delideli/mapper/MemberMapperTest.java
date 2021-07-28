@@ -19,13 +19,6 @@ public class MemberMapperTest {
     MemberDTO member1 = new MemberDTO("ddddd", "dda", "ddddda", "0101", "sdad");
     MemberDTO member2 = new MemberDTO("ddd", "dddda", "ddddda", "0101", "sdad");
 
-
-    @AfterEach
-    public void deleteDate() {
-        memberservice.deleteData(member1);
-        memberservice.deleteData(member2);
-    }
-
     @Test
     public void memberjoin() throws Exception {
         memberservice.joinMember(member1);
@@ -34,9 +27,6 @@ public class MemberMapperTest {
 
     @Test
     public void isExistUserId() throws Exception {
-        memberservice.joinMember(member1);
-        memberservice.joinMember(member2);
-
         String userid1 = "ddddd"; //이미 있는 데이터
         String userid2 = "dddd"; //데이터베이스에 들어있지 않는 데이터
         Assertions.assertThat(memberservice.isExistUserId(userid1)).isTrue();
