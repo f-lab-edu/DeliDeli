@@ -19,12 +19,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean isUserIdCheck(String userId) {
-        return memberMapper.userIdCheck(userId);
+    public boolean isDuplicatedUserId(String userId) {
+        return memberMapper.isDuplicatedUserId(userId);
     }
 
     public void validateUserId(String userId) {
-        if (isUserIdCheck(userId)) {
+        if (isDuplicatedUserId(userId)) {
             throw new IllegalStateException("이미 가입된 아이디입니다.");
         }
     }

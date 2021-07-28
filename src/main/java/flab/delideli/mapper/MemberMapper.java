@@ -7,7 +7,7 @@ public interface MemberMapper {
 
     MemberDTO selectMember(Long id);
 
-    boolean userIdCheck(String userId);
+    boolean isDuplicatedUserId(String userId);
 
     int joinMember(MemberDTO memberDTO);
 

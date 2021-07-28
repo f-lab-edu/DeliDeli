@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    private final ResponseEntity responseConflict =
-            new ResponseEntity(HttpStatus.CONFLICT);
-    private final ResponseEntity responseBadRequest =
-            new ResponseEntity(HttpStatus.BAD_REQUEST);
+    private final ResponseEntity<Void> responseConflict =
+            new ResponseEntity<>(HttpStatus.CONFLICT);
+    private final ResponseEntity<Void> responseBadRequest =
+            new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity illegalStateException(IllegalStateException e) {
+    public ResponseEntity<Void> illegalStateException(IllegalStateException e) {
 
         return responseConflict;
 
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity methodArgumentNotValidException(
+    public ResponseEntity<Void> methodArgumentNotValidException(
             MethodArgumentNotValidException e) {
 
         return responseBadRequest;

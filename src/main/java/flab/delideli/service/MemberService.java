@@ -6,7 +6,7 @@ public interface MemberService {
 
     MemberDTO selectMember(Long id);
 
-    boolean isUserIdCheck(String userId);
+    boolean isDuplicatedUserId(String userId);
 
     int joinMember(MemberDTO memberDTO);
 

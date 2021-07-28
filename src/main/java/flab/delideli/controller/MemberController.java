@@ -16,10 +16,10 @@ public class MemberController {
 
     private MemberService memberService;
 
-    private final ResponseEntity responseOK =
-            new ResponseEntity(HttpStatus.OK);
-    private final ResponseEntity responseConflict =
-            new ResponseEntity(HttpStatus.CONFLICT);
+    private final ResponseEntity<Void> responseOK =
+            new ResponseEntity<>(HttpStatus.OK);
+    private final ResponseEntity<Void> responseConflict =
+            new ResponseEntity<>(HttpStatus.CONFLICT);
 
     @RequestMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,9 +30,9 @@ public class MemberController {
     }
 
     @RequestMapping("/{userId}/duplicate")
-    public ResponseEntity userIdCheck(@RequestBody @PathVariable("userId") String userId) {
+    public ResponseEntity<Void> userIdCheck(@RequestBody @PathVariable("userId") String userId) {
 
-        boolean idDuplicated = memberService.isUserIdCheck(userId);
+        boolean idDuplicated = memberService.isDuplicatedUserId(userId);
 
         if (idDuplicated) {
             return responseConflict;

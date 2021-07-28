@@ -9,7 +9,7 @@
         FROM members WHERE id = #{id}
     </select>
 
-    <select id="isUserIdCheck" resultType="boolean">
+    <select id="isDuplicatedUserId" resultType="boolean">
         SELECT IF(COUNT(*) > 0, 1, 0) FROM members
         WHERE user_id = #{userId}
     </select>
