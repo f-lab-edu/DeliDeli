@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class EncryptionSHA256 implements Encryption {
 
-
     @Override
     public String getHashing(String userPassword, String salt) {
 
@@ -30,6 +29,7 @@ public class EncryptionSHA256 implements Encryption {
         return byteToString(password);
 
     }
+        
 
     @Override
     public String byteToString(byte[] temp) {

@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.security.NoSuchAlgorithmException;
 
 @Service
 @RequiredArgsConstructor
@@ -27,20 +26,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean userIdCheck(String userId) {
-        return memberMapper.userIdCheck(userId);
+    public boolean isDuplicatedUserId(String userId) {
+        return memberMapper.isDuplicatedUserId(userId);
     }
 
-    // 아이디 중복 체크
-    public void validateUserId(String userId) throws IllegalStateException {
-        if (userIdCheck(userId)) {
+    public void validateUserId(String userId) {
+        if (isDuplicatedUserId(userId)) {
             throw new IllegalStateException("이미 가입된 아이디입니다.");
         }
     }
 
-    // 아이디 중복 체크와 비밀번호 암호화를 거친 후 회원 가입 진행
     @Override
-    public int joinMember(MemberDTO memberDTO) throws NoSuchAlgorithmException {
+    public int joinMember(MemberDTO memberDTO) {
 
         validateUserId(memberDTO.getUserId());
         String salt = userSalt.getRandomSalt();

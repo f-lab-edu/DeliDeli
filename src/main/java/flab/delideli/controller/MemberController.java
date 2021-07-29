@@ -3,7 +3,6 @@ package flab.delideli.controller;
 import flab.delideli.domain.RequestLoginDTO;
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.service.MemberService;
-import flab.delideli.util.error.StatusCode;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
-
-import static flab.delideli.util.error.StatusCode.*;
 
 @RestController
 @AllArgsConstructor
@@ -22,37 +18,36 @@ public class MemberController {
 
     private MemberService memberService;
 
-    private final ResponseEntity responseOK =
-            new ResponseEntity(HttpStatus.OK);
-    private final ResponseEntity<StatusCode> responseConflict =
-            new ResponseEntity<>(CONFLICT_USERID, HttpStatus.CONFLICT);
-    private final ResponseEntity responseUnauthorized =
-            new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    private final ResponseEntity<Void> responseOK =
+            new ResponseEntity<>(HttpStatus.OK);
+    private final ResponseEntity<Void> responseConflict =
+            new ResponseEntity<>(HttpStatus.CONFLICT);
+    private final ResponseEntity<Void> responseUnauthorized =
+            new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
-    // 회원 가입
     @RequestMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
-    public void joinMember(@RequestBody @Valid MemberDTO memberDTO)
-            throws NoSuchAlgorithmException {
+    public void joinMember(@RequestBody @Valid MemberDTO memberDTO) {
 
         memberService.joinMember(memberDTO);
 
     }
 
-    // 사용자 아이디 중복 체크
-    @RequestMapping("/{userId}/checkId")
-    public ResponseEntity<StatusCode> userIdCheck(@RequestBody @PathVariable("userId") String userId) {
+    @RequestMapping("/{userId}/duplicate")
+    public ResponseEntity<Void> duplicatedUserIdCheck(@RequestBody @PathVariable("userId") String userId) {
 
-        boolean idDuplicated = memberService.userIdCheck(userId);
+        boolean idDuplicated = memberService.isDuplicatedUserId(userId);
 
-        if (idDuplicated) { return responseConflict; }
-
-        return responseOK;
+        if (idDuplicated) {
+            return responseConflict;
+        } else {
+            return responseOK;
+        }
 
     }
 
     @RequestMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid RequestLoginDTO loginDTO, HttpSession session) {
+    public ResponseEntity<Void> login(@RequestBody @Valid RequestLoginDTO loginDTO, HttpSession session) {
 
         boolean loginCheck = memberService.isLoginCheck(loginDTO);
         String userId = loginDTO.getUserId();
@@ -69,12 +64,10 @@ public class MemberController {
     }
 
     @RequestMapping("/logout")
-    public ResponseEntity logout(HttpSession session) {
+    public ResponseEntity<Void> logout(HttpSession session) {
 
         memberService.logout(session);
-
+      
         return responseOK;
 
     }
-
-}

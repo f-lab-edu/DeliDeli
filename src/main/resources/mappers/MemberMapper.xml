@@ -4,20 +4,16 @@
 
 <mapper namespace="flab.delideli.mapper.MemberMapper">
 
-    <!-- 회원 조회 -->
     <select id="selectMember" resultType="flab.delideli.domain.MemberDTO">
         SELECT user_id, user_name, user_password, user_phone, user_address
         FROM members WHERE id = #{id}
     </select>
 
-    <!-- 회원 아이디 중복 체크 -->
-    <select id="userIdCheck" resultType="boolean">
-        SELECT IF(COUNT(*) > 0, 1, 0) FROM members, members_salt
-        WHERE members.user_id = #{userId}
-        AND members_salt.user_id = #{userId}
+    <select id="isDuplicatedUserId" resultType="boolean">
+        SELECT IF(COUNT(*) > 0, 1, 0) FROM members
+        WHERE user_id = #{userId}
     </select>
 
-    <!-- 테스트를 위해 DB에 저장된 기본키인 id 값을 불러옴 -->
     <select id="getId" resultType="Long">
         SELECT id FROM members
         WHERE user_id = #{userId}
@@ -39,26 +35,22 @@
         VALUES (#{userId}, #{salt})
     </insert>
 
-    <!-- 회원 가입 -->
     <insert id="joinMember">
         INSERT INTO members(user_id, user_name, user_password, user_phone, user_address)
         VALUES (#{userId}, #{userName},
                 #{userPassword}, #{userPhone}, #{userAddress})
     </insert>
 
-    <!-- 회원 정보 수정 -->
     <update id="updateMember">
         UPDATE members SET user_address = #{userAddress}
         WHERE id = #{id}
     </update>
 
-    <!-- 회원 탈퇴 -->
     <update id="deleteMember">
         UPDATE members SET delete_flag = 1
         WHERE id = #{id}
     </update>
 
-    <!-- 반복 테스트를 위한 DB 초기화 -->
     <delete id="initDB">
         DELETE FROM members
         WHERE id = #{id}
