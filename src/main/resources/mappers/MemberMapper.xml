@@ -19,6 +19,22 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="loginCheck" resultType="boolean">
+        SELECT IF(COUNT(*) = 1, 1, 0) FROM members
+        WHERE user_id = #{userId}
+          AND user_password = #{hashPassword}
+    </select>
+
+    <select id="getUserSalt" resultType="String">
+        SELECT salt FROM members_salt
+        WHERE user_id = #{userId}
+    </select>
+
+    <insert id="addUserSalt" parameterType="map">
+        INSERT INTO members_salt(user_id, salt)
+        VALUES (#{userId}, #{salt})
+    </insert>
+
     <insert id="joinMember">
         INSERT INTO members(user_id, user_name, user_password, user_phone, user_address)
         VALUES (#{userId}, #{userName},

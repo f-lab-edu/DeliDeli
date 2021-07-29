@@ -1,17 +1,24 @@
 package flab.delideli.service;
 
+import flab.delideli.domain.RequestLoginDTO;
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.mapper.MemberMapper;
-import flab.delideli.util.encryption.EncryptionSHA256;
+import flab.delideli.util.encryption.Encryption;
+import flab.delideli.util.encryption.UserSalt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
-    private final EncryptionSHA256 encryptionSHA256;
+    private final Encryption encryption;
+    private final UserSalt userSalt;
+
+    private static final String ID = "id";
 
     @Override
     public MemberDTO selectMember(Long id) {
@@ -33,14 +40,38 @@ public class MemberServiceImpl implements MemberService {
     public int joinMember(MemberDTO memberDTO) {
 
         validateUserId(memberDTO.getUserId());
+        String salt = userSalt.getRandomSalt();
 
         MemberDTO copyMemberDTO = new
                 MemberDTO(memberDTO.getUserId(), memberDTO.getUserName(),
-                encryptionSHA256.getHashing(memberDTO.getUserPassword(), encryptionSHA256.getSalt()),
+                encryption.getHashing(memberDTO.getUserPassword(), salt),
                 memberDTO.getUserPhone(), memberDTO.getUserAddress());
+
+        userSalt.addUserSalt(copyMemberDTO.getUserId(), salt);
 
         return memberMapper.joinMember(copyMemberDTO);
 
+    }
+
+    @Override
+    public boolean isLoginCheck(RequestLoginDTO loginDTO) {
+
+        String salt = userSalt.getUserSalt(loginDTO.getUserId());
+        String userId = loginDTO.getUserId();
+        String hashPassword = encryption.getHashing(loginDTO.getUserPassword(), salt);
+
+        return memberMapper.isLoginCheck(userId, hashPassword);
+
+    }
+
+    @Override
+    public void login(HttpSession session, Long id) {
+        session.setAttribute(ID, id);
+    }
+
+    @Override
+    public void logout(HttpSession session) {
+        session.invalidate();
     }
 
     @Override
@@ -54,8 +85,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long getId(MemberDTO memberDTO) {
-        return memberMapper.getId(memberDTO);
+    public Long getId(String userId) {
+        return memberMapper.getId(userId);
     }
 
     @Override

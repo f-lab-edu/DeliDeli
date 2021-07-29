@@ -1,7 +1,7 @@
 package flab.delideli.mapper;
 
 import flab.delideli.domain.MemberDTO;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 public interface MemberMapper {
 
@@ -11,11 +11,17 @@ public interface MemberMapper {
 
     int joinMember(MemberDTO memberDTO);
 
+    int addUserSalt(@Param("userId") String userId, @Param("salt") String salt);
+
+    String getUserSalt(String userId);
+
+    boolean isLoginCheck(@Param("userId") String userId, @Param("hashPassword") String hashPassword);
+
     int updateMember(MemberDTO memberDTO);
 
     int deleteMember(Long id);
 
-    Long getId(MemberDTO memberDTO);
+    Long getId(String userId);
 
     void initDB(Long id);
 

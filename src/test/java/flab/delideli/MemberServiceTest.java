@@ -2,7 +2,9 @@ package flab.delideli;
 
 import flab.delideli.domain.MemberDTO;
 import flab.delideli.service.MemberService;
+import flab.delideli.util.encryption.Encryption;
 import flab.delideli.util.encryption.EncryptionSHA256;
+import flab.delideli.util.encryption.UserSalt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,10 @@ public class MemberServiceTest {
     private MemberDTO member2;
     private MemberDTO member3;
 
-    private MemberService memberService;
-    private EncryptionSHA256 encryptionSHA256;
+    private final MemberService memberService;
+
+    private Encryption encryption;
+    private UserSalt userSalt;
 
     @Autowired
     public MemberServiceTest(MemberService memberService) {
@@ -29,7 +33,7 @@ public class MemberServiceTest {
     @BeforeEach
     public void beforeEach() {
 
-        encryptionSHA256 = new EncryptionSHA256();
+        encryption = new EncryptionSHA256();
 
         member1 = new MemberDTO("syw", "yeol",
                 "345ab", "010-1111-1111", "Busan");
@@ -38,19 +42,21 @@ public class MemberServiceTest {
         member3 = new MemberDTO("sje", "jeong",
                 "234ac", "010-2222-2222", "Seoul");
 
-        memberService.initDB(memberService.getId(member1));
-        memberService.initDB(memberService.getId(member2));
-        memberService.initDB(memberService.getId(member3));
+        memberService.initDB(memberService.getId(member1.getUserId()));
+        memberService.initDB(memberService.getId(member2.getUserId()));
+        memberService.initDB(memberService.getId(member3.getUserId()));
 
     }
 
     @Test
     public void 회원_가입() {
 
-        memberService.joinMember(member1);
-        MemberDTO selectMember = memberService.selectMember(memberService.getId(member1));
 
-        assertThat(member1.getUserId()).isEqualTo(selectMember.getUserId());
+        memberService.joinMember(member1);
+        Long id = memberService.getId(member1.getUserId());
+        MemberDTO selectMember = memberService.selectMember(id);
+
+        System.out.println(memberService.selectMember(id));
 
     }
 
@@ -73,12 +79,12 @@ public class MemberServiceTest {
         String userPassword2 = member3.getUserPassword();
 
         // 비밀번호 암호화에 사용할 솔트 값을 각각 생성한다.
-        String salt1 = encryptionSHA256.getSalt();
-        String salt2 = encryptionSHA256.getSalt();
+        String salt1 = userSalt.getSalt();
+        String salt2 = userSalt.getSalt();
 
         // 해싱을 수행하여 비밀번호를 암호화한다.
-        String hashPassword1 = encryptionSHA256.getHashing(userPassword1, salt1);
-        String hashPassword2 = encryptionSHA256.getHashing(userPassword2, salt2);
+        String hashPassword1 = encryption.getHashing(userPassword1, salt1);
+        String hashPassword2 = encryption.getHashing(userPassword2, salt2);
 
         // 두 값이 다르다면 같은 비밀번호를 사용하더라도 해시값은 다르다는 것을 의미한다.
         assertThat(hashPassword1).isNotEqualTo(hashPassword2);
@@ -95,7 +101,7 @@ public class MemberServiceTest {
         memberService.joinMember(member1);
 
         // DB에 저장된 비밀번호 값을 hashPassword에 할당한다.
-        MemberDTO selectMember = memberService.selectMember(memberService.getId(member1));
+        MemberDTO selectMember = memberService.selectMember(memberService.getId(member1.getUserId()));
         String hashPassword = selectMember.getUserPassword();
 
         // 두 값이 다르다면 DB에 암호화된 비밀번호가 저장되었음을 의미한다.
