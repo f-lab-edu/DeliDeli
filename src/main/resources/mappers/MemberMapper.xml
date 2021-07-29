@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.MemberDao" >
+
+    <insert id="joinMember" >
+        INSERT INTO members (userid , password , username , phone , address)
+        VALUES (#{userid} , #{password}, #{username} , #{phone} , #{address})
+    </insert>
+
+    <select id="isExistUserId" resultType = "boolean">
+       SELECT EXISTS (SELECT 1 FROM members WHERE userid = #{userid})
+    </select>
+
+    <select id="findbyUserid" resultType="flab.delideli.dto.MemberDTO">
+        SELECT userid, password, username, phone, address
+        FROM members
+        WHERE userid = #{loginid}
+    </select>
+
+</mapper>
