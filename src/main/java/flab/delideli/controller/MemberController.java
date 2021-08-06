@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private MemberService memberService;
-    private static final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.ACCEPTED);
+    private static final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.OK);
     private static final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
     private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";

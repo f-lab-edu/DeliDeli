@@ -3,11 +3,11 @@ package flab.delideli.service;
 import flab.delideli.dao.MemberDao;
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
+import flab.delideli.dto.UpdateDTO;
 import flab.delideli.encrypt.Encryption;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
 
 @Service
 @AllArgsConstructor
@@ -45,5 +45,10 @@ public class MemberServiceImpl implements MemberService {
         if (userPassword.equals(encryptPassword.encrypt(loginPassword)))
             return true;
         return false;
+    }
+
+    @Override
+    public void updateUserInfo(UpdateDTO updateDTO) {
+        memberDao.updateUser(updateDTO);
     }
 }

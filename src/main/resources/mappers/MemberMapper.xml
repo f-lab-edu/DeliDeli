@@ -18,4 +18,9 @@
         WHERE userid = #{loginid}
     </select>
 
+    <update id = "updateUser" >
+        UPDATE members
+        SET username = #{updateDTO.username}, phone = #{updateDTO.phone}, address = #{updateDTO.address}
+        WHERE userid = {#userid} and password = {#password}
+    </update>
 </mapper>

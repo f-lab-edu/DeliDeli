@@ -2,8 +2,8 @@ package flab.delideli.dao;
 
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
+import flab.delideli.dto.UpdateDTO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MemberDao {
@@ -14,5 +14,6 @@ public interface MemberDao {
 
     public MemberDTO findbyUserid(String loginid);
 
-    public void clearData(MemberDTO memberDTO);
+    public void updateUser(UpdateDTO updateDTO);
+
 }
