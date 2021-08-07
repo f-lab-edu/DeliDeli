@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private MemberService memberService;
-    private static final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.ACCEPTED);
+    private static final ResponseEntity okResponseEntity = new ResponseEntity(HttpStatus.OK);
     private static final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
     private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
@@ -34,13 +34,13 @@ public class MemberController {
     @RequestMapping(value="/{userid}/duplicate",method = RequestMethod.POST)
     @ApiOperation(value = "회원 아이디 중복 체크")
     @ApiResponses({
-        @ApiResponse(code = 202, message = "사용 가능한 아이디"),
+        @ApiResponse(code = 200, message = "사용 가능한 아이디"),
         @ApiResponse(code = 409, message = "중복된 아이디")
     })
     public ResponseEntity checkUserId(@RequestBody String userid) {
         boolean result = memberService.isExistUserId(userid);
         if (!result) {
-            return acceptedResponseEntity;
+            return okResponseEntity;
         }
         return conflictResponseEntity;
     }
@@ -48,7 +48,7 @@ public class MemberController {
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ApiOperation(value = "회원 로그인")
     @ApiResponses({
-        @ApiResponse(code = 202, message = "로그인 성공"),
+        @ApiResponse(code = 200, message = "로그인 성공"),
         @ApiResponse(code = 401, message = "로그인 실패")
     })
     public ResponseEntity loginUser(@RequestBody LoginDTO loginDTO, HttpSession session) {
@@ -56,7 +56,7 @@ public class MemberController {
 
         if(result) {
             session.setAttribute(USER_ID, loginDTO.getLoginid());
-            return acceptedResponseEntity;
+            return okResponseEntity;
         }
         else
             return unauthorizedResponseEntity;
@@ -66,7 +66,7 @@ public class MemberController {
     @ApiOperation(value = "회원 로그아웃")
     public ResponseEntity logoutUser(HttpSession session) {
         session.removeAttribute(USER_ID);
-        return acceptedResponseEntity;
+        return okResponseEntity;
     }
 
 }
