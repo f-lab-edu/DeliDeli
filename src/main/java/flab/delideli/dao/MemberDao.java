@@ -4,6 +4,7 @@ import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MemberDao {
@@ -14,6 +15,6 @@ public interface MemberDao {
 
     public MemberDTO findbyUserid(String loginid);
 
-    public void updateUser(UpdateDTO updateDTO);
+    public void updateUser(@Param("userid") String userid , @Param("updateDTO") UpdateDTO updateDTO);
 
 }

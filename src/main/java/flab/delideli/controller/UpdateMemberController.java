@@ -15,15 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@AllArgsConstructor
 public class UpdateMemberController {
+
 
     private MemberService memberService;
 
-    private static final ResponseEntity acceptedResponseEntity = new ResponseEntity(HttpStatus.OK);
+    private static final ResponseEntity OKResponseEntity = new ResponseEntity(HttpStatus.OK);
+    private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    private static final String USER_ID = "USER_ID";
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity updateUser(@RequestBody UpdateDTO updateDTO) {
-        memberService.updateUserInfo(updateDTO);
-        return acceptedResponseEntity;
+    public ResponseEntity updateUser(HttpSession session, @RequestBody UpdateDTO updateDTO) {
+        String currentUserId = (String) session.getAttribute(USER_ID);
+        if (currentUserId == null) {
+            return unauthorizedResponseEntity;
+        }
+        memberService.updateUserInfo(currentUserId ,updateDTO);
+        return OKResponseEntity;
     }
 }

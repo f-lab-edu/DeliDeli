@@ -12,6 +12,6 @@ public interface MemberService {
 
     public boolean isExistUserInfo(LoginDTO loginDTO);
 
-    public void updateUserInfo(UpdateDTO updateDTO);
+    public void updateUserInfo(String userid, UpdateDTO updateDTO);
 
 }

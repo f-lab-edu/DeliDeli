@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateUserInfo(UpdateDTO updateDTO) {
-        memberDao.updateUser(updateDTO);
+    public void updateUserInfo(String userid, UpdateDTO updateDTO) {
+        memberDao.updateUser(userid, updateDTO);
     }
 }

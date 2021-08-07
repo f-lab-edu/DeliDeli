@@ -21,6 +21,6 @@
     <update id = "updateUser" >
         UPDATE members
         SET username = #{updateDTO.username}, phone = #{updateDTO.phone}, address = #{updateDTO.address}
-        WHERE userid = {#userid} and password = {#password}
+        WHERE userid = #{userid}
     </update>
 </mapper>
