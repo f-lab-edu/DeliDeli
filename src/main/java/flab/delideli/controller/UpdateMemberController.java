@@ -21,7 +21,7 @@ public class UpdateMemberController {
 
     private MemberService memberService;
 
-    private static final ResponseEntity OKResponseEntity = new ResponseEntity(HttpStatus.OK);
+    private static final ResponseEntity okResponseEntity = new ResponseEntity(HttpStatus.OK);
     private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
@@ -32,6 +32,16 @@ public class UpdateMemberController {
             return unauthorizedResponseEntity;
         }
         memberService.updateUserInfo(currentUserId ,updateDTO);
-        return OKResponseEntity;
+        return okResponseEntity;
+    }
+
+    @RequestMapping(value="/delete", method = RequestMethod.POST)
+    public ResponseEntity deleteUser(HttpSession session) {
+        String currentUserId = (String) session.getAttribute(USER_ID);
+        if (currentUserId == null)
+            return unauthorizedResponseEntity;
+        memberService.deleteUserInfo(currentUserId);
+        session.invalidate();
+        return okResponseEntity;
     }
 }

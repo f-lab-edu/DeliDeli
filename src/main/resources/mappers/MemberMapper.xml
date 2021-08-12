@@ -23,4 +23,9 @@
         SET username = #{updateDTO.username}, phone = #{updateDTO.phone}, address = #{updateDTO.address}
         WHERE userid = #{userid}
     </update>
+
+    <delete id="deleteUser">
+        DELETE FROM members
+        WHERE userid = #{userid}
+    </delete>
 </mapper>
