@@ -17,4 +17,5 @@ public interface MemberDao {
 
     public void updateUser(@Param("userid") String userid , @Param("updateDTO") UpdateDTO updateDTO);
 
+    public MemberDTO getUserInfo(String userid);
 }

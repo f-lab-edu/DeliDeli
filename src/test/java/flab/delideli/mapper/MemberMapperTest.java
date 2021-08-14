@@ -36,7 +36,7 @@ public class MemberMapperTest {
 
     @Test
     public void update() throws Exception {
-        UpdateDTO updateDTO1 = new UpdateDTO("ssss","dddddd","adadad");
+        UpdateDTO updateDTO1 = new UpdateDTO("kimsu",null,"");
         memberservice.updateUserInfo("ddaad",updateDTO1);
     }
 
