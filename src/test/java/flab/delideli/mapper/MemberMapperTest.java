@@ -17,8 +17,8 @@ public class MemberMapperTest {
     private MemberService memberservice;
     private Encrypt encrypt;
 
-    MemberDTO member1 = new MemberDTO("ddddd", "dda", "ddddda", "0101", "sdad");
-    MemberDTO member2 = new MemberDTO("ddd", "dddda", "ddddda", "0101", "sdad");
+    MemberDTO member1 = new MemberDTO("suykim", "suykima", "김나연", "010-2222-2222", "seong");
+    MemberDTO member2 = new MemberDTO("jeong", "jenoga", "김연아", "010-7777-7777", "seoul");
 
     @Test
     public void memberjoin() throws Exception {
@@ -37,11 +37,11 @@ public class MemberMapperTest {
     @Test
     public void update() throws Exception {
         UpdateDTO updateDTO1 = new UpdateDTO("","","");
-        memberservice.updateUserInfo("ddaad",updateDTO1);
+        memberservice.updateUserInfo("jeong",updateDTO1);
     }
 
     @Test
     public void delete() throws Exception {
-        memberservice.deleteUserInfo("ddaaddddd");
+        memberservice.deleteUserInfo("suykim");
     }
 }
