@@ -22,27 +22,27 @@ public class UpdateMemberController {
 
     private MemberService memberService;
 
-    private static final ResponseEntity OK_Response_Entity = new ResponseEntity(HttpStatus.OK);
-    private static final ResponseEntity UNAUTHORIZED_ResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    private static final ResponseEntity OK_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.OK);
+    private static final ResponseEntity UNAUTHORIZED_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userid}/update", method = RequestMethod.PATCH)
     public ResponseEntity updateUser(HttpSession session, @RequestBody UpdateDTO updateDTO) {
         String currentUserId = (String) session.getAttribute(USER_ID);
         if (currentUserId == null) {
-            return UNAUTHORIZED_ResponseEntity;
+            return UNAUTHORIZED_RESPONSE_ENTITY;
         }
         memberService.updateUserInfo(currentUserId ,updateDTO);
-        return OK_Response_Entity;
+        return OK_RESPONSE_ENTITY;
     }
 
     @RequestMapping(value="/{userid}/delete", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(HttpSession session) {
         String currentUserId = (String) session.getAttribute(USER_ID);
         if (currentUserId == null)
-            return UNAUTHORIZED_ResponseEntity;
+            return UNAUTHORIZED_RESPONSE_ENTITY;
         memberService.deleteUserInfo(currentUserId);
         session.invalidate();
-        return OK_Response_Entity;
+        return OK_RESPONSE_ENTITY;
     }
 }
