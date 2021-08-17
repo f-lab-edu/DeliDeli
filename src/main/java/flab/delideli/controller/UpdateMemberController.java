@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class UpdateMemberController {
 
@@ -26,7 +27,7 @@ public class UpdateMemberController {
     private static final ResponseEntity UNAUTHORIZED_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
-    @RequestMapping(value = "/{userid}/update", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PATCH)
     public ResponseEntity updateUser(HttpSession session, @RequestBody UpdateDTO updateDTO) {
         String currentUserId = (String) session.getAttribute(USER_ID);
         if (currentUserId == null) {
@@ -36,7 +37,7 @@ public class UpdateMemberController {
         return OK_RESPONSE_ENTITY;
     }
 
-    @RequestMapping(value="/{userid}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value="/{userId}/delete", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(HttpSession session) {
         String currentUserId = (String) session.getAttribute(USER_ID);
         if (currentUserId == null)

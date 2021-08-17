@@ -15,7 +15,7 @@ public interface MemberDao {
 
     public MemberDTO findbyUserid(String loginid);
 
-    public void updateUser(@Param("userid") String userid , @Param("updateDTO") UpdateDTO updateDTO);
+    public void updateUser(@Param("userid") String userid, @Param("updateDTO") UpdateDTO updateDTO);
 
     public void deleteUser(String userid);
 }

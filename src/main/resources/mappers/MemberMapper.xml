@@ -20,7 +20,17 @@
 
     <update id = "updateUser" >
         UPDATE members
-        SET username = #{updateDTO.username}, phone = #{updateDTO.phone}, address = #{updateDTO.address}
+        <set>
+            <if test="updateDTO.username != null and updateDTO.username != ''">
+                members.username = #{updateDTO.username},
+            </if>
+            <if test="updateDTO.phone != null and updateDTO.phone != ''">
+                members.phone = #{updateDTO.phone},
+            </if>
+            <if test="updateDTO.address != null and updateDTO.address != ''">
+                members.address = #{updateDTO.address}
+            </if>
+        </set>
         WHERE userid = #{userid}
     </update>
 
@@ -28,4 +38,5 @@
         DELETE FROM members
         WHERE userid = #{userid}
     </delete>
+
 </mapper>
