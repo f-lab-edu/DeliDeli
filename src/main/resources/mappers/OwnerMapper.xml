@@ -3,14 +3,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="flab.delideli.dao.OwnerDao" >
 
-  <insert id="insertOwner" >
+  <insert id="insertOwner">
     INSERT INTO owners (owner_id, password, name, phone, address, businessnumber)
     VALUES (#{ownerId}, #{ownerPassword}, #{ownerName}, #{ownerPhone},
             #{ownerAddress}, #{businessRegistrationNumber})
   </insert>
 
-  <select id="isExistOwnerId" resultType = "boolean">
+  <select id="isExistOwnerId" resultType="boolean">
     SELECT EXISTS (SELECT 1 FROM owners WHERE owner_id = #{ownerId})
   </select>
+
+  <select id="testSelectOwner" resultType="flab.delideli.dto.OwnerDTO">
+    SELECT owner_id, password, name, phone, address, businessnumber
+    FROM owners
+    WHERE owner_id = #{ownerId}
+  </select>
+  
+  <delete id="testDeleteOwner">
+    DELETE FROM owners
+    WHERE owner_id = #{ownerId}
+  </delete>
 
 </mapper>

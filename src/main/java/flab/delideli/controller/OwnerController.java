@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,16 +30,14 @@ public class OwnerController {
 	private final ResponseEntity<Void> CONFLICT_RESPONSE_ENTITY =
 		new ResponseEntity<>(HttpStatus.CONFLICT);
 
-	@RequestMapping("/join")
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "사장님 회원 가입")
 	public void joinOwner(@RequestBody @Valid OwnerDTO ownerDTO) {
-
 		ownerService.joinOwner(ownerDTO);
-
 	}
 
-	@RequestMapping("/{ownerId}/duplicate")
+	@RequestMapping(value = "/{ownerId}/duplicate", method = RequestMethod.POST)
 	@ApiOperation(value = "사장님 아이디 중복 체크")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "사용 가능한 아이디"),
@@ -51,9 +50,8 @@ public class OwnerController {
 
 		if (idDuplicated) {
 			return CONFLICT_RESPONSE_ENTITY;
-		} else {
-			return OK_RESPONSE_ENTITY;
 		}
+			return OK_RESPONSE_ENTITY;
 
 	}
 }

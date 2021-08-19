@@ -1,7 +1,6 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.OwnerDao;
-import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 import flab.delideli.encrypt.Encryption;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ public class OwnerService {
 		boolean duplicatedOwnerId = isExistOwnerId(owner.getOwnerId());
 
 		if (duplicatedOwnerId) {
-			throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+			throw new IllegalStateException("이미 존재하는 회원입니다.");
 		}
 
 		String encryptPassword = encryption.encrypt(owner.getOwnerPassword());
@@ -32,9 +31,15 @@ public class OwnerService {
 	}
 
 	public boolean isExistOwnerId(String ownerId) {
-
 		return ownerDao.isExistOwnerId(ownerId);
+	}
 
+	public OwnerDTO testSelectOwner(String ownerId) {
+		return ownerDao.testSelectOwner(ownerId);
+	}
+
+	public void testDeleteOwner(String ownerId) {
+		ownerDao.testDeleteOwner(ownerId);
 	}
 
 }
