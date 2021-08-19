@@ -24,24 +24,18 @@ public class UpdateMemberController {
     private MemberService memberService;
 
     private static final ResponseEntity OK_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.OK);
-    private static final ResponseEntity UNAUTHORIZED_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.PATCH)
     public ResponseEntity updateUser(HttpSession session, @RequestBody UpdateDTO updateDTO) {
         String currentUserId = (String) session.getAttribute(USER_ID);
-        if (currentUserId == null) {
-            return UNAUTHORIZED_RESPONSE_ENTITY;
-        }
         memberService.updateUserInfo(currentUserId ,updateDTO);
         return OK_RESPONSE_ENTITY;
     }
 
-    @RequestMapping(value="/{userId}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value="/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(HttpSession session) {
         String currentUserId = (String) session.getAttribute(USER_ID);
-        if (currentUserId == null)
-            return UNAUTHORIZED_RESPONSE_ENTITY;
         memberService.deleteUserInfo(currentUserId);
         session.invalidate();
         return OK_RESPONSE_ENTITY;
