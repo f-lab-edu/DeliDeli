@@ -37,11 +37,12 @@ public class UpdateMemberController {
         return OK_RESPONSE_ENTITY;
     }
 
-    @RequestMapping(value="/{userId}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value="/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(HttpSession session) {
         String currentUserId = (String) session.getAttribute(USER_ID);
-        if (currentUserId == null)
+        if (currentUserId == null) {
             return UNAUTHORIZED_RESPONSE_ENTITY;
+        }
         memberService.deleteUserInfo(currentUserId);
         session.invalidate();
         return OK_RESPONSE_ENTITY;
