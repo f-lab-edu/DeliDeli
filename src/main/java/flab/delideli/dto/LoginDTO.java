@@ -9,4 +9,10 @@ public class LoginDTO {
 
     private String loginid;
     private String loginPassword;
+
+    public LoginDTO(String loginid, String loginPassword) {
+        this.loginid = loginid;
+        this.loginPassword = loginPassword;
+    }
+
 }

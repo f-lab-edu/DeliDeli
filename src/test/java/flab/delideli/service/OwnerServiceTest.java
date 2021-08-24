@@ -3,6 +3,7 @@ package flab.delideli.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,9 @@ public class OwnerServiceTest {
 		"010-2222-1234", "Seoul");
 	OwnerDTO owner3 = new OwnerDTO("monday", "abcd123", "Mon",
 		"010-3333-1234", "Seoul");
+
+	LoginDTO loginDTO1 = new LoginDTO("sunday", "abcd123");
+	LoginDTO loginDTO2 = new LoginDTO("monday", "abcd123");
 
 	@BeforeEach
 	public void beforeEach() {
@@ -56,7 +60,7 @@ public class OwnerServiceTest {
 	}
 
 	@Test
-	public void 사장님_중복_가입_테스트() {
+	public void 사장님_중복_가입_예외_발생_테스트() {
 
 		ownerService.joinOwner(owner1);
 
@@ -64,6 +68,28 @@ public class OwnerServiceTest {
 			()->ownerService.joinOwner(owner2));
 
 		assertEquals(e.getMessage(), "이미 존재하는 회원입니다.");
+
+	}
+
+	@Test
+	public void 사장님_로그인정보_존재여부_테스트() {
+
+		ownerService.joinOwner(owner1);
+
+		assertThat(ownerService.isExistOwnerInfo(loginDTO1)).isTrue();
+		assertThat(ownerService.isExistOwnerInfo(loginDTO2)).isFalse();
+
+	}
+
+	@Test
+	public void 사장님_로그인실패_예외_발생_테스트() {
+
+		ownerService.joinOwner(owner1);
+
+		IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+			()->ownerService.loginOwner(loginDTO2));
+
+		assertEquals(e.getMessage(), "아이디 혹은 비밀번호가 일치하지 않습니다.");
 
 	}
 

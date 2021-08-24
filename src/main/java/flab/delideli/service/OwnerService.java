@@ -1,6 +1,7 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.OwnerDao;
+import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 import flab.delideli.encrypt.Encryption;
 import lombok.AllArgsConstructor;
@@ -29,8 +30,25 @@ public class OwnerService {
 
 	}
 
+	public void loginOwner(LoginDTO loginDTO) {
+
+		if(!isExistOwnerInfo(loginDTO)) {
+			throw new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다.");
+		}
+
+	}
+
 	public boolean isExistOwnerId(String ownerId) {
 		return ownerDao.isExistOwnerId(ownerId);
+	}
+
+	public boolean isExistOwnerInfo(LoginDTO loginDTO) {
+
+		String loginId = loginDTO.getLoginid();
+		String loginPassword = encryption.encrypt(loginDTO.getLoginPassword());
+
+		return ownerDao.isExistOwnerInfo(loginId, loginPassword);
+
 	}
 
 }
