@@ -18,13 +18,12 @@ public class OwnerService {
 		boolean duplicatedOwnerId = isExistOwnerId(owner.getOwnerId());
 
 		if (duplicatedOwnerId) {
-			throw new IllegalStateException("이미 존재하는 회원입니다.");
+			throw new IllegalArgumentException("이미 존재하는 회원입니다.");
 		}
 
 		String encryptPassword = encryption.encrypt(owner.getOwnerPassword());
 		OwnerDTO encryptOwner = new OwnerDTO(owner.getOwnerId(), encryptPassword,
-			owner.getOwnerName(), owner.getOwnerPhone(), owner.getOwnerAddress(),
-			owner.getBusinessRegistrationNumber());
+			owner.getOwnerName(), owner.getOwnerPhone(), owner.getOwnerAddress());
 
 		ownerDao.insertOwner(encryptOwner);
 
@@ -32,14 +31,6 @@ public class OwnerService {
 
 	public boolean isExistOwnerId(String ownerId) {
 		return ownerDao.isExistOwnerId(ownerId);
-	}
-
-	public OwnerDTO testSelectOwner(String ownerId) {
-		return ownerDao.testSelectOwner(ownerId);
-	}
-
-	public void testDeleteOwner(String ownerId) {
-		ownerDao.testDeleteOwner(ownerId);
 	}
 
 }

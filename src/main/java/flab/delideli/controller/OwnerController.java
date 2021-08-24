@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,14 +31,14 @@ public class OwnerController {
 	private final ResponseEntity<Void> CONFLICT_RESPONSE_ENTITY =
 		new ResponseEntity<>(HttpStatus.CONFLICT);
 
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	@PostMapping(value = "/join")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "사장님 회원 가입")
 	public void joinOwner(@RequestBody @Valid OwnerDTO ownerDTO) {
 		ownerService.joinOwner(ownerDTO);
 	}
 
-	@RequestMapping(value = "/{ownerId}/duplicate", method = RequestMethod.POST)
+	@PostMapping(value = "/{ownerId}/duplicate")
 	@ApiOperation(value = "사장님 아이디 중복 체크")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "사용 가능한 아이디"),
@@ -54,4 +55,5 @@ public class OwnerController {
 			return OK_RESPONSE_ENTITY;
 
 	}
+
 }

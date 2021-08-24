@@ -17,11 +17,11 @@ public class OwnerServiceTest {
 	OwnerService ownerService;
 
 	OwnerDTO owner1 = new OwnerDTO("sunday", "abcd123", "Sun",
-		"010-1111-1234", "Seoul", "111-22-33334");
+		"010-1111-1234", "Seoul");
 	OwnerDTO owner2 = new OwnerDTO("sunday", "abcd123", "Sun",
-		"010-2222-1234", "Seoul", "111-33-33334");
+		"010-2222-1234", "Seoul");
 	OwnerDTO owner3 = new OwnerDTO("monday", "abcd123", "Mon",
-		"010-3333-1234", "Seoul", "111-44-33334");
+		"010-3333-1234", "Seoul");
 
 	@BeforeEach
 	public void beforeEach() {
@@ -36,9 +36,9 @@ public class OwnerServiceTest {
 	public void 사장님_회원가입_테스트() {
 
 		ownerService.joinOwner(owner1);
-		OwnerDTO selectOwner = ownerService.testSelectOwner(owner1.getOwnerId());
+		String selectOwner = ownerService.testSelectOwnerId(owner1.getOwnerId());
 
-		assertThat(selectOwner).isEqualTo(owner1);
+		assertThat(selectOwner).isEqualTo(owner1.getOwnerId());
 
 	}
 
@@ -60,7 +60,7 @@ public class OwnerServiceTest {
 
 		ownerService.joinOwner(owner1);
 
-		IllegalStateException e = assertThrows(IllegalStateException.class,
+		IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
 			()->ownerService.joinOwner(owner2));
 
 		assertEquals(e.getMessage(), "이미 존재하는 회원입니다.");

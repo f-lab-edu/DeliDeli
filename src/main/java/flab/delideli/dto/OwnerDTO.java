@@ -19,18 +19,15 @@ public class OwnerDTO {
 	private String ownerPhone;
 	@NotBlank
 	private String ownerAddress;
-	@NotBlank
-	private String businessRegistrationNumber;
 
 	@Builder
 	public OwnerDTO(String ownerId, String ownerPassword, String ownerName, String ownerPhone,
-		String ownerAddress, String businessRegistrationNumber) {
+		String ownerAddress) {
 		this.ownerId = ownerId;
 		this.ownerPassword = ownerPassword;
 		this.ownerName = ownerName;
 		this.ownerPhone = ownerPhone;
 		this.ownerAddress = ownerAddress;
-		this.businessRegistrationNumber = businessRegistrationNumber;
 	}
 
 }
