@@ -1,6 +1,7 @@
 package flab.delideli.mapper;
 
 import flab.delideli.dto.MemberDTO;
+import flab.delideli.dto.UpdateDTO;
 import flab.delideli.encrypt.Encrypt;
 import flab.delideli.encrypt.Encryption;
 import flab.delideli.service.MemberService;
@@ -32,4 +33,11 @@ public class MemberMapperTest {
         Assertions.assertThat(memberservice.isExistUserId(userid1)).isTrue();
         Assertions.assertThat(memberservice.isExistUserId(userid2)).isFalse();
     }
+
+    @Test
+    public void update() throws Exception {
+        UpdateDTO updateDTO1 = new UpdateDTO("kimsu",null,"");
+        memberservice.updateUserInfo("ddaad",updateDTO1);
+    }
+
 }

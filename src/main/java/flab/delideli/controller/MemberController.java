@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private MemberService memberService;
+
     private static final ResponseEntity okResponseEntity = new ResponseEntity(HttpStatus.OK);
     private static final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
     private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
