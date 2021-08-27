@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,17 +23,28 @@ public class UpdateMemberController {
 
     private MemberService memberService;
 
-    private static final ResponseEntity OKResponseEntity = new ResponseEntity(HttpStatus.OK);
-    private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    private static final ResponseEntity OK_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.OK);
+    private static final ResponseEntity UNAUTHORIZED_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PATCH)
     public ResponseEntity updateUser(HttpSession session, @RequestBody UpdateDTO updateDTO) {
         String currentUserId = (String) session.getAttribute(USER_ID);
         if (currentUserId == null) {
-            return unauthorizedResponseEntity;
+            return UNAUTHORIZED_RESPONSE_ENTITY;
         }
         memberService.updateUserInfo(currentUserId ,updateDTO);
-        return OKResponseEntity;
+        return OK_RESPONSE_ENTITY;
+    }
+
+    @RequestMapping(value="/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteUser(HttpSession session) {
+        String currentUserId = (String) session.getAttribute(USER_ID);
+        if (currentUserId == null) {
+            return UNAUTHORIZED_RESPONSE_ENTITY;
+        }
+        memberService.deleteUserInfo(currentUserId);
+        session.invalidate();
+        return OK_RESPONSE_ENTITY;
     }
 }
