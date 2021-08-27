@@ -32,11 +32,6 @@
             </if>
         </set>
         WHERE userid = #{userid}
-    </update>
-
-    <delete id="deleteUser">
-        DELETE FROM members
-        WHERE userid = #{userid}
-    </delete>
+</update>
 
 </mapper>

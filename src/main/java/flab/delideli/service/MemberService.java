@@ -14,5 +14,4 @@ public interface MemberService {
 
     public void updateUserInfo(String userid, UpdateDTO updateDTO);
 
-    public void deleteUserInfo(String userid);
 }
