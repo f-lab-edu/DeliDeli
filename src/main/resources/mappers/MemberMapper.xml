@@ -18,4 +18,20 @@
         WHERE userid = #{loginid}
     </select>
 
+    <update id = "updateUser" >
+        UPDATE members
+        <set>
+            <if test="updateDTO.username != null and updateDTO.username != ''">
+                members.username = #{updateDTO.username},
+            </if>
+            <if test="updateDTO.phone != null and updateDTO.phone != ''">
+                members.phone = #{updateDTO.phone},
+            </if>
+            <if test="updateDTO.address != null and updateDTO.address != ''">
+                members.address = #{updateDTO.address}
+            </if>
+        </set>
+        WHERE userid = #{userid}
+</update>
+
 </mapper>
