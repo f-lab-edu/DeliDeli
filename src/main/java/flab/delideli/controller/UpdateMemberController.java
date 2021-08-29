@@ -2,6 +2,7 @@ package flab.delideli.controller;
 
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
+import flab.delideli.service.LoginService;
 import flab.delideli.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
