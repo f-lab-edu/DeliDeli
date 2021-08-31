@@ -4,6 +4,7 @@ import flab.delideli.dao.MemberDao;
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.encrypt.Encryption;
+import flab.delideli.exception.DuplicatedIdException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void joinMember(MemberDTO member) {
         if(this.isExistUserId(member.getUserid()))
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+            throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
         MemberDTO encodemember = new MemberDTO(member.getUserid(), encryptPassword.encrypt(member.getPassword()), member.getUsername(), member.getPhone(), member.getAddress());
         memberDao.joinMember(encodemember);
     }

@@ -4,6 +4,8 @@ import flab.delideli.dao.OwnerDao;
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 import flab.delideli.encrypt.Encryption;
+import flab.delideli.exception.DuplicatedIdException;
+import flab.delideli.exception.WrongLoginInfoException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class OwnerService {
 		boolean duplicatedOwnerId = isExistOwnerId(owner.getOwnerId());
 
 		if (duplicatedOwnerId) {
-			throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+			throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
 		}
 
 		String encryptPassword = encryption.encrypt(owner.getOwnerPassword());
@@ -30,24 +32,20 @@ public class OwnerService {
 
 	}
 
-	public void loginOwner(LoginDTO loginDTO) {
-
-		if(!isExistOwnerInfo(loginDTO)) {
-			throw new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다.");
-		}
-
-	}
-
 	public boolean isExistOwnerId(String ownerId) {
 		return ownerDao.isExistOwnerId(ownerId);
 	}
 
-	public boolean isExistOwnerInfo(LoginDTO loginDTO) {
+	public void ownerLoginInfoCheck(LoginDTO loginDTO) {
 
 		String loginId = loginDTO.getLoginid();
 		String loginPassword = encryption.encrypt(loginDTO.getLoginPassword());
 
-		return ownerDao.isExistOwnerInfo(loginId, loginPassword);
+		boolean isExistInfo = ownerDao.isExistOwnerInfo(loginId, loginPassword);
+
+		if(!isExistInfo) {
+			throw new WrongLoginInfoException("아이디 혹은 비밀번호가 일치하지 않습니다.");
+		}
 
 	}
 

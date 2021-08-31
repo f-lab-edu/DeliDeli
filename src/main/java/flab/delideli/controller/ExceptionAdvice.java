@@ -1,5 +1,7 @@
 package flab.delideli.controller;
 
+import flab.delideli.exception.DuplicatedIdException;
+import flab.delideli.exception.WrongLoginInfoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,19 +10,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    private ResponseEntity<Void> responseEntity;
-
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Void> illegalArgumentExceptionAdvice(IllegalArgumentException e) {
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
 
-        if(e.getMessage().equals("이미 존재하는 아이디입니다.")) {
-            responseEntity = new ResponseEntity<>(HttpStatus.CONFLICT);
-        } else if(e.getMessage().equals("아이디 혹은 비밀번호가 일치하지 않습니다.")) {
-            responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    @ExceptionHandler(DuplicatedIdException.class)
+    public ResponseEntity<Void> DuplicatedIdExceptionAdvice() {
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
 
-        return responseEntity;
-
+    @ExceptionHandler(WrongLoginInfoException.class)
+    public ResponseEntity<Void> WrongLoginInfoExceptionAdvice() {
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
 }

@@ -2,12 +2,12 @@ package flab.delideli.controller;
 
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
+import flab.delideli.service.LoginService;
 import flab.delideli.service.OwnerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class OwnerController {
 
 	private OwnerService ownerService;
+	private LoginService loginService;
 
 	private static final ResponseEntity<Void> OK_RESPONSE_ENTITY =
 		new ResponseEntity<>(HttpStatus.OK);
 	private static final ResponseEntity<Void> CONFLICT_RESPONSE_ENTITY =
 		new ResponseEntity<>(HttpStatus.CONFLICT);
-	private static final String OWNER_ID = "OWNER_ID";
 
 	@PostMapping(value = "/join")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -66,18 +66,18 @@ public class OwnerController {
 		@ApiResponse(code = 200, message = "로그인 성공"),
 		@ApiResponse(code = 401, message = "로그인 실패")
 	})
-	public void loginOwner(@RequestBody LoginDTO loginDTO, HttpSession session) {
+	public void loginOwner(@RequestBody LoginDTO loginDTO) {
 
-		ownerService.loginOwner(loginDTO);
-		session.setAttribute(OWNER_ID, loginDTO.getLoginid());
+		ownerService.ownerLoginInfoCheck(loginDTO);
+		loginService.login(loginDTO);
 
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.DELETE)
 	@ResponseStatus
 	@ApiOperation(value = "사장님 로그아웃")
-	public void logoutOwner(HttpSession session) {
-		session.removeAttribute(OWNER_ID);
+	public void logoutOwner() {
+		loginService.logout();
 	}
 
 }
