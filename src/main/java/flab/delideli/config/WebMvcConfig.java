@@ -1,7 +1,6 @@
 package flab.delideli.config;
 
 import flab.delideli.interceptor.LoginInterceptor;
-import flab.delideli.service.LoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
