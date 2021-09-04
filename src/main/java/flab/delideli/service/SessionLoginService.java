@@ -1,12 +1,13 @@
 package flab.delideli.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Service
-public class SessionLoginService implements LoginService{
+public class SessionLoginService implements LoginService {
 
     private static final String USER_ID = "USER_ID";
 

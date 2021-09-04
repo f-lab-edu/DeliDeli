@@ -1,8 +1,12 @@
 package flab.delideli.interceptor;
 
 import flab.delideli.exception.UnauthorizedException;
+import flab.delideli.service.LoginService;
 import flab.delideli.service.SessionLoginService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private SessionLoginService SessionloginService;
+    @Qualifier("SessionLogin")
+    private LoginService SessionloginService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
