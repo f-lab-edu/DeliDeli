@@ -15,11 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-@AllArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
 
-    @Qualifier("SessionLogin")
+
     private LoginService SessionloginService;
+
+    @Autowired
+    public LoginInterceptor(@Qualifier("SessionLogin") LoginService sessionloginService) {
+        SessionloginService = sessionloginService;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
