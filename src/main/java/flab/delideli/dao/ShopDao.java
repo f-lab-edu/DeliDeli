@@ -13,9 +13,12 @@ public interface ShopDao {
 	boolean isExistShop(@Param("shopName") String shopName,
 		@Param("ownerId") String ownerId);
 
-	ShopDTO selectMyShop(@Param("shopName") String shopName,
+	ShopDTO selectShopByNameAndOwnerId(@Param("shopName") String shopName,
 		@Param("ownerId") String ownerId);
 
-	List<ShopDTO> selectMyShopList(String ownerId);
+	List<ShopDTO> selectShopListByOwnerId(String ownerId);
+
+//	Long selectShopId(@Param("shopName") String shopName,
+//		@Param("ownerId") String ownerId);
 
 }

@@ -1,6 +1,7 @@
 package flab.delideli.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class ShopDTO {
 	private String shopInfo;
 	@NotBlank
 	private String deliveryArea;
-	@NotBlank
+	@NotNull
 	private FoodCategory foodCategory;
 	@NotBlank
 	private String notice;
