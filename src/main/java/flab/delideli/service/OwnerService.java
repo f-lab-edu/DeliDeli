@@ -1,11 +1,9 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.OwnerDao;
-import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 import flab.delideli.encrypt.Encryption;
 import flab.delideli.exception.DuplicatedIdException;
-import flab.delideli.exception.WrongLoginInfoException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,17 +34,12 @@ public class OwnerService {
 		return ownerDao.isExistOwnerId(ownerId);
 	}
 
-	public void ownerLoginInfoCheck(LoginDTO loginDTO) {
+	public String selectOwnerId(String ownerId) {
+		return ownerDao.selectOwnerId(ownerId);
+	}
 
-		String loginId = loginDTO.getLoginid();
-		String loginPassword = encryption.encrypt(loginDTO.getLoginPassword());
-
-		boolean isExistInfo = ownerDao.isExistOwnerInfo(loginId, loginPassword);
-
-		if(!isExistInfo) {
-			throw new WrongLoginInfoException("아이디 혹은 비밀번호가 일치하지 않습니다.");
-		}
-
+	public void deleteOwner(String ownerId) {
+		ownerDao.deleteOwner(ownerId);
 	}
 
 }

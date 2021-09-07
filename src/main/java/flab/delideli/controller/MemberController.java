@@ -1,5 +1,9 @@
 package flab.delideli.controller;
 
+import static flab.delideli.util.ResponseEntityCode.CONFLICT_RESPONSE_ENTITY;
+import static flab.delideli.util.ResponseEntityCode.OK_RESPONSE_ENTITY;
+import static flab.delideli.util.ResponseEntityCode.UNAUTHORIZED_RESPONSE_ENTITY;
+
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.service.MemberService;
@@ -8,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +23,6 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private MemberService memberService;
-    private static final ResponseEntity okResponseEntity = new ResponseEntity(HttpStatus.OK);
-    private static final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
-    private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
     private static final String USER_ID = "USER_ID";
 
     @RequestMapping(value ="/users", method = RequestMethod.POST)
@@ -37,12 +37,12 @@ public class MemberController {
         @ApiResponse(code = 200, message = "사용 가능한 아이디"),
         @ApiResponse(code = 409, message = "중복된 아이디")
     })
-    public ResponseEntity checkUserId(@RequestBody String userid) {
+    public ResponseEntity<Void> checkUserId(@RequestBody String userid) {
         boolean result = memberService.isExistUserId(userid);
         if (!result) {
-            return okResponseEntity;
+            return OK_RESPONSE_ENTITY;
         }
-        return conflictResponseEntity;
+        return CONFLICT_RESPONSE_ENTITY;
     }
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
@@ -56,17 +56,17 @@ public class MemberController {
 
         if(result) {
             session.setAttribute(USER_ID, loginDTO.getLoginid());
-            return okResponseEntity;
+            return OK_RESPONSE_ENTITY;
         }
         else
-            return unauthorizedResponseEntity;
+            return UNAUTHORIZED_RESPONSE_ENTITY;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ApiOperation(value = "회원 로그아웃")
     public ResponseEntity logoutUser(HttpSession session) {
         session.removeAttribute(USER_ID);
-        return okResponseEntity;
+        return OK_RESPONSE_ENTITY;
     }
 
 }

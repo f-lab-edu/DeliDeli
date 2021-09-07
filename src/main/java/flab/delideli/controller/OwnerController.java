@@ -1,9 +1,13 @@
 package flab.delideli.controller;
 
+import static flab.delideli.util.ResponseEntityCode.*;
+import static flab.delideli.util.ResponseEntityCode.OK_RESPONSE_ENTITY;
+
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 import flab.delideli.service.LoginService;
 import flab.delideli.service.OwnerService;
+import flab.delideli.util.ResponseEntityCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -28,11 +32,6 @@ public class OwnerController {
 
 	private OwnerService ownerService;
 	private LoginService loginService;
-
-	private static final ResponseEntity<Void> OK_RESPONSE_ENTITY =
-		new ResponseEntity<>(HttpStatus.OK);
-	private static final ResponseEntity<Void> CONFLICT_RESPONSE_ENTITY =
-		new ResponseEntity<>(HttpStatus.CONFLICT);
 
 	@PostMapping(value = "/join")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -60,17 +59,13 @@ public class OwnerController {
 	}
 
 	@PostMapping(value = "/login")
-	@ResponseStatus
 	@ApiOperation(value = "사장님 로그인")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "로그인 성공"),
 		@ApiResponse(code = 401, message = "로그인 실패")
 	})
 	public void loginOwner(@RequestBody LoginDTO loginDTO) {
-
-		ownerService.ownerLoginInfoCheck(loginDTO);
 		loginService.login(loginDTO);
-
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.DELETE)

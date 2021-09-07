@@ -3,9 +3,11 @@ package flab.delideli.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import flab.delideli.dao.LoginDao;
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.OwnerDTO;
 
+import flab.delideli.exception.WrongLoginInfoException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,12 @@ public class OwnerServiceTest {
 
 	@Autowired
 	OwnerService ownerService;
+
+	@Autowired
+	LoginService loginService;
+
+	@Autowired
+	LoginDao loginDao;
 
 	OwnerDTO owner1 = new OwnerDTO("sunday", "abcd123", "Sun",
 		"010-1111-1234", "Seoul");
@@ -30,9 +38,9 @@ public class OwnerServiceTest {
 	@BeforeEach
 	public void beforeEach() {
 
-		ownerService.testDeleteOwner(owner1.getOwnerId());
-		ownerService.testDeleteOwner(owner2.getOwnerId());
-		ownerService.testDeleteOwner(owner3.getOwnerId());
+		ownerService.deleteOwner(owner1.getOwnerId());
+		ownerService.deleteOwner(owner2.getOwnerId());
+		ownerService.deleteOwner(owner3.getOwnerId());
 
 	}
 
@@ -40,7 +48,7 @@ public class OwnerServiceTest {
 	public void 사장님_회원가입_테스트() {
 
 		ownerService.joinOwner(owner1);
-		String selectOwner = ownerService.testSelectOwnerId(owner1.getOwnerId());
+		String selectOwner = ownerService.selectOwnerId(owner1.getOwnerId());
 
 		assertThat(selectOwner).isEqualTo(owner1.getOwnerId());
 
@@ -76,8 +84,13 @@ public class OwnerServiceTest {
 
 		ownerService.joinOwner(owner1);
 
-		assertThat(ownerService.isExistOwnerInfo(loginDTO1)).isTrue();
-		assertThat(ownerService.isExistOwnerInfo(loginDTO2)).isFalse();
+		boolean isLoginOk1 = loginDao.isExistUserInfo(
+			loginDTO1.getLoginid(), loginDTO1.getLoginPassword());
+		boolean isLoginOk2 = loginDao.isExistUserInfo(
+			loginDTO2.getLoginid(), loginDTO2.getLoginPassword());
+
+		assertThat(isLoginOk1).isTrue();
+		assertThat(isLoginOk2).isFalse();
 
 	}
 
@@ -86,8 +99,8 @@ public class OwnerServiceTest {
 
 		ownerService.joinOwner(owner1);
 
-		IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-			()->ownerService.loginOwner(loginDTO2));
+		WrongLoginInfoException e = assertThrows(WrongLoginInfoException.class,
+			()->loginService.login(loginDTO2));
 
 		assertEquals(e.getMessage(), "아이디 혹은 비밀번호가 일치하지 않습니다.");
 

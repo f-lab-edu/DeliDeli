@@ -13,10 +13,15 @@
     SELECT EXISTS (SELECT 1 FROM owners WHERE owner_id = #{ownerId})
   </select>
 
-  <select id="isExistOwnerInfo" resultType="boolean">
-    SELECT IF(COUNT(*) = 1, 1, 0) FROM owners
-    WHERE owner_id = #{loginId}
-      AND owner_password = #{loginPassword}
+  <select id="selectOwnerId" resultType="String">
+    SELECT owner_id
+    FROM owners
+    WHERE owner_id = #{ownerId}
   </select>
+
+  <delete id="deleteOwner">
+    DELETE FROM owners
+    WHERE owner_id = #{ownerId}
+  </delete>
 
 </mapper>

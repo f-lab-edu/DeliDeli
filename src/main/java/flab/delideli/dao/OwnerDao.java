@@ -11,7 +11,8 @@ public interface OwnerDao {
 
 	boolean isExistOwnerId(@Param("ownerId") String ownerId);
 
-	boolean isExistOwnerInfo(@Param("loginId") String loginId,
-		@Param("loginPassword") String loginPassword);
+	String selectOwnerId(@Param("ownerId") String ownerId);
+
+	void deleteOwner(@Param("ownerId") String ownerId);
 
 }
