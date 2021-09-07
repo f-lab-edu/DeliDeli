@@ -1,4 +1,4 @@
-package flab.delideli.controller;
+package flab.delideli.exception;
 
 import flab.delideli.exception.AlreadyAddedShopException;
 import org.springframework.http.HttpStatus;
@@ -18,5 +18,10 @@ public class ExceptionAdvice {
     public ResponseEntity<Void> AlreadyAddedShopExceptionAdvice() {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
-    
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity unauthorizedExceptionAdvice(UnauthorizedException e) {
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
+
 }

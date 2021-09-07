@@ -29,10 +29,4 @@
     WHERE owner_id = #{ownerId}
   </select>
 
-<!--  <select id="selectShopId" resultType="Long">
-    SELECT shop_id
-    FROM shops
-    WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
-  </select> -->
-
 </mapper>

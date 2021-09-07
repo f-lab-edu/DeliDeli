@@ -18,7 +18,4 @@ public interface ShopDao {
 
 	List<ShopDTO> selectShopListByOwnerId(String ownerId);
 
-//	Long selectShopId(@Param("shopName") String shopName,
-//		@Param("ownerId") String ownerId);
-
 }

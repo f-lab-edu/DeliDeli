@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface LoginUserLevel {
 
-	UserLevel UserLevel();
+	UserLevel role();
 
 	enum UserLevel {
 		ADMIN_LEVEL,

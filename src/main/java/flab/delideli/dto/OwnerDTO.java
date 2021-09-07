@@ -1,5 +1,6 @@
 package flab.delideli.dto;
 
+import flab.delideli.annotation.LoginUserLevel.UserLevel;
 import javax.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class OwnerDTO {
+
+	private static final UserLevel userLevel = UserLevel.OWNER_LEVEL;
 
 	@NotBlank
 	private String ownerId;
