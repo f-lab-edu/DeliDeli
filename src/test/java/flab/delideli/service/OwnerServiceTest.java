@@ -23,22 +23,22 @@ public class OwnerServiceTest {
 	OwnerDTO owner3 = new OwnerDTO("monday", "abcd123", "Mon",
 		"010-3333-1234", "Seoul");
 
-	@BeforeEach
-	public void beforeEach() {
-
-		ownerService.testDeleteOwner(owner1.getOwnerId());
-		ownerService.testDeleteOwner(owner2.getOwnerId());
-		ownerService.testDeleteOwner(owner3.getOwnerId());
-
-	}
+//	@BeforeEach
+//	public void beforeEach() {
+//
+//		ownerService.testDeleteOwner(owner1.getOwnerId());
+//		ownerService.testDeleteOwner(owner2.getOwnerId());
+//		ownerService.testDeleteOwner(owner3.getOwnerId());
+//
+//	}
 
 	@Test
 	public void 사장님_회원가입_테스트() {
 
 		ownerService.joinOwner(owner1);
-		String selectOwner = ownerService.testSelectOwnerId(owner1.getOwnerId());
-
-		assertThat(selectOwner).isEqualTo(owner1.getOwnerId());
+//		String selectOwner = ownerService.testSelectOwnerId(owner1.getOwnerId());
+//
+//		assertThat(selectOwner).isEqualTo(owner1.getOwnerId());
 
 	}
 
