@@ -18,16 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
 
 
-    private LoginService SessionloginService;
+    private LoginService SessionLoginService;
 
-    @Autowired
-    public LoginInterceptor(@Qualifier("SessionLogin") LoginService sessionloginService) {
-        SessionloginService = sessionloginService;
+    public LoginInterceptor(@Qualifier("sessionLoginService") LoginService sessionLoginService) {
+        SessionLoginService = sessionLoginService;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String currentUserId = SessionloginService.getSessionUserId(request);
+        String currentUserId = SessionLoginService.getSessionUserId(request);
         if (currentUserId != null) {
             return true;
         }
