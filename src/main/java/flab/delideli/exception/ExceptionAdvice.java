@@ -1,4 +1,4 @@
-package flab.delideli.controller;
+package flab.delideli.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,5 +11,10 @@ public class ExceptionAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity illegalArgumentExceptionAdvice(IllegalArgumentException e) {
         return new ResponseEntity(HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity unauthorizedExceptionAdvice(UnauthorizedException e) {
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 }
