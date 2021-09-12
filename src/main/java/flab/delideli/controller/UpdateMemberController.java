@@ -26,6 +26,7 @@ public class UpdateMemberController {
         return OK_RESPONSE_ENTITY;
     }
 
+
     @DeleteMapping(value="/{userId}")
     public ResponseEntity deleteUser(HttpSession session) {
         String currentUserId = (String) session.getAttribute(USER_ID);
