@@ -1,8 +1,8 @@
 package flab.delideli.controller;
 
 import flab.delideli.annotation.LoginUserLevel;
-import flab.delideli.annotation.LoginUserLevel.UserLevel;
 import flab.delideli.dto.ShopDTO;
+import flab.delideli.enums.UserLevel;
 import flab.delideli.service.ShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,7 +10,6 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/shops")
 public class ShopController {
 
-	private ShopService shopService;
+	private final ShopService shopService;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -39,26 +38,18 @@ public class ShopController {
 	@GetMapping
 	@ApiOperation(value = "가게 이름과 사장님 ID로 가게 조회")
 	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public ResponseEntity<ShopDTO> getShop(
+	public ShopDTO getShop(
 		@RequestParam(value = "name") String shopName,
 		@RequestParam(value = "owner") String ownerId) {
-
-		ShopDTO myShop = shopService.getShop(shopName, ownerId);
-
-		return ResponseEntity.ok(myShop);
-
+		return shopService.getShop(shopName, ownerId);
 	}
 
 	@GetMapping(value = "/{ownerId}")
 	@ApiOperation(value = "사장님 ID로 가게 리스트 조회")
 	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public ResponseEntity<List<ShopDTO>> getShopList(
+	public List<ShopDTO> getShopList(
 		@PathVariable("ownerId") String ownerId) {
-
-		List<ShopDTO> myShopList = shopService.getShopList(ownerId);
-
-		return ResponseEntity.ok(myShopList);
-
+		return shopService.getShopList(ownerId);
 	}
 
 }

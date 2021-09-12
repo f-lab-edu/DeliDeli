@@ -1,5 +1,6 @@
 package flab.delideli.dto;
 
+import flab.delideli.enums.FoodCategory;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
@@ -9,12 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ShopDTO {
-
-	public enum FoodCategory {
-		KOREAN_FOOD, JAPANESE_FOOD, CHINESE_FOOD,
-		ASIAN_FOOD, WESTERN_FOOD,
-		BURGER, PIZZA, CHICKEN, SNACK_BAR, CAFE_DESSERT
-	}
 
 	@NotBlank
 	private String shopName;

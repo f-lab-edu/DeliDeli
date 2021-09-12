@@ -1,6 +1,6 @@
 package flab.delideli.dto;
 
-import flab.delideli.annotation.LoginUserLevel;
+import flab.delideli.enums.UserLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +12,6 @@ public class LoginDTO {
 
     private String loginPassword;
 
-    private LoginUserLevel loginUserLevel;
+    private UserLevel userLevel;
 
 }

@@ -1,7 +1,5 @@
 package flab.delideli.service;
 
-import flab.delideli.dto.LoginDTO;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
