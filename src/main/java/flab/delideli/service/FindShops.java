@@ -1,8 +1,9 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.FindShopDao;
-import flab.delideli.dao.ShopDao;
 import flab.delideli.dto.ShopDTO;
+import flab.delideli.dto.ShoplistDTO;
+import flab.delideli.paging.PagingCriteria;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,8 @@ public class FindShops implements FindShopService{
     private FindShopDao findShopDao;
 
     @Override
-    public List<ShopDTO> findAllShop() {
-        return findShopDao.findAllShop();
+    public List<ShoplistDTO> findAllShop(int pageNumber) {
+        PagingCriteria pagingCriteria = new PagingCriteria(pageNumber);
+        return findShopDao.findAllShop(pagingCriteria);
     }
 }
