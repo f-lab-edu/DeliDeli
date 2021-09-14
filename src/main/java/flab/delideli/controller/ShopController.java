@@ -51,5 +51,5 @@ public class ShopController {
 		@PathVariable("ownerId") String ownerId) {
 		return shopService.getShopList(ownerId);
 	}
-
+	
 }

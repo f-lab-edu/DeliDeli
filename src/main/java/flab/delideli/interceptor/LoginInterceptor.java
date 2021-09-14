@@ -1,8 +1,6 @@
 package flab.delideli.interceptor;
 
 import flab.delideli.annotation.LoginUserLevel;
-//import flab.delideli.dto.LoginDTO;
-//import flab.delideli.enums.UserLevel;
 import flab.delideli.exception.UnauthorizedException;
 import flab.delideli.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +27,25 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        String currentUserId = SessionloginService.getSessionUserId(request);
+        if (currentUserId != null) {
+            return true;
+        }
+
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         LoginUserLevel loginUserLevel = handlerMethod.getMethodAnnotation(LoginUserLevel.class);
-        if (loginUserLevel == null) {
+        String role = loginUserLevel.role().name();
+        String userLevel = SessionloginService.getSessionUserLevel(request);
+
+        if (loginUserLevel == null ||
+            (loginUserLevel != null && role.equals(userLevel))) {
             return true;
         }
 
-        throw new UnauthorizedException();
+        throw new UnauthorizedException("접근 권한이 없습니다.");
 
     }
 
