@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginDTO {
 
-    private String loginid;
+    private String loginId;
     private String loginPassword;
 
-    public LoginDTO(String loginid, String loginPassword) {
-        this.loginid = loginid;
+    public LoginDTO(String loginId, String loginPassword) {
+        this.loginId = loginId;
         this.loginPassword = loginPassword;
     }
 

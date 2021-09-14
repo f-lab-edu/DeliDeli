@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Void> illegalArgumentExceptionAdvice(IllegalArgumentException e) {
-        return CONFLICT_RESPONSE_ENTITY;
-    }
-
     @ExceptionHandler(DuplicatedIdException.class)
     public ResponseEntity<Void> DuplicatedIdExceptionAdvice() {
         return CONFLICT_RESPONSE_ENTITY;

@@ -1,8 +1,9 @@
 package flab.delideli.service;
 
-import flab.delideli.dao.LoginDao;
+import flab.delideli.dao.MemberDao;
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.encrypt.Encryption;
+import flab.delideli.enums.UserLevel;
 import flab.delideli.exception.WrongLoginInfoException;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,26 +15,38 @@ public class SessionLoginService implements LoginService {
 
 	private final HttpSession session;
 	private final Encryption encryption;
-	private final LoginDao loginDao;
-	private static final String LOGIN_ID = "LOGIN_ID";
+	private final MemberDao memberDao;
+
+	private static final String USER_ID = "USER_ID";
+	private static final String USER_LEVEL = "USER_LEVEL";
 
 	@Override
 	public void login(LoginDTO loginDTO) {
+
 		loginInfoCheck(loginDTO);
-		session.setAttribute(LOGIN_ID, loginDTO);
+
+		String loginId = loginDTO.getLoginId();
+		UserLevel userLevel = memberDao.selectUserLevel(loginId);
+
+		session.setAttribute(USER_ID, loginId);
+		session.setAttribute(USER_LEVEL, userLevel);
+
 	}
 
 	@Override
 	public void logout() {
-		session.removeAttribute(LOGIN_ID);
+
+		session.removeAttribute(USER_ID);
+		session.removeAttribute(USER_LEVEL);
+
 	}
 
 	public void loginInfoCheck(LoginDTO loginDTO) {
 
-		String loginId = loginDTO.getLoginid();
+		String loginId = loginDTO.getLoginId();
 		String loginPassword = encryption.encrypt(loginDTO.getLoginPassword());
 
-		boolean isExistInfo = loginDao.isExistUserInfo(loginId, loginPassword);
+		boolean isExistInfo = memberDao.isExistUserInfo(loginId, loginPassword);
 
 		if(!isExistInfo) {
 			throw new WrongLoginInfoException("아이디 혹은 비밀번호가 일치하지 않습니다.");
