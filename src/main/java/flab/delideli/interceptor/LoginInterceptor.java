@@ -3,7 +3,6 @@ package flab.delideli.interceptor;
 import flab.delideli.annotation.LoginUserLevel;
 import flab.delideli.exception.UnauthorizedException;
 import flab.delideli.service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -16,18 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
+    private LoginService sessionLoginService;
 
-    private LoginService SessionloginService;
-
-    @Autowired
-    public LoginInterceptor(@Qualifier("SessionLogin") LoginService sessionloginService) {
-        SessionloginService = sessionloginService;
+    public LoginInterceptor(@Qualifier("sessionLoginService") LoginService sessionLoginService) {
+        this.sessionLoginService = sessionLoginService;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String currentUserId = SessionloginService.getSessionUserId(request);
+        String currentUserId = sessionLoginService.getSessionUserId(request);
         if (currentUserId != null) {
             return true;
         }
@@ -35,10 +32,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         LoginUserLevel loginUserLevel = handlerMethod.getMethodAnnotation(LoginUserLevel.class);
         String role = loginUserLevel.role().name();
-        String userLevel = SessionloginService.getSessionUserLevel(request);
+        String userLevel = sessionLoginService.getSessionUserLevel(request);
 
         if (loginUserLevel == null ||
             (loginUserLevel != null && role.equals(userLevel))) {
@@ -56,4 +54,5 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     }
+
 }

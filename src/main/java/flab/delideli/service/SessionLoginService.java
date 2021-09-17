@@ -1,10 +1,12 @@
 package flab.delideli.service;
 
 import flab.delideli.exception.UnauthorizedException;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
-@Service("SessionLogin")
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+@Service
 public class SessionLoginService implements LoginService {
 
     private static final String USER_ID = "USER_ID";
