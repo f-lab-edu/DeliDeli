@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface FindShopService {
 
-    List<ShoplistDTO> findAllShop(int pageNumber);
+    List<ShoplistDTO> findAllShop(Integer cursor);
 }

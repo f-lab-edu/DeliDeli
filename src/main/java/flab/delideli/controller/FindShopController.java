@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class FindShopController{
 
     private FindShopService findShopService;
 
-    @GetMapping(value="/shops/{pageNumber}")
-    public List<ShoplistDTO> findAllShop(@PathVariable int pageNumber) {
-        List<ShoplistDTO> shopDTOList = findShopService.findAllShop(pageNumber);
+    @GetMapping(value="/shops")
+    public List<ShoplistDTO> findAllShop(@RequestParam(required = false) Integer cursor) {
+        List<ShoplistDTO> shopDTOList = findShopService.findAllShop(cursor);
         return shopDTOList;
     }
 }

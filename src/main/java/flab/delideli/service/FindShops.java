@@ -16,8 +16,8 @@ public class FindShops implements FindShopService{
     private FindShopDao findShopDao;
 
     @Override
-    public List<ShoplistDTO> findAllShop(int pageNumber) {
-        PagingCriteria pagingCriteria = new PagingCriteria(pageNumber);
+    public List<ShoplistDTO> findAllShop(Integer cursor) {
+        PagingCriteria pagingCriteria = new PagingCriteria(cursor);
         return findShopDao.findAllShop(pagingCriteria);
     }
 }

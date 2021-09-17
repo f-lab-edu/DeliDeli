@@ -6,8 +6,12 @@
     <select id="findAllShop" resultMap="findAllShops" parameterType="flab.delideli.paging.PagingCriteria">
         SELECT shop_name, shop_tel, shop_location, delivery_area
         FROM shops
-        ORDER BY shop_id ASC
-        LIMIT #{startPage}, #{perPage}
+        WHERE
+              <if test="cursor != null">
+                    shop_id <![CDATA[<]]> #{cursor}
+              </if>
+        ORDER BY shop_id DESC
+        LIMIT #{perPage}
     </select>
 
     <resultMap id="findAllShops" type="flab.delideli.dto.ShoplistDTO">
