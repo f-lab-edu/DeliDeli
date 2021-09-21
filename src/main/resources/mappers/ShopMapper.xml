@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.ShopDao" >
+
+  <insert id="insertShop">
+    INSERT INTO shops (shop_name, shop_tel, shop_location, shop_info, delivery_area,
+                food_category, notice, operating_time, business_num, owner_id)
+    VALUES (#{shopName}, #{shopTel}, #{shopLocation}, #{shopInfo}, #{deliveryArea},
+            #{foodCategory}, #{notice}, #{operatingTime}, #{businessNum}, #{ownerId})
+  </insert>
+
+  <select id="isExistShop" resultType="boolean">
+    SELECT IF(COUNT(*) > 0, 1, 0) FROM shops
+    WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
+  </select>
+
+  <select id="selectShopByNameAndOwnerId" resultType="flab.delideli.dto.ShopDTO">
+    SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
+           food_category, notice, operating_time, business_num, owner_id
+    FROM shops
+    WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
+  </select>
+
+  <select id="selectShopListByOwnerId" resultType="flab.delideli.dto.ShopDTO">
+    SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
+           food_category, notice, operating_time, business_num, owner_id
+    FROM shops
+    WHERE owner_id = #{ownerId}
+  </select>
+
+</mapper>

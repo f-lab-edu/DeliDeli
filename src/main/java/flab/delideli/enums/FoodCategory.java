@@ -1,0 +1,9 @@
+package flab.delideli.enums;
+
+public enum FoodCategory {
+
+		KOREAN_FOOD, JAPANESE_FOOD, CHINESE_FOOD,
+		ASIAN_FOOD, WESTERN_FOOD,
+		BURGER, PIZZA, CHICKEN, SNACK_BAR, CAFE_DESSERT
+
+}

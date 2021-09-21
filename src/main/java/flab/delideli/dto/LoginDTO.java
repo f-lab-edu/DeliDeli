@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginDTO {
 
-    private String loginid;
+    private String loginId;
     private String loginPassword;
+
 }
