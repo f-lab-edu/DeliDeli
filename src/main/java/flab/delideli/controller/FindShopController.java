@@ -16,13 +16,14 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+
 public class FindShopController{
 
     private FindShopService findShopService;
 
-    @GetMapping(value="/shops")
-    public List<ShoplistDTO> findAllShop(@RequestParam(required = false) Integer cursor) {
-        List<ShoplistDTO> shopDTOList = findShopService.findAllShop(cursor);
+    @GetMapping(value = "/shops")
+    public List<ShoplistDTO> findAllShop(@RequestParam(required = false) Integer lastId) {
+        List<ShoplistDTO> shopDTOList = findShopService.findAllShop(lastId);
         return shopDTOList;
     }
 }

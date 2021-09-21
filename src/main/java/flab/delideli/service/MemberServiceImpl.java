@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public boolean isExistUserInfo(LoginDTO loginDTO){
-        MemberDTO checkMember = memberDao.findbyUserid(loginDTO.getLoginid());
+        MemberDTO checkMember = memberDao.findbyUserid(loginDTO.getLoginId());
         if(checkMember == null)
             throw new IllegalArgumentException("존재하지 않은 회원입니다.");
         else {

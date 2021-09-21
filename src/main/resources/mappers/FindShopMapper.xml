@@ -4,12 +4,11 @@
 <mapper namespace="flab.delideli.dao.FindShopDao" >
 
     <select id="findAllShop" resultMap="findAllShops" parameterType="flab.delideli.paging.PagingCriteria">
-        SELECT shop_name, shop_tel, shop_location, delivery_area
+        SELECT shop_name, shop_tel, shop_location, delivery_area, shop_id
         FROM shops
-        WHERE
-              <if test="cursor != null">
-                    shop_id <![CDATA[<]]> #{cursor}
-              </if>
+        <if test="cursor != null">
+            WHERE shop_id <![CDATA[<]]> #{cursor}
+        </if>
         ORDER BY shop_id DESC
         LIMIT #{perPage}
     </select>
@@ -19,5 +18,6 @@
         <result column="shop_tel" property="shopTel"></result>
         <result column="shop_location" property="shopLocation"></result>
         <result column="delivery_area" property="deliveryArea"></result>
+        <result column="shop_id" property="shopid"></result>
     </resultMap>
 </mapper>

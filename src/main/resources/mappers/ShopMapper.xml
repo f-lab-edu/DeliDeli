@@ -15,14 +15,15 @@
     WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
   </select>
 
-  <select id="selectMyShop" resultType="flab.delideli.dto.ShopDTO">
+
+  <select id="selectShopByNameAndOwnerId" resultType="flab.delideli.dto.ShopDTO">
     SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
            food_category, notice, operating_time, business_num, owner_id
     FROM shops
     WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
   </select>
 
-  <select id="selectMyShopList" resultType="flab.delideli.dto.ShopDTO">
+  <select id="selectShopListByOwnerId" resultType="flab.delideli.dto.ShopDTO">
     SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
            food_category, notice, operating_time, business_num, owner_id
     FROM shops

@@ -17,4 +17,6 @@ public class ShoplistDTO {
     private String shopLocation;
     @NotBlank
     private String deliveryArea;
+    @NotBlank
+    private int shopid;
 }

@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class PagingCriteria {
 
-    private Integer cursor;
-    private static int perPage = 10;
+    private final Integer cursor;
+    private static final int perPage = 10;
 
     public PagingCriteria(Integer cursor) {
         this.cursor = cursor;

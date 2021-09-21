@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 @AllArgsConstructor
 public class UpdateMemberController {
 
-
     private MemberService memberService;
 
     private static final ResponseEntity OK_RESPONSE_ENTITY = new ResponseEntity(HttpStatus.OK);
@@ -33,4 +32,5 @@ public class UpdateMemberController {
         session.invalidate();
         return OK_RESPONSE_ENTITY;
     }
+
 }
