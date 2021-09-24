@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = {"가게 컨트롤러 API"})
 @AllArgsConstructor
-@RequestMapping("/shops")
+@RequestMapping("/owners/shops")
 public class ShopController {
 
 	private ShopService shopService;
@@ -37,12 +37,20 @@ public class ShopController {
 		shopService.addShop(shopDTO);
 	}
 
-	@GetMapping(value = "/{ownerId}")
+	@GetMapping
 	@ApiOperation(value = "가게 이름과 사장님 ID로 가게 조회")
 	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
 	public ShopDTO getShop(
-		@RequestParam(value = "name", required = false,defaultValue = "shop") String shopName,
-		@PathVariable(value = "owner") String ownerId) {
+			@RequestParam(value = "name", required = false, defaultValue = "shop") String shopName,
+			@RequestParam(value = "owner", required = false, defaultValue = "owner") String ownerId) {
 		return shopService.getShop(shopName, ownerId);
+	}
+
+	@GetMapping(value = "/{ownerId}")
+	@ApiOperation(value = "사장님 ID로 가게 리스트 조회")
+	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
+	public List<ShopDTO> getShopList(
+			@PathVariable("ownerId") String ownerId) {
+		return shopService.getShopList(ownerId);
 	}
 }
