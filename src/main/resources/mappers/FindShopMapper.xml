@@ -20,4 +20,17 @@
         <result column="delivery_area" property="deliveryArea"></result>
         <result column="shop_id" property="shopid"></result>
     </resultMap>
+    
+    <select id="findShopName" resultMap = "findAllShops">
+        SELECT shop_name, shop_tel, shop_location, delivery_area, shop_id
+        FROM shops
+        WHERE shop_name LIKE CONCAT('%',#{shopname},'%')
+    </select>
+
+    <select id="getShop" resultType="flab.delideli.dto.ShopDTO">
+        SELECT *
+        FROM shops
+        WHERE shop_id = #{shop_id}
+    </select>
+
 </mapper>
