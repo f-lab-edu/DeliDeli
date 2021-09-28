@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.FindShopDao" >
+
+    <select id="findAllShop" resultMap="findAllShops" parameterType="flab.delideli.paging.PagingCriteria">
+        SELECT shop_name, shop_tel, shop_location, delivery_area, shop_id
+        FROM shops
+        <if test="cursor != null">
+            WHERE shop_id <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY shop_id DESC
+        LIMIT #{perPage}
+    </select>
+
+    <resultMap id="findAllShops" type="flab.delideli.dto.ShoplistDTO">
+        <result column="shop_name" property="shopName"></result>
+        <result column="shop_tel" property="shopTel"></result>
+        <result column="shop_location" property="shopLocation"></result>
+        <result column="delivery_area" property="deliveryArea"></result>
+        <result column="shop_id" property="shopid"></result>
+    </resultMap>
+</mapper>

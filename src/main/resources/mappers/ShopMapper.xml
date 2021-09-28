@@ -15,6 +15,7 @@
     WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
   </select>
 
+
   <select id="selectShopByNameAndOwnerId" resultType="flab.delideli.dto.ShopDTO">
     SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
            food_category, notice, operating_time, business_num, owner_id

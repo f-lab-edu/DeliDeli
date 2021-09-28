@@ -56,7 +56,7 @@ public class MemberController {
         boolean result = memberService.isExistUserInfo(loginDTO);
 
         if(result) {
-            session.setAttribute(USER_ID, loginDTO.getLoginid());
+            session.setAttribute(USER_ID, loginDTO.getLoginId());
             return okResponseEntity;
         }
         else
