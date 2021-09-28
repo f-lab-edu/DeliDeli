@@ -8,4 +8,10 @@ public interface MemberService {
 
     boolean isExistUserId(String userId);
 
+    void setOwnerLoginApproval(String ownerId);
+
+    void setOwnerDocsSubmitted(String ownerId);
+
+    void setOwnerDocsApproved(String ownerId);
+
 }

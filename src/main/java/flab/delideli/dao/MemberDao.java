@@ -13,9 +13,18 @@ public interface MemberDao {
 
     boolean isExistUserInfo(String loginId, String loginPassword);
 
-    UserLevel selectUserLevel(String loginId);
+    boolean isDocsSubmitted(String loginId);
+
+    boolean isDocsApproved(String loginId);
 
     MemberDTO findByUserId(String loginId);
 
-    void clearData(MemberDTO memberDTO);
+    UserLevel selectUserLevel(String loginId);
+
+    void updateOwnerLoginApproval(String ownerId);
+
+    void updateOwnerDocsSubmitted(String ownerId);
+
+    void updateOwnerDocsApproved(String ownerId);
+
 }

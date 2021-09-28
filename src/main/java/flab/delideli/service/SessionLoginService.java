@@ -28,6 +28,19 @@ public class SessionLoginService implements LoginService {
 		String loginId = loginDTO.getLoginId();
 		UserLevel userLevel = memberDao.selectUserLevel(loginId);
 
+		if(userLevel.name().equals("OWNER_LEVEL")) {
+
+			boolean isDocsSubmitted = memberDao.isDocsSubmitted(loginId);
+			boolean isDocsApproved = memberDao.isDocsApproved(loginId);
+
+			if (!isDocsSubmitted) {
+				throw new UnauthorizedException("서류 제출이 완료되지 않았습니다.");
+			} else if (!isDocsApproved) {
+				throw new UnauthorizedException("관리자의 승인을 기다려야 합니다.");
+			}
+
+		}
+
 		session.setAttribute(USER_ID, loginId);
 		session.setAttribute(USER_LEVEL, userLevel);
 
