@@ -6,6 +6,7 @@ import flab.delideli.exception.AlreadyAddedShopException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import springfox.documentation.annotations.Cacheable;
 
 @Service
 @RequiredArgsConstructor

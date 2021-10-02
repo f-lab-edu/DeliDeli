@@ -4,17 +4,13 @@ import flab.delideli.dto.ShopDTO;
 import flab.delideli.dto.ShoplistDTO;
 import flab.delideli.service.FindShopService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-
-public class FindShopController{
+public class FindShopController {
 
     private FindShopService findShopService;
 
@@ -31,7 +27,7 @@ public class FindShopController{
 
     @GetMapping(value = "/shops/{shopId}")
     public ShopDTO getShop(@PathVariable int shopId) {
-        ShopDTO shopDTO= findShopService.getShop(shopId);
+        ShopDTO shopDTO = findShopService.getShop(shopId);
         return shopDTO;
     }
 }
