@@ -4,21 +4,13 @@
 <mapper namespace="flab.delideli.dao.MemberDao" >
 
     <insert id="joinMember" >
-        <choose>
-            <when test='userLevel == "OWNER_LEVEL"'>
-                INSERT INTO members (user_id, user_password, user_name, user_phone,
-                                     user_address, user_level, login_approval)
-                VALUES (#{userId}, #{userPassword}, #{userName}, #{userPhone},
-                       #{userAddress}, #{userLevel}, '0');
-                INSERT INTO owners_docs (owner_id) VALUE (#{userId})
-            </when>
-            <otherwise>
-                INSERT INTO members (user_id, user_password, user_name, user_phone,
-                                     user_address, user_level, login_approval)
-                VALUES (#{userId}, #{userPassword}, #{userName}, #{userPhone},
-                       #{userAddress}, #{userLevel}, '1');
-            </otherwise>
-        </choose>
+        INSERT INTO members (user_id, user_password, user_name, user_phone,
+                             user_address, user_level)
+        VALUES (#{userId}, #{userPassword}, #{userName}, #{userPhone},
+                #{userAddress}, #{userLevel});
+        <if test='userLevel == "OWNER_LEVEL"'>
+            INSERT INTO owners_docs (owner_id) VALUE (#{userId})
+        </if>
     </insert>
 
     <select id="isExistUserId" resultType = "boolean">
@@ -32,12 +24,12 @@
     </select>
 
     <select id="isDocsSubmitted" resultType = "boolean">
-        SELECT IF(docs_submitted = 1, 1, 0) FROM owners_docs
+        SELECT IF(docs_submission = 1, 1, 0) FROM owners_docs
         WHERE owner_id = #{loginId}
     </select>
 
-    <select id="isDocsApproved" resultType = "boolean">
-        SELECT IF(docs_approved = 1, 1, 0) FROM owners_docs
+    <select id="isLoginApproved" resultType = "boolean">
+        SELECT IF(login_approval = 1, 1, 0) FROM owners_docs
         WHERE owner_id = #{loginId}
     </select>
 
@@ -52,23 +44,16 @@
         FROM members
         WHERE user_id = #{loginId}
     </select>
-
-    <update id="updateOwnerLoginApproval">
-        UPDATE members
-        SET login_approval =
-            (SELECT docs_approved FROM owners_docs WHERE owner_id = #{ownerId})
-        WHERE user_id = #{ownerId}
-    </update>
     
-    <update id="updateOwnerDocsSubmitted">
+    <update id="updateOwnerDocsSubmission">
         UPDATE owners_docs
-        SET docs_submitted = '1'
+        SET docs_submission = '1'
         WHERE owner_id = #{ownerId}
     </update>
 
-    <update id="updateOwnerDocsApproved">
+    <update id="updateOwnerLoginApproval">
         UPDATE owners_docs
-        SET docs_approved = '1'
+        SET login_approval = '1'
         WHERE owner_id = #{ownerId}
     </update>
 

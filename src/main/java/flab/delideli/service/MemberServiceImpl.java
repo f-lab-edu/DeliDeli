@@ -34,19 +34,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void setOwnerDocsSubmission(String ownerId) {
+        memberDao.updateOwnerDocsSubmission(ownerId);
+    }
+
+    @Override
     public void setOwnerLoginApproval(String ownerId) {
         memberDao.updateOwnerLoginApproval(ownerId);
     }
-
-    @Override
-    public void setOwnerDocsSubmitted(String ownerId) {
-        memberDao.updateOwnerDocsSubmitted(ownerId);
-    }
-
-    @Override
-    public void setOwnerDocsApproved(String ownerId) {
-        memberDao.updateOwnerDocsApproved(ownerId);
-    }
-
 
 }

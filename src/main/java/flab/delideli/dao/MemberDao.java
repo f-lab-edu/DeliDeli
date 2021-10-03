@@ -21,10 +21,8 @@ public interface MemberDao {
 
     UserLevel selectUserLevel(String loginId);
 
+    void updateOwnerDocsSubmission(String ownerId);
+
     void updateOwnerLoginApproval(String ownerId);
-
-    void updateOwnerDocsSubmitted(String ownerId);
-
-    void updateOwnerDocsApproved(String ownerId);
 
 }
