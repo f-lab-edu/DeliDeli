@@ -25,12 +25,12 @@ public class FindShopController{
     }
 
     @PostMapping(value = "/shops/search")
-    public List<ShoplistDTO> findbyShopName(@RequestParam(value = "shopname", required = false) String shopName, @RequestParam(required = false) Integer lastId) {
+    public List<ShoplistDTO> findbyShopName(@RequestParam(value = "shopname", required = false) String shopName, @RequestParam(value = "lastId", required = false) Integer lastId) {
         return findShopService.findbyShopName(shopName, lastId);
     }
 
     @GetMapping(value = "/shops/{shopId}")
-    public ShopDTO getShop(@PathVariable int shopId) {
+    public ShopDTO getShop (@PathVariable int shopId) {
         ShopDTO shopDTO= findShopService.getShop(shopId);
         return shopDTO;
     }
