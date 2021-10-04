@@ -16,20 +16,4 @@ public class MenuService {
 		menuDao.insertMenu(menuDTO);
 	}
 
-	public void updateMenu(Long menuId) {
-		menuDao.updateMenu(menuId);
-	}
-
-	public void deleteMenu(Long menuId) {
-		menuDao.deleteMenu(menuId);
-	}
-
-	public MenuDTO getMenu(Long menuId) {
-		return menuDao.selectMenu(menuId);
-	}
-
-	public List<MenuDTO> getMenusOfShop(Long shopId) {
-		return menuDao.selectMenusOfShop(shopId);
-	}
-
 }

@@ -37,34 +37,4 @@ public class MenuController {
 		menuService.addMenu(menuDTO);
 	}
 
-	@PutMapping
-	@ApiOperation(value = "메뉴 수정")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public void updateMenu(@RequestParam(
-		value = "menuId", required = false, defaultValue = "menu") Long menuId) {
-		menuService.updateMenu(menuId);
-	}
-
-	@DeleteMapping
-	@ApiOperation(value = "메뉴 삭제")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public void deleteMenu(@RequestParam(
-		value = "menuId", required = false, defaultValue = "menu") Long menuId) {
-		menuService.deleteMenu(menuId);
-	}
-
-	@GetMapping
-	@ApiOperation(value = "메뉴 조회")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public MenuDTO getMenu(@RequestParam(
-		value = "menuId", required = false, defaultValue = "menu") Long menuId) {
-		return menuService.getMenu(menuId);}
-
-	@GetMapping("/{shopId}")
-	@ApiOperation(value = "가게의 메뉴 목록 조회")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public List<MenuDTO> getMenusOfShop(
-		@PathVariable("shopId") Long shopId) {
-		return menuService.getMenusOfShop(shopId);}
-
 }

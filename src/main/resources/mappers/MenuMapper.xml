@@ -5,27 +5,9 @@
 
   <insert id="insertMenu">
     INSERT INTO menus (menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category)
-    VALUES (#{menuName}, #{menuPrice}, #{shopId}, #{menuStock}, #{menuInfo}, #{menuCategory})
+    VALUES (#{menuName}, #{menuPrice},
+            (SELECT shop_id FROM shops WHERE shop_name = #{shopName} AND owner_id = #{ownerId}),
+            #{menuStock}, #{menuInfo}, #{menuCategory})
   </insert>
-  
-  <update id="updateMenu">
-    UPDATE menus
-    SET menu_price = #{menuPrice}, menu_stock = #{menuStock}, menu_info = #{menuInfo}
-    WHERE menu_id = #{menuId}
-  </update>
-
-  <delete id="deleteMenu">
-    DELETE FROM menus WHERE menu_id = #{menuId}
-  </delete>
-
-  <select id="selectMenu" resultType="flab.delideli.dto.MenuDTO">
-    SELECT menu_id, menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category
-    FROM menus WHERE menu_id = #{menuId}
-  </select>
-
-  <select id="selectMenusOfShop" resultMap="selectMenusMap">
-    SELECT menu_id, menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category
-    FROM menus WHERE shop_id = #{shopId}
-  </select>
 
 </mapper>
