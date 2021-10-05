@@ -7,4 +7,6 @@ public interface MenuDao {
 
 	void insertMenu(MenuDTO menuDTO);
 
+	boolean isExistMenu(String menuName, Long shopId);
+
 }

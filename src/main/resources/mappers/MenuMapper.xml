@@ -5,9 +5,12 @@
 
   <insert id="insertMenu">
     INSERT INTO menus (menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category)
-    VALUES (#{menuName}, #{menuPrice},
-            (SELECT shop_id FROM shops WHERE shop_name = #{shopName} AND owner_id = #{ownerId}),
-            #{menuStock}, #{menuInfo}, #{menuCategory})
+    VALUES (#{menuName}, #{menuPrice}, #{shopId}, #{menuStock}, #{menuInfo}, #{menuCategory})
   </insert>
+
+  <select id="isExistMenu" resultType="boolean">
+    SELECT IF(COUNT(*) > 0, 1, 0) FROM menus
+    WHERE menu_name = #{menuName} AND shop_id = #{shopId}
+  </select>
 
 </mapper>

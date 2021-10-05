@@ -28,7 +28,7 @@ public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodAr
 		String currentUser = loginService.getSessionUserId();
 
 		return currentUser;
-		
+
 	}
 
 }
