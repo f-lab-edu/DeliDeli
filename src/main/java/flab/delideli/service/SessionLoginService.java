@@ -12,7 +12,12 @@ public class SessionLoginService implements LoginService {
     private static final String USER_LEVEL = "USER_LEVEL";
 
     public String getSessionUserId() {
+
+        if(session.getAttribute(USER_ID) == null) {
+            throw new UnauthorizedException("로그인 후 이용 가능합니다.");
+        }
         return session.getAttribute(USER_ID).toString();
+
     }
 
     public String getSessionUserLevel() {
