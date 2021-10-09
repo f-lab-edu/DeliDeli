@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.io.Serializable;
 
 @Getter
-public class PagingCriteria implements Serializable {
+public class PagingCriteria {
 
     private final Integer cursor;
     private static final int perPage = 10;

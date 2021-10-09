@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class FindShops implements FindShopService{
+public class FindShops implements FindShopService {
 
     private FindShopDao findShopDao;
 

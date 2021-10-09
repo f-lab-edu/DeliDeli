@@ -30,7 +30,7 @@ public class FindShopController{
     }
 
     @GetMapping(value = "/shops/{shopId}")
-    public ShopDTO getShop (@PathVariable int shopId) {
+    public ShopDTO getShop(@PathVariable int shopId) {
         ShopDTO shopDTO= findShopService.getShop(shopId);
         return shopDTO;
     }
