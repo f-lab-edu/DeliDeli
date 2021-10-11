@@ -18,6 +18,6 @@
         <result column="shop_tel" property="shopTel"></result>
         <result column="shop_location" property="shopLocation"></result>
         <result column="delivery_area" property="deliveryArea"></result>
-        <result column="shop_id" property="shopid"></result>
+        <result column="shop_id" property="shopId"></result>
     </resultMap>
 </mapper>

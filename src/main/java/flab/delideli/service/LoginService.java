@@ -1,11 +1,15 @@
 package flab.delideli.service;
 
-import javax.servlet.http.HttpServletRequest;
+import flab.delideli.dto.LoginDTO;
 
 public interface LoginService {
 
-	String getSessionUserId(HttpServletRequest request);
+	void login(LoginDTO loginId);
 
-	String getSessionUserLevel(HttpServletRequest request);
+	void logout();
+
+	String getSessionUserId();
+
+	String getSessionUserLevel();
 
 }

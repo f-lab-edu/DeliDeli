@@ -1,7 +1,8 @@
 package flab.delideli.exception;
 
-import flab.delideli.exception.AlreadyAddedShopException;
-import org.springframework.http.HttpStatus;
+import static flab.delideli.util.ResponseEntityCode.CONFLICT_RESPONSE_ENTITY;
+import static flab.delideli.util.ResponseEntityCode.UNAUTHORIZED_RESPONSE_ENTITY;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,12 +12,23 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(AlreadyAddedShopException.class)
     public ResponseEntity<Void> AlreadyAddedShopExceptionAdvice() {
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return CONFLICT_RESPONSE_ENTITY;
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity unauthorizedExceptionAdvice(UnauthorizedException e) {
-        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<Void> unauthorizedExceptionAdvice() {
+        return UNAUTHORIZED_RESPONSE_ENTITY;
     }
+
+    @ExceptionHandler(DuplicatedIdException.class)
+    public ResponseEntity<Void> DuplicatedIdExceptionAdvice() {
+        return CONFLICT_RESPONSE_ENTITY;
+    }
+
+    @ExceptionHandler(WrongLoginInfoException.class)
+    public ResponseEntity<Void> WrongLoginInfoExceptionAdvice() {
+        return UNAUTHORIZED_RESPONSE_ENTITY;
+    }
+
 }
 
