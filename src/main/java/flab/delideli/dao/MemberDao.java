@@ -1,21 +1,35 @@
 package flab.delideli.dao;
 
-import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
+import flab.delideli.enums.UserLevel;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MemberDao {
 
-    public void joinMember(MemberDTO member);
+    void joinMember(MemberDTO member);
 
-    public boolean isExistUserId(String userid);
+    boolean isExistUserId(String userId);
 
-    public MemberDTO findbyUserid(String loginid);
+    boolean isExistUserInfo(String loginId, String loginPassword);
 
-    public void updateUser(@Param("userid") String userid, @Param("updateDTO") UpdateDTO updateDTO);
+    boolean isDocsSubmitted(String loginId);
 
-    public void deleteUser(String userid);
+    boolean isDocsApproved(String loginId);
+
+    MemberDTO findByUserId(String loginId);
+
+    UserLevel selectUserLevel(String loginId);
+
+    void updateOwnerDocsSubmission(String ownerId);
+
+    void updateOwnerLoginApproval(String ownerId);
+
+    void updateUser(@Param("userId") String userId, @Param("updateDTO") UpdateDTO updateDTO);
+
+    void deleteUser(String userId);
+
 }

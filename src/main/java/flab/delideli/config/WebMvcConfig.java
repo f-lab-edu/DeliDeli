@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @AllArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private static final String[] EXCLUDE_PATHS= {"/users", "/login", "/logout", "/{userid}/duplicated", "/shops"};
-
+    private static final String[] EXCLUDE_PATHS= {"/users", "/login", "/logout", "/{userId}/duplicate", "/shops", "/shops/search", "/shops/{shopId}"};
+    
     private final LoginInterceptor loginInterceptor;
     private final CurrentUserHandlerMethodArgumentResolver currentUserHandlerMethodArgumentResolver;
 
