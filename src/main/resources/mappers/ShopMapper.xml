@@ -30,4 +30,9 @@
     WHERE owner_id = #{ownerId}
   </select>
 
+  <select id="isCurrentUserMatchingOwnerId" resultType="boolean">
+    SELECT IF(COUNT(*) > 0, 1, 0) FROM shops
+    WHERE owner_id = #{ownerId} AND shop_id = #{id}
+  </select>
+
 </mapper>

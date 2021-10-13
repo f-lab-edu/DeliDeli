@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ExceptionHandler(AlreadyAddedShopException.class)
-    public ResponseEntity<Void> AlreadyAddedShopExceptionAdvice() {
+    @ExceptionHandler(AlreadyAddedValueException.class)
+    public ResponseEntity<Void> AlreadyAddedValueExceptionAdvice() {
         return CONFLICT_RESPONSE_ENTITY;
     }
 
@@ -31,4 +31,3 @@ public class ExceptionAdvice {
     }
 
 }
-
