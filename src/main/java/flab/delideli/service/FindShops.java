@@ -17,7 +17,7 @@ public class FindShops implements FindShopService{
     private FindShopDao findShopDao;
 
     @Override
-    @Cacheable(value ="findAllshop", key = "#cursor", unless = "#cursor == null")
+    @Cacheable(value ="findAllshop", key = "#cursor", unless="#cursor == null")
     public List<ShoplistDTO> findAllShop(Integer cursor) {
         PagingCriteria pagingCriteria = new PagingCriteria(cursor);
         return findShopDao.findAllShop(pagingCriteria);

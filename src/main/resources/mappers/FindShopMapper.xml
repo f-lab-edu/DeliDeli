@@ -24,7 +24,10 @@
     <select id="findShopName" resultMap = "findAllShops">
         SELECT shop_name, shop_tel, shop_location, delivery_area, shop_id
         FROM shops
-        WHERE shop_name LIKE CONCAT('%',#{shopname},'%')
+        WHERE shop_name LIKE CONCAT(#{shopname},'%')
+        <if test="pagingCriteria.cursor != null">
+            AND shop_id <![CDATA[<]]> #{pagingCriteria.cursor}
+        </if>
     </select>
 
     <select id="getShop" resultType="flab.delideli.dto.ShopDTO">
