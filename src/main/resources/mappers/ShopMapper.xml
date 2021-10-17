@@ -15,15 +15,14 @@
     WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
   </select>
 
-
-  <select id="selectShopByNameAndOwnerId" resultType="flab.delideli.dto.ShopDTO">
+  <select id="selectShopByShopNameAndOwnerId" resultMap="selectShop">
     SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
            food_category, notice, operating_time, business_num, owner_id
     FROM shops
     WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
   </select>
 
-  <select id="selectShopListByOwnerId" resultType="flab.delideli.dto.ShopDTO">
+  <select id="selectShopListByOwnerId" resultMap="selectShop">
     SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
            food_category, notice, operating_time, business_num, owner_id
     FROM shops
@@ -34,5 +33,18 @@
     SELECT IF(COUNT(*) > 0, 1, 0) FROM shops
     WHERE owner_id = #{ownerId} AND shop_id = #{id}
   </select>
+
+  <resultMap id="selectShop" type="flab.delideli.dto.ShopDTO">
+    <result column="shop_name" property="shopName"/>
+    <result column="shop_tel" property="shopTel"/>
+    <result column="shop_location" property="shopLocation"/>
+    <result column="shop_info" property="shopInfo"/>
+    <result column="delivery_area" property="deliveryArea"/>
+    <result column="food_category" property="foodCategory"/>
+    <result column="notice" property="notice"/>
+    <result column="operating_time" property="operatingTime"/>
+    <result column="business_num" property="businessNum"/>
+    <result column="owner_id" property="ownerId"/>
+  </resultMap>
 
 </mapper>

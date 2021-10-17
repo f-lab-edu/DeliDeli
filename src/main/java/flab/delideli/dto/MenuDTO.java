@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenuDTO {
 
-	@NotNull
-	private Long menuId;
 	@NotBlank
 	private String menuName;
 	@NotNull
@@ -28,9 +26,8 @@ public class MenuDTO {
 	private FoodCategory menuCategory;
 
 	@Builder
-	public MenuDTO(Long menuId, String menuName, Long menuPrice, Long shopId,
+	public MenuDTO(String menuName, Long menuPrice, Long shopId,
 		MenuStock menuStock, String menuInfo, FoodCategory menuCategory) {
-		this.menuId = menuId;
 		this.menuName = menuName;
 		this.menuPrice = menuPrice;
 		this.shopId = shopId;

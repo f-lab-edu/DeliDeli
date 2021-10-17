@@ -30,11 +30,11 @@ public class ShopService {
 		return shopDao.isExistShop(shopName, ownerId);
 	}
 
-	public ShopDTO getShop(String shopName, String ownerId) {
+	public ShopDTO getShopByNameAndOwnerId(String shopName, String ownerId) {
 		return shopDao.selectShopByNameAndOwnerId(shopName, ownerId);
 	}
 
-	public List<ShopDTO> getShopList(String ownerId) {
+	public List<ShopDTO> getShopListByOwnerId(String ownerId) {
 		return shopDao.selectShopListByOwnerId(ownerId);
 	}
 

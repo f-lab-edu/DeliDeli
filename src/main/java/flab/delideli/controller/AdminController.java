@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(tags = {"관리자의 사장님 계정 관리 컨트롤러 API"})
+@Api(tags = {"관리자의 관리 컨트롤러 API"})
 @AllArgsConstructor
-@RequestMapping("/admins/owners")
+@RequestMapping("/admins")
 public class AdminController {
 
 	private final MemberService memberService;
 
-	@PutMapping(value = "/{ownerId}/submission")
+	@PutMapping(value = "/owners/{ownerId}/submission")
 	@ApiOperation(value = "사장님 서류 제출 시 제출 완료로 업데이트")
 	@LoginUserLevel(role = UserLevel.ADMIN_LEVEL)
 	public void setOwnerDocsSubmission(
@@ -27,7 +27,7 @@ public class AdminController {
 		memberService.setOwnerDocsSubmission(ownerId);
 	}
 
-	@PutMapping(value = "/{ownerId}/approval")
+	@PutMapping(value = "/owners/{ownerId}/approval")
 	@ApiOperation(value = "사장님 서류 통과 시 로그인 승인으로 업데이트")
 	@LoginUserLevel(role = UserLevel.ADMIN_LEVEL)
 	public void setOwnerLoginApproval(
