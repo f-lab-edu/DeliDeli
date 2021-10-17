@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="flab.delideli.dao.MemberDao" >
 
     <insert id="joinMember" >
@@ -8,19 +8,20 @@
                              user_address, user_level)
         VALUES (#{userId}, #{userPassword}, #{userName}, #{userPhone},
                 #{userAddress}, #{userLevel});
-        <if test='userLevel == "OWNER_LEVEL"'>
-            INSERT INTO owners_docs (owner_id) VALUE (#{userId})
-        </if>
+    </insert>
+
+    <insert id="insertOwnerId">
+        INSERT INTO owners_docs (owner_id) VALUE (#{userId})
     </insert>
 
     <select id="isExistUserId" resultType = "boolean">
-       SELECT EXISTS (SELECT 1 FROM members WHERE user_id = #{userId})
+        SELECT EXISTS (SELECT 1 FROM members WHERE user_id = #{userId})
     </select>
 
     <select id="isExistUserInfo" resultType = "boolean">
         SELECT IF(COUNT(*) = 1, 1, 0) FROM members
         WHERE user_id = #{loginId} AND
-              user_password = #{loginPassword}
+            user_password = #{loginPassword}
     </select>
 
     <select id="isDocsSubmitted" resultType = "boolean">
@@ -49,7 +50,7 @@
         UPDATE members
         <set>
             <if test="updateDTO.userName != null and updateDTO.userName != ''">
-                members.userName = #{updateDTO.userName},
+                members.user_name = #{updateDTO.userName},
             </if>
             <if test="updateDTO.phone != null and updateDTO.phone != ''">
                 members.user_phone = #{updateDTO.phone},
@@ -60,7 +61,7 @@
         </set>
         WHERE user_id = #{userId}
     </update>
-    
+
     <update id="updateOwnerDocsSubmission">
         UPDATE owners_docs
         SET docs_submission = '1'

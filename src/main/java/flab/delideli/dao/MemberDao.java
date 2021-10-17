@@ -14,11 +14,13 @@ public interface MemberDao {
 
     boolean isExistUserId(String userId);
 
-    boolean isExistUserInfo(String loginId, String loginPassword);
+    boolean isExistUserInfo(@Param("loginId") String loginId, @Param("loginPassword") String loginPassword);
+
+    void insertOwnerId(String userId);
 
     boolean isDocsSubmitted(String loginId);
 
-    boolean isDocsApproved(String loginId);
+    boolean isLoginApproved(String loginId);
 
     MemberDTO findByUserId(String loginId);
 

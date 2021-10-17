@@ -3,7 +3,8 @@ package flab.delideli.service;
 import flab.delideli.dao.MemberDao;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
-import flab.delideli.encrypt.Encryption;
+import flab.delideli.encrypt.EncryptSha256;
+import flab.delideli.enums.UserLevel;
 import flab.delideli.exception.DuplicatedIdException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,12 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDao memberDao;
-    private final Encryption encryptPassword;
+    private final EncryptSha256 encryptPassword;
 
     @Override
     public void joinMember(MemberDTO member) {
 
-        if(isExistUserId(member.getUserId())) {
+        if(memberDao.isExistUserId(member.getUserId())) {
             throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
         }
 
@@ -27,11 +28,17 @@ public class MemberServiceImpl implements MemberService {
 
         memberDao.joinMember(encodeMember);
 
+        if(member.getUserLevel() == UserLevel.OWNER_LEVEL) {
+            memberDao.insertOwnerId(member.getUserId());
+        }
+
     }
 
     @Override
-    public boolean isExistUserId(String userId) {
-        return memberDao.isExistUserId(userId);
+    public void duplicatedId(String userId) {
+        if(memberDao.isExistUserId(userId)) {
+            throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
+        }
     }
 
     @Override
