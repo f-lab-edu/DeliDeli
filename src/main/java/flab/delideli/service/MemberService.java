@@ -7,6 +7,8 @@ public interface MemberService {
 
     void joinMember(MemberDTO member);
 
+    boolean isExistUserId(String userId);
+
     void duplicatedId(String userId);
 
     void setOwnerDocsSubmission(String ownerId);

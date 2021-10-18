@@ -35,8 +35,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean isExistUserId(String userId) {
+        return memberDao.isExistUserId(userId);
+    }
+
+    @Override
     public void duplicatedId(String userId) {
-        if(memberDao.isExistUserId(userId)) {
+        if(isExistUserId(userId)) {
             throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
         }
     }
