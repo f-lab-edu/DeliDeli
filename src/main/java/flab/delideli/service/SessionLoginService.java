@@ -2,7 +2,7 @@ package flab.delideli.service;
 
 import flab.delideli.dao.MemberDao;
 import flab.delideli.dto.LoginDTO;
-import flab.delideli.encrypt.Encryption;
+import flab.delideli.encrypt.Encrypt;
 import flab.delideli.enums.UserLevel;
 import flab.delideli.exception.UnauthorizedException;
 import flab.delideli.exception.WrongLoginInfoException;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class SessionLoginService implements LoginService {
 
 	private final HttpSession session;
-	private final Encryption encryption;
+	private final Encrypt encryption;
 	private final MemberDao memberDao;
 
 	private static final String USER_ID = "USER_ID";
@@ -32,11 +32,11 @@ public class SessionLoginService implements LoginService {
 		if(userLevel.name().equals("OWNER_LEVEL")) {
 
 			boolean isDocsSubmitted = memberDao.isDocsSubmitted(loginId);
-			boolean isDocsApproved = memberDao.isDocsApproved(loginId);
+			boolean isLoginApproved = memberDao.isLoginApproved(loginId);
 
 			if (!isDocsSubmitted) {
 				throw new UnauthorizedException("서류 제출이 완료되지 않았습니다.");
-			} else if (!isDocsApproved) {
+			} else if (!isLoginApproved) {
 				throw new UnauthorizedException("관리자의 승인을 기다려야 합니다.");
 			}
 
