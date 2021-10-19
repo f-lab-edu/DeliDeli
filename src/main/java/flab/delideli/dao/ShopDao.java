@@ -18,4 +18,7 @@ public interface ShopDao {
 
 	List<ShopDTO> selectShopListByOwnerId(String ownerId);
 
+	boolean isCurrentUserMatchingOwnerId(@Param("shopId") Long shopId,
+		@Param("ownerId") String ownerId);
+
 }

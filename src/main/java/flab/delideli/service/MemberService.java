@@ -1,18 +1,22 @@
 package flab.delideli.service;
 
-import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
 
 public interface MemberService {
 
-    public void joinMember(MemberDTO member);
+    void joinMember(MemberDTO member);
 
-    public boolean isExistUserId(String userid);
+    boolean isExistUserId(String userId);
 
-    public boolean isExistUserInfo(LoginDTO loginDTO);
+    void duplicatedId(String userId);
 
-    public void updateUserInfo(String userid, UpdateDTO updateDTO);
+    void setOwnerDocsSubmission(String ownerId);
 
-    public void deleteUserInfo(String userid);
+    void setOwnerLoginApproval(String ownerId);
+
+    void updateUserInfo(String userid, UpdateDTO updateDTO);
+
+    void deleteUserInfo(String userid);
+
 }

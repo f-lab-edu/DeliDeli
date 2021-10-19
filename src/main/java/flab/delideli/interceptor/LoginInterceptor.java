@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String currentUserId = sessionLoginService.getSessionUserId(request);
+        String currentUserId = sessionLoginService.getSessionUserId();
         if (currentUserId != null) {
             return true;
         }
@@ -36,7 +36,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         LoginUserLevel loginUserLevel = handlerMethod.getMethodAnnotation(LoginUserLevel.class);
         String role = loginUserLevel.role().name();
-        String userLevel = sessionLoginService.getSessionUserLevel(request);
+        String userLevel = sessionLoginService.getSessionUserLevel();
 
         if (loginUserLevel == null ||
             (loginUserLevel != null && role.equals(userLevel))) {

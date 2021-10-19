@@ -11,7 +11,6 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +42,7 @@ public class ShopController {
 	public ShopDTO getShop(
 			@RequestParam(value = "name", required = false, defaultValue = "shop") String shopName,
 			@RequestParam(value = "owner", required = false, defaultValue = "owner") String ownerId) {
-		return shopService.getShop(shopName, ownerId);
+		return shopService.getShopByNameAndOwnerId(shopName, ownerId);
 	}
 
 	@GetMapping(value = "/{ownerId}")
@@ -51,6 +50,7 @@ public class ShopController {
 	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
 	public List<ShopDTO> getShopList(
 			@PathVariable("ownerId") String ownerId) {
-		return shopService.getShopList(ownerId);
+		return shopService.getShopListByOwnerId(ownerId);
 	}
+
 }

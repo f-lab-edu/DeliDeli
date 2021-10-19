@@ -22,5 +22,5 @@ public class ShoplistDTO {
     @NotBlank
     private String deliveryArea;
     @NotBlank
-    private int shopid;
+    private int shopId;
 }

@@ -1,59 +1,69 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.MemberDao;
-import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
-import flab.delideli.encrypt.Encryption;
+import flab.delideli.encrypt.EncryptSha256;
+import flab.delideli.enums.UserLevel;
+import flab.delideli.exception.DuplicatedIdException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 
 @Service
 @AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDao memberDao;
-    private final Encryption encryptPassword;
+    private final EncryptSha256 encryptPassword;
 
     @Override
     public void joinMember(MemberDTO member) {
-        if(this.isExistUserId(member.getUserid()))
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
-        MemberDTO encodemember = new MemberDTO(member.getUserid(), encryptPassword.encrypt(member.getPassword()), member.getUsername(), member.getPhone(), member.getAddress());
-        memberDao.joinMember(encodemember);
-    }
 
-    @Override
-    public boolean isExistUserId(String userid) {
-        return memberDao.isExistUserId(userid);
-    }
-
-    public boolean isExistUserInfo(LoginDTO loginDTO){
-        MemberDTO checkMember = memberDao.findbyUserid(loginDTO.getLoginId());
-        if(checkMember == null)
-            throw new IllegalArgumentException("존재하지 않은 회원입니다.");
-        else {
-            if(isEqualPassword(checkMember.getPassword(), loginDTO.getLoginPassword())) {
-                return true;
-            }
+        if(memberDao.isExistUserId(member.getUserId())) {
+            throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
         }
-        return false;
-    }
 
-    private boolean isEqualPassword(String userPassword, String loginPassword) {
-        if (userPassword.equals(encryptPassword.encrypt(loginPassword)))
-            return true;
-        return false;
-    }
+        MemberDTO encodeMember = new MemberDTO(member.getUserId(), encryptPassword.encrypt(member.getUserPassword()),
+            member.getUserName(), member.getUserPhone(), member.getUserAddress(), member.getUserLevel());
 
-    @Override
-    public void updateUserInfo(String userid, UpdateDTO updateDTO) {
-        memberDao.updateUser(userid, updateDTO);
+        memberDao.joinMember(encodeMember);
+
+        if(member.getUserLevel() == UserLevel.OWNER_LEVEL) {
+            memberDao.insertOwnerId(member.getUserId());
+        }
+
     }
 
     @Override
-    public void deleteUserInfo(String userid) {
-        memberDao.deleteUser(userid);
+    public boolean isExistUserId(String userId) {
+        return memberDao.isExistUserId(userId);
     }
+
+    @Override
+    public void duplicatedId(String userId) {
+        if(isExistUserId(userId)) {
+            throw new DuplicatedIdException("이미 존재하는 아이디입니다.");
+        }
+    }
+
+    @Override
+    public void setOwnerDocsSubmission(String ownerId) {
+        memberDao.updateOwnerDocsSubmission(ownerId);
+    }
+
+    @Override
+    public void setOwnerLoginApproval(String ownerId) {
+        memberDao.updateOwnerLoginApproval(ownerId);
+    }
+
+    @Override
+    public void updateUserInfo(String userId, UpdateDTO updateDTO) {
+        memberDao.updateUser(userId, updateDTO);
+    }
+
+    @Override
+    public void deleteUserInfo(String userId) {
+        memberDao.deleteUser(userId);
+    }
+
 }

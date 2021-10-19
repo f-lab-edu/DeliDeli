@@ -2,72 +2,58 @@ package flab.delideli.controller;
 
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
+import flab.delideli.service.LoginService;
 import flab.delideli.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 @RestController
 @Api(tags = {"회원 컨트롤러 API"})
 @AllArgsConstructor
+@RequestMapping("/users")
 public class MemberController {
 
-    private MemberService memberService;
+    private final MemberService memberService;
+    private final LoginService loginService;
 
-    private static final ResponseEntity okResponseEntity = new ResponseEntity(HttpStatus.OK);
-    private static final ResponseEntity conflictResponseEntity = new ResponseEntity(HttpStatus.CONFLICT);
-    private static final ResponseEntity unauthorizedResponseEntity = new ResponseEntity(HttpStatus.UNAUTHORIZED);
-    private static final String USER_ID = "USER_ID";
-
-    @RequestMapping(value ="/users", method = RequestMethod.POST)
+    @PostMapping(value = "/join")
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "회원 가입")
-    public void joinMember(@RequestBody MemberDTO memberDto) {
-        memberService.joinMember(memberDto);
+    public void joinMember(@RequestBody @Valid MemberDTO member) {
+        memberService.joinMember(member);
     }
 
-    @RequestMapping(value="/{userid}/duplicate",method = RequestMethod.POST)
+    @PostMapping(value="/{userId}/duplicate")
     @ApiOperation(value = "회원 아이디 중복 체크")
     @ApiResponses({
         @ApiResponse(code = 200, message = "사용 가능한 아이디"),
         @ApiResponse(code = 409, message = "중복된 아이디")
     })
-    public ResponseEntity checkUserId(@RequestBody String userid) {
-        boolean result = memberService.isExistUserId(userid);
-        if (!result) {
-            return okResponseEntity;
-        }
-        return conflictResponseEntity;
+    public void duplicatedUserIdCheck(
+        @RequestBody @PathVariable("userId") String userId) {
+        memberService.duplicatedId(userId);
     }
 
-    @RequestMapping(value="/login", method = RequestMethod.POST)
+    @PostMapping(value="/login")
     @ApiOperation(value = "회원 로그인")
     @ApiResponses({
         @ApiResponse(code = 200, message = "로그인 성공"),
         @ApiResponse(code = 401, message = "로그인 실패")
     })
-    public ResponseEntity loginUser(@RequestBody LoginDTO loginDTO, HttpSession session) {
-        boolean result = memberService.isExistUserInfo(loginDTO);
-
-        if(result) {
-            session.setAttribute(USER_ID, loginDTO.getLoginId());
-            return okResponseEntity;
-        }
-        else
-            return unauthorizedResponseEntity;
+    public void loginUser(@RequestBody LoginDTO loginDTO) {
+        loginService.login(loginDTO);
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @DeleteMapping(value = "/logout")
     @ApiOperation(value = "회원 로그아웃")
-    public ResponseEntity logoutUser(HttpSession session) {
-        session.removeAttribute(USER_ID);
-        return okResponseEntity;
+    public void logoutUser() {
+        loginService.logout();
     }
 
 }

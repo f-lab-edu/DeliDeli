@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 public class UpdateDTO {
 
     @Nullable
-    private String username;
+    private String userName;
     @Nullable
     private String phone;
     @Nullable

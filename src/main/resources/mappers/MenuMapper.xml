@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.MenuDao" >
+
+  <insert id="insertMenu">
+    INSERT INTO menus (menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category)
+    VALUES (#{menuName}, #{menuPrice}, #{shopId}, #{menuStock}, #{menuInfo}, #{menuCategory})
+  </insert>
+
+  <select id="isExistMenu" resultType="boolean">
+    SELECT IF(COUNT(*) > 0, 1, 0) FROM menus
+    WHERE menu_name = #{menuName} AND shop_id = #{shopId}
+  </select>
+
+</mapper>

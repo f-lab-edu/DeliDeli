@@ -1,42 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="flab.delideli.dao.MemberDao" >
 
     <insert id="joinMember" >
-        INSERT INTO members (userid , password , username , phone , address)
-        VALUES (#{userid} , #{password}, #{username} , #{phone} , #{address})
+        INSERT INTO members (user_id, user_password, user_name, user_phone,
+                             user_address, user_level)
+        VALUES (#{userId}, #{userPassword}, #{userName}, #{userPhone},
+                #{userAddress}, #{userLevel});
+    </insert>
+
+    <insert id="insertOwnerId">
+        INSERT INTO owners_docs (owner_id) VALUE (#{userId})
     </insert>
 
     <select id="isExistUserId" resultType = "boolean">
-       SELECT EXISTS (SELECT 1 FROM members WHERE userid = #{userid})
+        SELECT EXISTS (SELECT 1 FROM members WHERE user_id = #{userId})
     </select>
 
-    <select id="findbyUserid" resultType="flab.delideli.dto.MemberDTO">
-        SELECT userid, password, username, phone, address
+    <select id="isExistUserInfo" resultType = "boolean">
+        SELECT IF(COUNT(*) = 1, 1, 0) FROM members
+        WHERE user_id = #{loginId} AND
+            user_password = #{loginPassword}
+    </select>
+
+    <select id="isDocsSubmitted" resultType = "boolean">
+        SELECT IF(docs_submission = 1, 1, 0) FROM owners_docs
+        WHERE owner_id = #{loginId}
+    </select>
+
+    <select id="isLoginApproved" resultType = "boolean">
+        SELECT IF(login_approval = 1, 1, 0) FROM owners_docs
+        WHERE owner_id = #{loginId}
+    </select>
+
+    <select id="findByUserId" resultType="flab.delideli.dto.MemberDTO">
+        SELECT user_id, user_password, user_name, user_phone, user_address, user_level
         FROM members
-        WHERE userid = #{loginid}
+        WHERE user_id = #{loginId}
+    </select>
+
+    <select id="selectUserLevel" resultType="flab.delideli.enums.UserLevel">
+        SELECT user_level
+        FROM members
+        WHERE user_id = #{loginId}
     </select>
 
     <update id = "updateUser" >
         UPDATE members
         <set>
-            <if test="updateDTO.username != null and updateDTO.username != ''">
-                members.username = #{updateDTO.username},
+            <if test="updateDTO.userName != null and updateDTO.userName != ''">
+                members.user_name = #{updateDTO.userName},
             </if>
             <if test="updateDTO.phone != null and updateDTO.phone != ''">
-                members.phone = #{updateDTO.phone},
+                members.user_phone = #{updateDTO.phone},
             </if>
             <if test="updateDTO.address != null and updateDTO.address != ''">
-                members.address = #{updateDTO.address}
+                members.user_address = #{updateDTO.address}
             </if>
         </set>
-        WHERE userid = #{userid}
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateOwnerDocsSubmission">
+        UPDATE owners_docs
+        SET docs_submission = '1'
+        WHERE owner_id = #{ownerId}
+    </update>
+
+    <update id="updateOwnerLoginApproval">
+        UPDATE owners_docs
+        SET login_approval = '1'
+        WHERE owner_id = #{ownerId}
     </update>
 
     <delete id="deleteUser">
         DELETE FROM members
-        WHERE userid = #{userid}
+        WHERE user_id = #{userId}
     </delete>
 
 </mapper>
