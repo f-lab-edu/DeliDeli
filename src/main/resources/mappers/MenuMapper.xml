@@ -13,4 +13,20 @@
     WHERE menu_name = #{menuName} AND shop_id = #{shopId}
   </select>
 
+  <update id = "updateMenu" >
+    UPDATE menus
+    <set>
+      <if test="updateMenuDTO.menuPrice != null">
+        menus.menu_price = #{updateMenuDTO.menuPrice},
+      </if>
+      <if test="updateMenuDTO.menuStock != null">
+        menus.menu_stock = #{updateMenuDTO.menuStock},
+      </if>
+      <if test="updateMenuDTO.menuInfo != null and updateMenuDTO.menuInfo != ''">
+        menus.menu_info = #{updateMenuDTO.menuInfo}
+      </if>
+    </set>
+    WHERE menu_id = #{updateMenuDTO.menuId}
+  </update>
+
 </mapper>
