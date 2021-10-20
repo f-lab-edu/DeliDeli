@@ -16,14 +16,25 @@
   <update id = "updateMenu" >
     UPDATE menus
     <set>
-      <if test="updateMenuDTO.menuPrice != null">
+      <if test="updateMenuDTO.menuPrice != null and updateMenuDTO.menuPrice != 0">
         menus.menu_price = #{updateMenuDTO.menuPrice},
       </if>
       <if test="updateMenuDTO.menuStock != null">
         menus.menu_stock = #{updateMenuDTO.menuStock},
       </if>
       <if test="updateMenuDTO.menuInfo != null and updateMenuDTO.menuInfo != ''">
-        menus.menu_info = #{updateMenuDTO.menuInfo}
+        menus.menu_info = #{updateMenuDTO.menuInfo},
+      </if>
+      <choose>
+        <when test="updateMenuDTO.menuCategory != null">
+          menus.menu_category = #{updateMenuDTO.menuCategory},
+        </when>
+        <otherwise>
+          menus.menu_category = menus.menu_category,
+        </otherwise>
+      </choose>
+      <if test="updateMenuDTO.menuActivation != null">
+        menus.menu_activation = #{updateMenuDTO.menuActivation}
       </if>
     </set>
     WHERE menu_id = #{updateMenuDTO.menuId}
