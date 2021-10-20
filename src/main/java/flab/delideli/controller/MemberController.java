@@ -1,8 +1,5 @@
 package flab.delideli.controller;
 
-import static flab.delideli.util.ResponseEntityCode.CONFLICT_RESPONSE_ENTITY;
-import static flab.delideli.util.ResponseEntityCode.OK_RESPONSE_ENTITY;
-
 import flab.delideli.dto.LoginDTO;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.service.LoginService;
@@ -14,7 +11,6 @@ import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,16 +35,9 @@ public class MemberController {
         @ApiResponse(code = 200, message = "사용 가능한 아이디"),
         @ApiResponse(code = 409, message = "중복된 아이디")
     })
-    public ResponseEntity<Void> duplicatedUserIdCheck(
+    public void duplicatedUserIdCheck(
         @RequestBody @PathVariable("userId") String userId) {
-
-        boolean idDuplicated = memberService.isExistUserId(userId);
-
-        if (idDuplicated) {
-            return CONFLICT_RESPONSE_ENTITY;
-        }
-            return OK_RESPONSE_ENTITY;
-
+        memberService.duplicatedId(userId);
     }
 
     @PostMapping(value="/login")

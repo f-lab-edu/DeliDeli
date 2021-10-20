@@ -1,12 +1,17 @@
 package flab.delideli.dao;
 
 import flab.delideli.dto.MenuDTO;
+import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+
+@Mapper
 public interface MenuDao {
 
 	void insertMenu(MenuDTO menuDTO);
 
-	boolean isExistMenu(String menuName, Long shopId);
+	boolean isExistMenu(@Param("menuName") String menuName, @Param("shopId") Long shopId);
 
 }

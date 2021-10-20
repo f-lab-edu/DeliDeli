@@ -17,8 +17,8 @@ public class MemberMapperTest {
     private MemberService memberservice;
     private Encrypt encrypt;
 
-    MemberDTO member1 = new MemberDTO("suykim", "suykima", "김나연", "010-2222-2222", "seong");
-    MemberDTO member2 = new MemberDTO("jeong", "jenoga", "김연아", "010-7777-7777", "seoul");
+    MemberDTO member1 = new MemberDTO("suykim", "suykima", "김나연", "010-2222-2222", "SEOUL","MEMBER_LEVEL");
+    MemberDTO member2 = new MemberDTO("jeong", "jenoga", "김연아", "010-7777-7777","BUSAN", "MEMBER_LEVEL");
 
     @Test
     public void memberjoin() throws Exception {

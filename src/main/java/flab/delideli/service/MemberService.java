@@ -9,11 +9,14 @@ public interface MemberService {
 
     boolean isExistUserId(String userId);
 
+    void duplicatedId(String userId);
+
     void setOwnerDocsSubmission(String ownerId);
 
     void setOwnerLoginApproval(String ownerId);
 
-    public void updateUserInfo(String userid, UpdateDTO updateDTO);
+    void updateUserInfo(String userid, UpdateDTO updateDTO);
 
-    public void deleteUserInfo(String userid);
+    void deleteUserInfo(String userid);
+
 }
