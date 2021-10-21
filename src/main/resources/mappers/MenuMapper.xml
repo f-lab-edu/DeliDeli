@@ -16,7 +16,7 @@
   <update id = "updateMenu" >
     UPDATE menus
     <set>
-      <if test="updateMenuDTO.menuPrice != null and updateMenuDTO.menuPrice != 0">
+      <if test="updateMenuDTO.menuPrice != null">
         menus.menu_price = #{updateMenuDTO.menuPrice},
       </if>
       <if test="updateMenuDTO.menuStock != null">
