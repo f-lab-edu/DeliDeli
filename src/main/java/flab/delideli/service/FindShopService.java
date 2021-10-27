@@ -2,6 +2,7 @@ package flab.delideli.service;
 
 import flab.delideli.dto.ShopDTO;
 import flab.delideli.dto.ShoplistDTO;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
 

@@ -26,7 +26,7 @@
         FROM shops
         WHERE shop_name LIKE CONCAT(#{shopname},'%')
         <if test="pagingCriteria.cursor != null">
-          AND shop_id <![CDATA[<]]> #{pagingCriteria.cursor}
+            AND shop_id <![CDATA[<]]> #{pagingCriteria.cursor}
         </if>
     </select>
 
