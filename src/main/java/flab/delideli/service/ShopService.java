@@ -39,10 +39,10 @@ public class ShopService {
 		return shopDao.selectShopListByOwnerId(ownerId);
 	}
 
-	public void verifyShopOwner(Long id, String ownerId) {
+	public void verifyShopOwner(Long shopId, String ownerId) {
 
 		boolean isCurrentUserMatchingOwnerId =
-			shopDao.isCurrentUserMatchingOwnerId(id, ownerId);
+			shopDao.isCurrentUserMatchingOwnerId(shopId, ownerId);
 
 		if(!isCurrentUserMatchingOwnerId) {
 			throw new UnauthorizedException("이 가게의 사장님만 접근 가능합니다.");
