@@ -14,5 +14,4 @@ public interface MenuDao {
 
 	void updateMenu(@Param("updateMenuDTO") UpdateMenuDTO updateMenuDTO);
 
-
 }

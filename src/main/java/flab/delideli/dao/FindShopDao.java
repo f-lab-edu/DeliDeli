@@ -13,6 +13,6 @@ public interface FindShopDao {
     List<ShoplistDTO> findAllShop(PagingCriteria pagingCriteria);
 
     List<ShoplistDTO> findShopName(@Param("shopname") String shopName, @Param("pagingCriteria") PagingCriteria pagingCriteria);
-
+  
     ShopDTO getShop(int shopid);
 }

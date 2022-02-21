@@ -7,6 +7,7 @@ import flab.delideli.exception.UnauthorizedException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import springfox.documentation.annotations.Cacheable;
 
 @Service
 @RequiredArgsConstructor
@@ -38,10 +39,10 @@ public class ShopService {
 		return shopDao.selectShopListByOwnerId(ownerId);
 	}
 
-	public void verifyShopOwner(Long id, String ownerId) {
+	public void verifyShopOwner(Long shopId, String ownerId) {
 
 		boolean isCurrentUserMatchingOwnerId =
-			shopDao.isCurrentUserMatchingOwnerId(id, ownerId);
+			shopDao.isCurrentUserMatchingOwnerId(shopId, ownerId);
 
 		if(!isCurrentUserMatchingOwnerId) {
 			throw new UnauthorizedException("이 가게의 사장님만 접근 가능합니다.");
