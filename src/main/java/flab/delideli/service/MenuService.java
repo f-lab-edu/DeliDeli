@@ -22,5 +22,4 @@ public class MenuService {
 		menuDao.insertMenu(menuDTO);
 
 	}
-
 }

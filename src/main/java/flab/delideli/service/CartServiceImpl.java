@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
 
     private final CartDao cartDao;
 

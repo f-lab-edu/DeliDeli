@@ -32,7 +32,6 @@ public class SessionLoginService implements LoginService {
 		if(userLevel.name().equals("OWNER_LEVEL")) {
 
 			boolean isDocsSubmitted = memberDao.isDocsSubmitted(loginId);
-
 			boolean isLoginApproved = memberDao.isLoginApproved(loginId);
 
 
