@@ -34,7 +34,6 @@ public class SessionLoginService implements LoginService {
 			boolean isDocsSubmitted = memberDao.isDocsSubmitted(loginId);
 			boolean isLoginApproved = memberDao.isLoginApproved(loginId);
 
-
 			if (!isDocsSubmitted) {
 				throw new UnauthorizedException("서류 제출이 완료되지 않았습니다.");
 			} else if (!isLoginApproved) {

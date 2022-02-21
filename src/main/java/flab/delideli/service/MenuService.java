@@ -2,6 +2,7 @@ package flab.delideli.service;
 
 import flab.delideli.dao.MenuDao;
 import flab.delideli.dto.MenuDTO;
+import flab.delideli.dto.UpdateMenuDTO;
 import flab.delideli.exception.AlreadyAddedValueException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,4 +23,9 @@ public class MenuService {
 		menuDao.insertMenu(menuDTO);
 
 	}
+
+	public void updateMenu(UpdateMenuDTO updateMenuDTO) {
+		menuDao.updateMenu(updateMenuDTO);
+	}
+
 }
