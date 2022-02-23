@@ -8,8 +8,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,8 +50,9 @@ public class MemberController {
         @ApiResponse(code = 200, message = "로그인 성공"),
         @ApiResponse(code = 401, message = "로그인 실패")
     })
-    public void loginUser(@RequestBody LoginDTO loginDTO) {
+    public LoginDTO loginUser(@RequestBody LoginDTO loginDTO) {
         loginService.login(loginDTO);
+        return loginDTO;
     }
 
     @DeleteMapping(value = "/logout")
@@ -55,5 +60,4 @@ public class MemberController {
     public void logoutUser() {
         loginService.logout();
     }
-
 }

@@ -28,6 +28,7 @@ dependencies {
 	implementation 		'org.springframework.session:spring-session-data-redis'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	implementation group: 'org.json', name: 'json', version: '20201115'
 	compileOnly			'org.projectlombok:lombok'
 	runtimeOnly			'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
