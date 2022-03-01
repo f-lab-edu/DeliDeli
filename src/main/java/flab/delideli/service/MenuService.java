@@ -28,8 +28,4 @@ public class MenuService {
 		menuDao.updateMenu(updateMenuDTO);
 	}
 
-	public void deleteMenu(Long menuId, Long shopId) {
-		menuDao.deleteMenu(menuId, shopId);
-	}
-
 }

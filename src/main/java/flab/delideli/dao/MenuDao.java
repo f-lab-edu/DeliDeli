@@ -14,6 +14,4 @@ public interface MenuDao {
 
 	void updateMenu(@Param("updateMenuDTO") UpdateMenuDTO updateMenuDTO);
 
-	void deleteMenu(@Param("menuId") Long menuId, @Param("shopId") Long shopId);
-
 }

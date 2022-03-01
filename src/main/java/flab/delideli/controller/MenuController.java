@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,17 +49,6 @@ public class MenuController {
 
 		shopService.verifyShopOwner(shopId, ownerId);
 		menuService.updateMenu(updateMenuDTO);
-
-	}
-
-	@DeleteMapping(value = "/{menuId}")
-	@ApiOperation(value = "메뉴 삭제")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
-	public void deleteMenu(@RequestBody @PathVariable("menuId") Long menuId,
-		@PathVariable Long shopId, @CurrentUser String ownerId) {
-
-		shopService.verifyShopOwner(shopId, ownerId);
-		menuService.deleteMenu(menuId, shopId);
 
 	}
 
