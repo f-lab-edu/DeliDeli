@@ -40,4 +40,9 @@
     WHERE menu_id = #{updateMenuDTO.menuId}
   </update>
 
+  <delete id="deleteMenu">
+    DELETE FROM menus
+    WHERE menu_id = #{menuId} AND shop_id = #{shopId}
+  </delete>
+
 </mapper>
