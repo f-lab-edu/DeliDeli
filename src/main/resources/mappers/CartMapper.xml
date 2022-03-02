@@ -6,4 +6,10 @@
         INSERT INTO carts(user_id, menu_id, amount)
         VALUES (#{userid}, #{addCartDTO.menuId}, #{addCartDTO.amount})
     </insert>
+
+    <select id="getCartList" resultType="flab.delideli.dto.CartlistDTO">
+        SELECT carts.menu_id, menu_name, menus.menu_price, amount
+        FROM carts, menus, members
+        WHERE members.user_id = carts.user_id  AND menus.menu_id = carts.menu_id
+    </select>
 </mapper>
