@@ -4,6 +4,7 @@ import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
+import flab.delideli.service.LoginService;
 import flab.delideli.service.SessionLoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.List;
 public class CartController {
 
     private CartService cartService;
-    private SessionLoginService sessionLoginService;
+    private LoginService sessionLoginService;
 
     @PostMapping
     public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
