@@ -24,4 +24,9 @@ public class CartServiceImpl implements CartService {
         List<CartlistDTO> cartlist= cartDao.getCartList(userId);
         return cartlist;
     }
+
+    @Override
+    public void deleteCartItem(String userId, int cartId) {
+        cartDao.deleteCartList(userId, cartId);
+    }
 }

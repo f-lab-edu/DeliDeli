@@ -20,4 +20,10 @@
         <result column="menu_price" property="price"></result>
         <result column="amount" property="amount"></result>
     </resultMap>
+
+
+    <delete id="deleteCartItem">
+        DELETE FROM carts
+        WHERE cart_id = #{cartId} AND user_id = #{userId}
+    </delete>
 </mapper>

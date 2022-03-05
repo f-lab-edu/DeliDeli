@@ -13,4 +13,6 @@ public interface CartDao {
     void insertCart(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userid") String userId);
 
     List<CartlistDTO> getCartList(@Param("userId") String userId);
+
+    void deleteCartItem(@Param("userId") String userId, @Param("cartId") int cartId);
 }

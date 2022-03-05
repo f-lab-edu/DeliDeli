@@ -30,4 +30,10 @@ public class CartController {
         List<CartlistDTO> cartlist=cartService.getCartList(currentUserId);
         return cartlist;
     }
+
+    @DeleteMapping("/{cartId}")
+    public void deleteCartItem(@PathVariable int cartId) {
+        String currentUserId = sessionLoginService.getSessionUserId();
+        cartService.deleteCartItem(currentUserId, cartId);
+    }
 }
