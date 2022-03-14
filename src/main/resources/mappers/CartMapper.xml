@@ -6,4 +6,19 @@
         INSERT INTO carts(user_id, menu_id, amount)
         VALUES (#{userid}, #{addCartDTO.menuId}, #{addCartDTO.amount})
     </insert>
+
+    <select id="getCartList" resultMap="getCartLists" resultType="flab.delideli.dto.CartlistDTO">
+        SELECT carts.cart_id, carts.menu_id, menu_name, menu_price, amount
+        FROM carts, menus
+        WHERE carts.user_id = #{userId}
+          AND menus.menu_id = carts.menu_id
+    </select>
+
+    <resultMap id="getCartLists" type="flab.delideli.dto.CartlistDTO">
+        <result column="cart_id" property="cartId"></result>
+        <result column="menu_id" property="menuId"></result>
+        <result column="menu_name" property="menuName"></result>
+        <result column="menu_price" property="price"></result>
+        <result column="amount" property="amount"></result>
+    </resultMap>
 </mapper>
