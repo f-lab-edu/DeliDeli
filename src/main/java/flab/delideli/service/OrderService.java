@@ -1,7 +1,6 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.CartDao;
-import flab.delideli.dao.MemberDao;
 import flab.delideli.dao.OrderDao;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.dto.OrderDTO;
@@ -26,7 +25,12 @@ public class OrderService {
 			orderDTO.getPaymentMethod(), LocalDate.now(),
 			orderDTO.getShopId(), orderDTO.getRequest());
 
-		orderDao.insertOrder(copyOrderDTO);
+		Long orderId = orderDao.insertOrder(copyOrderDTO);
+
+		List<OrderItemDTO> orderItemDTOS =
+			getOrderItemDTO(orderDTO.getUserId(), orderId);
+
+		registerOrderMenus(orderItemDTOS);
 
 	}
 

@@ -3,12 +3,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="flab.delideli.dao.MenuDao" >
 
-    <insert id="insertOrder" >
+    <insert id="insertOrder" useGeneratedKeys="true"
+      keyProperty="orders.order_id" parameterType="flab.delideli.dto.OrderDTO">
       INSERT INTO orders (user_id, address, phone_number, total_price, payment_method, request, order_date, shop_id)
       VALUES (#{userId}, #{address}, #{phoneNumber}, #{totalPrice},
-              #{paymentMethod}, #{request}, #{orderDate}, #{shopId});
+              #{paymentMethod}, #{request}, #{orderDate}, #{shopId})
     </insert>
   
-    <insert id="insertOrderMenus" parameterType="java.util.List"></insert>
+    <insert id="insertOrderMenus" parameterType="java.util.List">
+      INSERT INTO order_menus (menu_name, menu_price, menu_quantity, order_id)
+      VALUES
+        <foreach collection="list" item="i" separator=",">
+          (#{i.menuName}, #{i.menuPrice}, #{i.menuQuantity}, #{i.orderId})
+        </foreach>
+    </insert>
 
 </mapper>

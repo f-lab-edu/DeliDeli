@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderDao {
 
-	void insertOrder(OrderDTO orderDTO);
+	Long insertOrder(OrderDTO orderDTO);
 
 	void insertOrderMenus(List<OrderItemDTO> orderItemDTOS);
 
