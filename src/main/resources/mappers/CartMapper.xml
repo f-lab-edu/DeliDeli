@@ -28,4 +28,9 @@
         WHERE cart_id = #{cartId}
           AND user_id = #{userId}
     </delete>
+
+    <delete id="deleteCartItem">
+        DELETE FROM carts
+        WHERE cart_id = #{cartId} AND user_id = #{userId} AND menu_id = #{menuId}
+    </delete>
 </mapper>
