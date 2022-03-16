@@ -30,8 +30,8 @@ public class CartController {
         return cartlist;
     }
 
-    @DeleteMapping("/{cartId}")
-    public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
-        cartService.deleteCart(userId, cartId);
+    @DeleteMapping()
+    public void clearCart(@CurrentUser String userId) {
+        cartService.clearCart(userId);
     }
 }

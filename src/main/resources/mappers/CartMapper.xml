@@ -23,9 +23,8 @@
     </resultMap>
 
 
-    <delete id="deleteCart">
+    <delete id="clearCart">
         DELETE FROM carts
-        WHERE cart_id = #{cartId}
-          AND user_id = #{userId}
+        WHERE user_id = #{userId}
     </delete>
 </mapper>

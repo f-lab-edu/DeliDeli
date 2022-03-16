@@ -14,5 +14,5 @@ public interface CartDao {
 
     List<CartlistDTO> getCartList(@Param("userId") String userId);
 
-    void deleteCart(@Param("userId") String userId, @Param("cartId") int cartId);
+    void clearCart(@Param("userId") String userId);
 }
