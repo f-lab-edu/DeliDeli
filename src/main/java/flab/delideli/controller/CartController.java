@@ -5,7 +5,6 @@ import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
-import flab.delideli.service.SessionLoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +31,7 @@ public class CartController {
     }
 
     @DeleteMapping("/{cartId}")
-    public void deleteCartItem(@PathVariable int cartId) {
-        String currentUserId = sessionLoginService.getSessionUserId();
-        cartService.deleteCartItem(currentUserId, cartId);
+    public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
+        cartService.deleteCart(userId, cartId);
     }
 }

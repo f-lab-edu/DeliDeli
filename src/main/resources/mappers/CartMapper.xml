@@ -10,7 +10,8 @@
     <select id="getCartList" resultMap="getCartLists" resultType="flab.delideli.dto.CartlistDTO">
         SELECT carts.cart_id, carts.menu_id, menu_name, menu_price, amount
         FROM carts, menus
-        WHERE carts.user_id = #{userId}   AND menus.menu_id = carts.menu_id
+        WHERE carts.user_id = #{userId}
+          AND menus.menu_id = carts.menu_id
     </select>
 
     <resultMap id="getCartLists" type="flab.delideli.dto.CartlistDTO">
@@ -22,8 +23,9 @@
     </resultMap>
 
 
-    <delete id="deleteCartItem">
+    <delete id="deleteCart">
         DELETE FROM carts
-        WHERE cart_id = #{cartId} AND user_id = #{userId}
+        WHERE cart_id = #{cartId}
+          AND user_id = #{userId}
     </delete>
 </mapper>
