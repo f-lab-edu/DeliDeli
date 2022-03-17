@@ -32,6 +32,5 @@
     <delete id="deleteCartItem">
         DELETE FROM carts
         WHERE cart_id = #{cartId}
-          AND user_id = #{userId}
     </delete>
 </mapper>
