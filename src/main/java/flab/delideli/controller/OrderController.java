@@ -2,6 +2,7 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.OrderDTO;
+import flab.delideli.dto.RequestOrderDTO;
 import flab.delideli.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,9 +27,9 @@ public class OrderController {
 	@PostMapping(value = "/{userId}")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "주문 등록")
-	public void registerOrder(@RequestBody @Valid OrderDTO orderDTO,
+	public void registerOrder(@RequestBody @Valid RequestOrderDTO requestOrderDTO,
 		@PathVariable("userId") @CurrentUser String userId) {
-		orderService.registerOrder(orderDTO);
+		orderService.registerOrder(requestOrderDTO, userId);
 	}
 
 }

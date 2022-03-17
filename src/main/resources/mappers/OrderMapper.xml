@@ -5,9 +5,9 @@
 
     <insert id="insertOrder" useGeneratedKeys="true"
       keyProperty="orders.order_id" parameterType="flab.delideli.dto.OrderDTO">
-      INSERT INTO orders (user_id, address, phone_number, total_price, payment_method, request, order_date, shop_id)
-      VALUES (#{userId}, #{address}, #{phoneNumber}, #{totalPrice},
-              #{paymentMethod}, #{request}, #{orderDate}, #{shopId})
+      INSERT INTO orders (user_id, address, phone_number, payment_method, total_price, request, order_date, shop_id)
+      VALUES (#{userId}, #{address}, #{phoneNumber}, #{paymentMethod},
+              #{totalPrice}, #{request}, #{orderDate}, #{shopId})
     </insert>
   
     <insert id="insertOrderMenus" parameterType="java.util.List">

@@ -5,6 +5,7 @@ import flab.delideli.dao.OrderDao;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.dto.OrderDTO;
 import flab.delideli.dto.OrderItemDTO;
+import flab.delideli.dto.RequestOrderDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +19,17 @@ public class OrderService {
 	private final OrderDao orderDao;
 	private final CartDao cartDao;
 
-	public void registerOrder(OrderDTO orderDTO) {
+	public void registerOrder(RequestOrderDTO requestOrderDTO, String userId) {
 
-		OrderDTO copyOrderDTO = new OrderDTO(orderDTO.getUserId(), orderDTO.getAddress(),
-			orderDTO.getPhoneNumber(), getTotalPrice(orderDTO.getUserId()),
-			orderDTO.getPaymentMethod(), LocalDate.now(),
-			orderDTO.getShopId(), orderDTO.getRequest());
+		OrderDTO orderDTO = new OrderDTO(userId, requestOrderDTO.getAddress(),
+			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentMethod(),
+			getTotalPrice(userId), requestOrderDTO.getShopId(),
+			requestOrderDTO.getRequest(), LocalDate.now());
 
-		Long orderId = orderDao.insertOrder(copyOrderDTO);
+		Long orderId = orderDao.insertOrder(orderDTO);
 
 		List<OrderItemDTO> orderItemDTOS =
-			getOrderItemDTO(orderDTO.getUserId(), orderId);
+			getOrderItemDTO(userId, orderId);
 
 		registerOrderMenus(orderItemDTOS);
 
