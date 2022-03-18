@@ -8,9 +8,22 @@
     VALUES (#{menuName}, #{menuPrice}, #{shopId}, #{menuStock}, #{menuInfo}, #{menuCategory})
   </insert>
 
-  <select id="isExistMenu" resultType="boolean">
+  <select id="isExistMenuName" resultType="boolean">
     SELECT IF(COUNT(*) > 0, 1, 0) FROM menus
     WHERE menu_name = #{menuName} AND shop_id = #{shopId}
+  </select>
+
+  <select id="isExistMenuId" resultType="boolean">
+    SELECT EXISTS(
+        SELECT menu_id
+        FROM menus
+        WHERE menu_id = #{menuId}
+             )
+  </select>
+
+  <select id="getMenuPrice" resultType="int">
+    SELECT menu_price FROM menus
+    WHERE menu_id = #{menuId}
   </select>
 
   <update id = "updateMenu" >

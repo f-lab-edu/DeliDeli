@@ -10,7 +10,11 @@ public interface MenuDao {
 
 	void insertMenu(MenuDTO menuDTO);
 
-	boolean isExistMenu(@Param("menuName") String menuName, @Param("shopId") Long shopId);
+	boolean isExistMenuName(@Param("menuName") String menuName, @Param("shopId") Long shopId);
+
+	boolean isExistMenuId(Long menuId);
+
+	int getMenuPrice(Long menuId);
 
 	void updateMenu(@Param("updateMenuDTO") UpdateMenuDTO updateMenuDTO);
 

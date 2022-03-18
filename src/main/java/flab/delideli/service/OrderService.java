@@ -1,11 +1,13 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.CartDao;
+import flab.delideli.dao.MenuDao;
 import flab.delideli.dao.OrderDao;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.dto.OrderDTO;
 import flab.delideli.dto.OrderItemDTO;
 import flab.delideli.dto.RequestOrderDTO;
+import flab.delideli.exception.MenuIdEmptyException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class OrderService {
 
 	private final OrderDao orderDao;
 	private final CartDao cartDao;
+	private final MenuDao menuDao;
 
 	public void registerOrder(RequestOrderDTO requestOrderDTO, String userId) {
 
@@ -45,9 +48,20 @@ public class OrderService {
 		int totalPrice = 0;
 
 		for (int i = 0; i < cartlistDTOS.size(); i++) {
-			int price = cartlistDTOS.get(i).getPrice();
-			int amount = cartlistDTOS.get(i).getAmount();
-			totalPrice = price * amount;
+			long menuIdInt = cartlistDTOS.get(i).getMenuId();
+			Long menuId = Long.valueOf(menuIdInt);
+			String menuName = cartlistDTOS.get(i).getMenuName();
+			int menuPrice;
+
+			boolean isExistMenuId = menuDao.isExistMenuId(menuId);
+			if (isExistMenuId) {
+				menuPrice = menuDao.getMenuPrice(menuId);
+			} else {
+				throw new MenuIdEmptyException("주문하신 메뉴(" + menuName + ")는 존재하지 않습니다.");
+			}
+
+			int menuAmount = cartlistDTOS.get(i).getAmount();
+			totalPrice = menuPrice * menuAmount;
 		}
 
 		return totalPrice;
@@ -70,4 +84,5 @@ public class OrderService {
 
 		return orderItemDTOS;
 	}
+
 }
