@@ -19,10 +19,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int checkCartItem(AddCartDTO addCartDTO, String userId) {
-        if (cartDao.checkCartItem(addCartDTO, userId) != null)
-            return 1;
-        return 0;
+    public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
+        if (cartDao.isItemInCart(addCartDTO, userId) != null)
+            return true;
+        return false;
     }
 
     @Override

@@ -9,7 +9,7 @@ public interface CartDao {
 
     void insertCart(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userid") String userId);
 
-    Integer checkCartItem(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userId") String userId);
+    Integer isItemInCart(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userId") String userId);
 
     void updateCartItem(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userId") String userId);
 }

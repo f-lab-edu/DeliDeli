@@ -16,12 +16,11 @@ public class CartController {
 
     @PostMapping
     public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
-        int count = cartService.checkCartItem(addCartDTO, userId);
-        if (count == 0) {
-            cartService.insertCart(addCartDTO, userId);
+        if (cartService.isItemInCart(addCartDTO, userId)) {
+            cartService.updateCartItem(addCartDTO, userId);
         }
         else {
-            cartService.updateCartItem(addCartDTO, userId);
+            cartService.insertCart(addCartDTO, userId);
         }
     }
 }

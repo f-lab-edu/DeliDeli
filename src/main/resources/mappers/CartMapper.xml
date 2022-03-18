@@ -7,15 +7,17 @@
         VALUES (#{userid}, #{addCartDTO.menuId}, #{addCartDTO.amount})
     </insert>
 
-    <select id="checkCartItem" resultType="int">
+    <select id="isItemInCart" resultType="int">
         SELECT menu_id
         FROM carts
-        WHERE user_id = #{userId} AND menu_id = #{addCartDTO.menuId}
+        WHERE user_id = #{userId}
+           AND menu_id = #{addCartDTO.menuId}
     </select>
     
     <update id="updateCartItem">
         UPDATE carts
         SET amount = amount + 1
-        WHERE user_id = #{userId} AND menu_id = #{addCartDTO.menuId}
+        WHERE user_id = #{userId}
+          AND menu_id = #{addCartDTO.menuId}
     </update>
 </mapper>
