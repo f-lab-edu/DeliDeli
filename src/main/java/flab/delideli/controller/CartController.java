@@ -24,9 +24,8 @@ public class CartController {
     }
 
     @GetMapping
-    public List<CartlistDTO> getCartList(){
-        String currentUserId = sessionLoginService.getSessionUserId();
-        List<CartlistDTO> cartlist=cartService.getCartList(currentUserId);
+    public List<CartlistDTO> getCartList(@CurrentUser String userId){
+        List<CartlistDTO> cartlist=cartService.getCartList(userId);
         return cartlist;
     }
 
