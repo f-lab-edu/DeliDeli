@@ -40,5 +40,4 @@ public class CartServiceImpl implements CartService {
     public void clearCart(String userId) {
         cartDao.clearCart(userId);
     }
-
 }
