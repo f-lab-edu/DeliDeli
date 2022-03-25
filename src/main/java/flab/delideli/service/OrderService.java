@@ -11,6 +11,7 @@ import flab.delideli.exception.MenuIdEmptyException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,26 +43,29 @@ public class OrderService {
 		orderDao.insertOrderMenus(orderItemDTOS);
 	}
 
-	public int getTotalPrice(String userId) {
+	public Long getTotalPrice(String userId) {
 
 		List<CartlistDTO> cartlistDTOS = cartDao.getCartList(userId);
-		int totalPrice = 0;
+		List<Long> cartMenuIds = cartlistDTOS.stream().map(
+			x -> x.getMenuId()).collect(Collectors.toList());
 
-		for (int i = 0; i < cartlistDTOS.size(); i++) {
-			long menuIdInt = cartlistDTOS.get(i).getMenuId();
-			Long menuId = Long.valueOf(menuIdInt);
-			String menuName = cartlistDTOS.get(i).getMenuName();
-			int menuPrice;
+		int menuCount = menuDao.getMenuCount(cartMenuIds);
+		if (cartMenuIds.size() != menuCount) {
+			throw new MenuIdEmptyException("주문하실 메뉴를 다시 확인해 주세요.");
+		}
 
-			boolean isExistMenuId = menuDao.isExistMenuId(menuId);
-			if (isExistMenuId) {
-				menuPrice = menuDao.getMenuPrice(menuId);
-			} else {
-				throw new MenuIdEmptyException("주문하신 메뉴(" + menuName + ")는 존재하지 않습니다.");
-			}
+		List<Long> menuPriceList = menuDao.getMenuPriceList(cartMenuIds);
 
-			int menuAmount = cartlistDTOS.get(i).getAmount();
-			totalPrice = menuPrice * menuAmount;
+		long totalPrice = 0;
+
+		List<Long> menuAmountList = cartlistDTOS.stream().map(
+			x -> x.getAmount()).collect(Collectors.toList());
+
+		for (int i = 0; i < menuPriceList.size(); i++) {
+			long menuPrice = menuPriceList.get(i);
+			long menuAmount = menuAmountList.get(i);
+
+			totalPrice += menuPrice * menuAmount;
 		}
 
 		return totalPrice;
@@ -75,8 +79,8 @@ public class OrderService {
 
 		for (int i = 0; i < cartlistDTOS.size(); i++) {
 			String menuName = cartlistDTOS.get(i).getMenuName();
-			int price = cartlistDTOS.get(i).getPrice();
-			int amount = cartlistDTOS.get(i).getAmount();
+			long price = cartlistDTOS.get(i).getPrice();
+			long amount = cartlistDTOS.get(i).getAmount();
 
 			OrderItemDTO orderItemDTO = new OrderItemDTO(menuName, price, amount, orderId);
 			orderItemDTOS.add(orderItemDTO);

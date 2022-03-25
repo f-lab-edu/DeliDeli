@@ -13,17 +13,24 @@
     WHERE menu_name = #{menuName} AND shop_id = #{shopId}
   </select>
 
-  <select id="isExistMenuId" resultType="boolean">
-    SELECT EXISTS(
-        SELECT menu_id
-        FROM menus
-        WHERE menu_id = #{menuId}
-             )
+  <select id="getMenuCount" parameterType="java.util.List" resultType="int">
+    SELECT count(*)
+    FROM menus
+    WHERE menu_id IN
+        <foreach collection="list" item="i" index="idx"
+          open="(" close=")" separator=",">
+          #{i[idx]}
+        </foreach>
   </select>
 
-  <select id="getMenuPrice" resultType="int">
-    SELECT menu_price FROM menus
-    WHERE menu_id = #{menuId}
+  <select id="getMenuPriceList" resultType="list">
+    SELECT menu_price
+    FROM menus
+    WHERE menu_id IN
+        <foreach collection="list" item="i" index="idx"
+          open="(" close=")" separator=",">
+          #{i[idx]}
+        </foreach>
   </select>
 
   <update id = "updateMenu" >

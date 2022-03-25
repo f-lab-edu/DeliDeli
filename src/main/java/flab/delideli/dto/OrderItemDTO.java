@@ -13,14 +13,14 @@ public class OrderItemDTO {
 	@NotBlank
 	private String menuName;
 	@NotNull
-	private int menuPrice;
+	private Long menuPrice;
 	@NotNull
-	private int menuQuantity;
+	private Long menuQuantity;
 	@NotNull
 	private Long orderId;
 
 	@Builder
-	public OrderItemDTO(String menuName, int menuPrice, int menuQuantity, Long orderId) {
+	public OrderItemDTO(String menuName, Long menuPrice, Long menuQuantity, Long orderId) {
 		this.menuName = menuName;
 		this.menuPrice = menuPrice;
 		this.menuQuantity = menuQuantity;

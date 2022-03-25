@@ -20,7 +20,7 @@ public class OrderDTO {
 	@NotBlank
 	private String paymentMethod;
 	@NotNull
-	private int totalPrice;
+	private Long totalPrice;
 	@NotNull
 	private Long shopId;
 
@@ -30,7 +30,7 @@ public class OrderDTO {
 
 	@Builder
 	public OrderDTO(String userId, String address, String phoneNumber, String paymentMethod,
-		int totalPrice, Long shopId, String request, LocalDate orderDate) {
+		Long totalPrice, Long shopId, String request, LocalDate orderDate) {
 		this.userId = userId;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
