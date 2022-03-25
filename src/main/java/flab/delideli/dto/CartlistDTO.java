@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartlistDTO {
 
-    private int cartId;
-    private int menuId;
-    private String menuName;
-    private int price;
-    private int amount;
+	private long cartId;
+	private int menuId;
+	private String menuName;
+	private int price;
+	private int amount;
 }
