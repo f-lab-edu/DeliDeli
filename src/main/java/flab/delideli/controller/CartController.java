@@ -15,8 +15,9 @@ import java.util.List;
 @RequestMapping("/users/{userid}/carts")
 public class CartController {
 
-    private CartService cartService;
-    private LoginService sessionLoginService;
+	private CartService cartService;
+	private LoginService sessionLoginService;
+
 
     @PostMapping
     public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
@@ -40,4 +41,3 @@ public class CartController {
         cartService.clearCart(userId);
     }
 }
-

@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class AddCartDTO {
 
-    @NotNull
-    private int menuId;
-    @NotNull
-    private int amount;
+	@NotNull
+	private int menuId;
+	@NotNull
+	private int amount;
 }

@@ -3,7 +3,6 @@ package flab.delideli.mapper;
 import flab.delideli.dto.MemberDTO;
 import flab.delideli.dto.UpdateDTO;
 import flab.delideli.encrypt.Encrypt;
-import flab.delideli.encrypt.EncryptSha256;
 import flab.delideli.service.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -17,7 +16,7 @@ public class MemberMapperTest {
 
     @Autowired
     private MemberService memberservice;
-    private Encrypt encrypt;
+    private Encrypt EncryptSha256;
 
     MemberDTO member1 = new MemberDTO("suykim", "suykima", "김나연", "010-2222-2222", "SEOUL",MEMBER_LEVEL);
     MemberDTO member2 = new MemberDTO("jeong", "jenoga", "김연아", "010-7777-7777","BUSAN", MEMBER_LEVEL);
