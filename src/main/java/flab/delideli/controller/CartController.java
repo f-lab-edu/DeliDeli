@@ -2,6 +2,7 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.AddCartDTO;
+import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
@@ -15,27 +16,29 @@ import java.util.List;
 @RequestMapping("/users/{userid}/carts")
 public class CartController {
 
-    private CartService cartService;
-    private LoginService sessionLoginService;
+	private CartService cartService;
+	private LoginService sessionLoginService;
 
-    @PostMapping
-    public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
-        cartService.insertCart(addCartDTO,userId);
-    }
+	@PostMapping
+	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
+		cartService.insertCart(addCartDTO, userId);
+	}
 
-    @GetMapping
-    public List<CartlistDTO> getCartList(@CurrentUser String userId){
-        List<CartlistDTO> cartlist=cartService.getCartList(userId);
-        return cartlist;
-    }
+	@GetMapping
+	public CartDTO getCartList(@CurrentUser String userId) {
+		List<CartlistDTO> cartlist = cartService.getCartList(userId);
+		int totalPrice = cartService.getCartTotalPrice(userId);
+		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
+		return cartDTO;
+	}
 
-    @DeleteMapping("/{cartId}")
-    public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
-        cartService.deleteCart(userId, cartId);
-    }
+	@DeleteMapping("/{cartId}")
+	public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
+		cartService.deleteCart(userId, cartId);
+	}
 
-    @DeleteMapping("/{cartItemId}")
-    public void deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
-        cartService.deleteCartItem(userId, cartItemId);
-    }
+	@DeleteMapping("/{cartItemId}")
+	public void deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
+		cartService.deleteCartItem(userId, cartItemId);
+	}
 }
