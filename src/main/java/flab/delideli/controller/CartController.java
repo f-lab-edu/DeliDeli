@@ -18,20 +18,26 @@ public class CartController {
 	private CartService cartService;
 	private LoginService sessionLoginService;
 
-	@PostMapping
-	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
-		cartService.insertCart(addCartDTO, userId);
-	}
 
-	@GetMapping
-	public List<CartlistDTO> getCartList() {
-		String currentUserId = sessionLoginService.getSessionUserId();
-		List<CartlistDTO> cartlist = cartService.getCartList(currentUserId);
-		return cartlist;
-	}
+    @PostMapping
+    public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
+        if (cartService.isItemInCart(addCartDTO, userId)) {
+            cartService.updateCartItem(addCartDTO, userId);
+        }
+        else {
+            cartService.insertCart(addCartDTO, userId);
+        }
+    }
+  
+    @GetMapping
+    public List<CartlistDTO> getCartList(){
+        String currentUserId = sessionLoginService.getSessionUserId();
+        List<CartlistDTO> cartlist=cartService.getCartList(currentUserId);
+        return cartlist;
+    }
 
-	@DeleteMapping()
-	public void clearCart(@CurrentUser String userId) {
-		cartService.clearCart(userId);
-	}
+    @DeleteMapping()
+    public void clearCart(@CurrentUser String userId) {
+        cartService.clearCart(userId);
+    }
 }

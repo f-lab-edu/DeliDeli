@@ -7,6 +7,20 @@
         VALUES (#{userid}, #{addCartDTO.menuId}, #{addCartDTO.amount})
     </insert>
 
+    <select id="isItemInCart" resultType="int">
+        SELECT menu_id
+        FROM carts
+        WHERE user_id = #{userId}
+           AND menu_id = #{addCartDTO.menuId}
+    </select>
+    
+    <update id="updateCartItem">
+        UPDATE carts
+        SET amount = amount + 1
+        WHERE user_id = #{userId}
+          AND menu_id = #{addCartDTO.menuId}
+    </update>
+
     <select id="getCartList" resultMap="getCartLists" resultType="flab.delideli.dto.CartlistDTO">
         SELECT carts.cart_id, carts.menu_id, menu_name, menu_price, amount
         FROM carts,
@@ -23,10 +37,10 @@
         <result column="amount" property="amount"></result>
     </resultMap>
 
-
     <delete id="clearCart">
         DELETE
         FROM carts
         WHERE user_id = #{userId}
     </delete>
+
 </mapper>

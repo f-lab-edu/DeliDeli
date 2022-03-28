@@ -19,11 +19,22 @@ public class CartServiceImpl implements CartService {
 		cartDao.insertCart(addCartDTO, userId);
 	}
 
-	@Override
-	public List<CartlistDTO> getCartList(String userId) {
-		List<CartlistDTO> cartlist = cartDao.getCartList(userId);
-		return cartlist;
-	}
+    @Override
+    public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
+        if (cartDao.isItemInCart(addCartDTO, userId) != null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void updateCartItem(AddCartDTO addCartDTO, String userId) {
+        cartDao.updateCartItem(addCartDTO, userId);
+    }
+
+    public List<CartlistDTO> getCartList(String userId) {
+        List<CartlistDTO> cartlist= cartDao.getCartList(userId);
+        return cartlist;
+    }
 
 	@Override
 	public void clearCart(String userId) {
