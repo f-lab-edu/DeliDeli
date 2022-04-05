@@ -9,7 +9,6 @@ import flab.delideli.dto.OrderItemDTO;
 import flab.delideli.dto.RequestOrderDTO;
 import flab.delideli.exception.MenuIdEmptyException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -75,18 +74,10 @@ public class OrderService {
 	public List<OrderItemDTO> getOrderItemDTO(String userId, Long orderId) {
 
 		List<CartlistDTO> cartlistDTOS = cartDao.getCartList(userId);
-		List<OrderItemDTO> orderItemDTOS = new ArrayList<>();
 
-		for (int i = 0; i < cartlistDTOS.size(); i++) {
-			String menuName = cartlistDTOS.get(i).getMenuName();
-			long price = cartlistDTOS.get(i).getPrice();
-			long amount = cartlistDTOS.get(i).getAmount();
-
-			OrderItemDTO orderItemDTO = new OrderItemDTO(menuName, price, amount, orderId);
-			orderItemDTOS.add(orderItemDTO);
-		}
-
-		return orderItemDTOS;
+		return cartlistDTOS.stream().map(x ->
+			new OrderItemDTO(x.getMenuName(), x.getPrice(), x.getAmount(), orderId)
+		).collect(Collectors.toList());
 	}
 
 }
