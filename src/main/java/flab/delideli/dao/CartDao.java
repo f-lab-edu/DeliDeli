@@ -17,4 +17,6 @@ public interface CartDao {
     void deleteCart(@Param("userId") String userId, @Param("cartId") int cartId);
 
     void deleteCartItem(@Param("cartId") int cartItemId);
+
+    String getCartOwnerId(@Param("cartId") int cartItemId);
 }

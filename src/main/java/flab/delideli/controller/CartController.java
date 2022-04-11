@@ -5,7 +5,10 @@ import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
+import flab.delideli.util.ResponseEntityCode;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,28 +18,35 @@ import java.util.List;
 @RequestMapping("/users/{userid}/carts")
 public class CartController {
 
-    private CartService cartService;
-    private LoginService sessionLoginService;
+	private CartService cartService;
+	private LoginService sessionLoginService;
+	private ResponseEntityCode responseEntityCode;
 
-    @PostMapping
-    public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
-        cartService.insertCart(addCartDTO,userId);
-    }
 
-    @GetMapping
-    public List<CartlistDTO> getCartList(){
-        String currentUserId = sessionLoginService.getSessionUserId();
-        List<CartlistDTO> cartlist=cartService.getCartList(currentUserId);
-        return cartlist;
-    }
+	@PostMapping
+	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
+		cartService.insertCart(addCartDTO, userId);
+	}
 
-    @DeleteMapping("/{cartId}")
-    public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
-        cartService.deleteCart(userId, cartId);
-    }
+	@GetMapping
+	public List<CartlistDTO> getCartList() {
+		String currentUserId = sessionLoginService.getSessionUserId();
+		List<CartlistDTO> cartlist = cartService.getCartList(currentUserId);
+		return cartlist;
+	}
 
-    @DeleteMapping("/{cartItemId}")
-    public void deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
-        cartService.deleteCartItem(userId, cartItemId);
-    }
+	@DeleteMapping("/{cartId}")
+	public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
+		cartService.deleteCart(userId, cartId);
+	}
+
+	@DeleteMapping("/{cartItemId}")
+	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
+		if (cartService.confirmUser(userId, cartItemId)) {
+			cartService.deleteCartItem(userId, cartItemId);
+			return responseEntityCode.OK_RESPONSE_ENTITY;
+		} else {
+			return responseEntityCode.CONFLICT_RESPONSE_ENTITY;
+		}
+	}
 }
