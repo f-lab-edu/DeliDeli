@@ -2,7 +2,11 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.RequestPaymentDTO;
-import flab.delideli.service.PaymentService;
+import flab.delideli.service.payment.ContactPaymentService;
+import flab.delideli.service.payment.CreditCardService;
+import flab.delideli.service.payment.DepositService;
+import flab.delideli.service.payment.KakaoPayService;
+import flab.delideli.service.payment.PaymentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -22,13 +26,41 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
 
 	private PaymentService paymentService;
+	private CreditCardService creditCardService;
+	private DepositService depositService;
+	private KakaoPayService kakaoPayService;
+	private ContactPaymentService contactPaymentService;
 
-	@PostMapping
+	@PostMapping("/credit_card")
 	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "결제")
-	public void pay(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
+	@ApiOperation(value = "카드로 결제")
+	public void payCreditCard(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
 		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
-		paymentService.pay(orderId, userId, requestPaymentDTO);
+		creditCardService.pay(orderId, userId, requestPaymentDTO);
+	}
+
+	@PostMapping("/deposit")
+	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value = "계좌이체로 결제")
+	public void payDeposit(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
+		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
+		depositService.pay(orderId, userId, requestPaymentDTO);
+	}
+
+	@PostMapping("/kakaopay")
+	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value = "카카오페이로 결제")
+	public void payKakaoPay(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
+		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
+		kakaoPayService.pay(orderId, userId, requestPaymentDTO);
+	}
+
+	@PostMapping("/contact_pay")
+	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value = "만나서 결제")
+	public void payContact(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
+		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
+		contactPaymentService.pay(orderId, userId, requestPaymentDTO);
 	}
 
 }

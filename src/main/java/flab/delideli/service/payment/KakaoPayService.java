@@ -1,4 +1,4 @@
-package flab.delideli.service;
+package flab.delideli.service.payment;
 
 import flab.delideli.dao.PaymentDao;
 import flab.delideli.dto.PaymentDTO;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CreditCardService implements PaymentService {
+public class KakaoPayService implements PaymentService {
 
 	private final PaymentDao paymentDao;
 
@@ -19,7 +19,7 @@ public class CreditCardService implements PaymentService {
 	public void pay(Long orderId, String userId, RequestPaymentDTO requestPaymentDTO) {
 
 		PaymentDTO paymentDTO = new PaymentDTO(
-			orderId, userId, PaymentType.CREDIT_CARD,
+			orderId, userId, PaymentType.KAKAO_PAY,
 			requestPaymentDTO.getAmountPaid(), PaymentStatus.BEFORE_CHECK, LocalDateTime.now()
 		);
 

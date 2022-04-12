@@ -1,4 +1,4 @@
-package flab.delideli.service;
+package flab.delideli.service.payment;
 
 import flab.delideli.dto.RequestPaymentDTO;
 
