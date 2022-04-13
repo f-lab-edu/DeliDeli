@@ -38,9 +38,6 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public boolean confirmUser(String userId, int cartItemId) {
-		if (cartDao.getCartOwnerId(cartItemId).equals(userId)) {
-			return true;
-		}
-		return false;
+		return cartDao.getCartOwnerId(cartItemId).equals(userId);
 	}
 }

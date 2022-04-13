@@ -1,11 +1,9 @@
 package flab.delideli.util;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-@Configuration
-public class ResponseEntityCode {
+public final class ResponseEntityCode {
 
 	public static final ResponseEntity<Void> OK_RESPONSE_ENTITY =
 		new ResponseEntity<>(HttpStatus.OK);

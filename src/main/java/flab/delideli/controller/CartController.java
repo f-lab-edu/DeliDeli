@@ -7,7 +7,6 @@ import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
 import flab.delideli.util.ResponseEntityCode;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,6 @@ public class CartController {
 
 	private CartService cartService;
 	private LoginService sessionLoginService;
-	private ResponseEntityCode responseEntityCode;
-
 
 	@PostMapping
 	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
@@ -44,9 +41,9 @@ public class CartController {
 	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
 		if (cartService.confirmUser(userId, cartItemId)) {
 			cartService.deleteCartItem(userId, cartItemId);
-			return responseEntityCode.OK_RESPONSE_ENTITY;
+			return ResponseEntityCode.OK_RESPONSE_ENTITY;
 		} else {
-			return responseEntityCode.CONFLICT_RESPONSE_ENTITY;
+			return ResponseEntityCode.FORBIDDEN_RESPONSE_ENTITY;
 		}
 	}
 }
