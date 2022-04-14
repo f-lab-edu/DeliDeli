@@ -2,12 +2,8 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.RequestPaymentDTO;
-import flab.delideli.service.payment.ContactPaymentStrategy;
-import flab.delideli.service.payment.CreditCardStrategy;
-import flab.delideli.service.payment.DepositStrategy;
-import flab.delideli.service.payment.KakaoPayStrategy;
+import flab.delideli.service.payment.PaymentFactory;
 import flab.delideli.service.payment.PaymentService;
-import flab.delideli.service.payment.PaymentStrategy;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -26,42 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/{orderId}/payment")
 public class PaymentController {
 
-	private CreditCardStrategy creditCardStrategy;
-	private DepositStrategy depositStrategy;
-	private KakaoPayStrategy kakaoPayStrategy;
-	private ContactPaymentStrategy contactPaymentStrategy;
-	private PaymentService paymentService;
+	private final PaymentFactory paymentFactory;
 
-	@PostMapping("/credit_card")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "카드로 결제")
-	public void payCreditCard(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
+	@ApiOperation(value = "결제")
+	public void pay(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
 		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
-		paymentService.pay(orderId, userId, requestPaymentDTO, creditCardStrategy);
-	}
+		final PaymentService paymentService = paymentFactory.getType(requestPaymentDTO.getPaymentType());
 
-	@PostMapping("/deposit")
-	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "계좌이체로 결제")
-	public void payDeposit(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
-		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
-		paymentService.pay(orderId, userId, requestPaymentDTO, depositStrategy);
-	}
-
-	@PostMapping("/kakaopay")
-	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "카카오페이로 결제")
-	public void payKakaoPay(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
-		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
-		paymentService.pay(orderId, userId, requestPaymentDTO, kakaoPayStrategy);
-	}
-
-	@PostMapping("/contact_pay")
-	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "만나서 결제")
-	public void payContact(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
-		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
-		paymentService.pay(orderId, userId, requestPaymentDTO, contactPaymentStrategy);
+		paymentService.pay(orderId, userId, requestPaymentDTO);
 	}
 
 }
