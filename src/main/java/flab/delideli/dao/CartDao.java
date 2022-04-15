@@ -12,11 +12,15 @@ public interface CartDao {
 
     void insertCart(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userid") String userId);
 
-    List<CartlistDTO> getCartList(@Param("userId") String userId);
+    Integer isItemInCart(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userId") String userId);
 
-    void deleteCart(@Param("userId") String userId, @Param("cartId") int cartId);
+    void updateCartItem(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userId") String userId);
+
+    List<CartlistDTO> getCartList(@Param("userId") String userId);
 
     void deleteCartItem(@Param("cartId") int cartItemId);
 
     String getCartOwnerId(@Param("cartId") int cartItemId);
+  
+    void clearCart(@Param("userId") String userId);
 }

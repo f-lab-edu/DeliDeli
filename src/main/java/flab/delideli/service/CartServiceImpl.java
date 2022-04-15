@@ -27,11 +27,6 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void deleteCart(String userId, int cartId) {
-		cartDao.deleteCart(userId, cartId);
-	}
-
-	@Override
 	public void deleteCartItem(String userId, int cartItemId) {
 		cartDao.deleteCartItem(cartItemId);
 	}
@@ -39,5 +34,21 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public boolean confirmUser(String userId, int cartItemId) {
 		return cartDao.getCartOwnerId(cartItemId).equals(userId);
+
+   @Override
+   public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
+       if (cartDao.isItemInCart(addCartDTO, userId) != null)
+           return true;
+       return false;
+   }
+
+   @Override
+   public void updateCartItem(AddCartDTO addCartDTO, String userId) {
+       cartDao.updateCartItem(addCartDTO, userId);
+   }
+
+	 @Override
+	 public void clearCart(String userId) {
+     cartDao.clearCart(userId);
 	}
 }

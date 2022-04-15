@@ -32,11 +32,6 @@ public class CartController {
 		return cartlist;
 	}
 
-	@DeleteMapping("/{cartId}")
-	public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
-		cartService.deleteCart(userId, cartId);
-	}
-
 	@DeleteMapping("/{cartItemId}")
 	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
 		if (cartService.confirmUser(userId, cartItemId)) {
@@ -46,4 +41,9 @@ public class CartController {
 			return ResponseEntityCode.FORBIDDEN_RESPONSE_ENTITY;
 		}
 	}
+
+  @DeleteMapping()
+  public void clearCart(@CurrentUser String userId) {
+    cartService.clearCart(userId);
+  }
 }
