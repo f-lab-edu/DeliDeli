@@ -13,13 +13,13 @@ public class RequestPaymentDTO {
 	@NotNull
 	private PaymentType paymentType;
 	@NotNull
-	private Long amountPaid;
+	private long amountPaid;
 	@NotNull
-	private Long totalPrice;
+	private long totalPrice;
 
 	@Builder
 	public RequestPaymentDTO(PaymentType paymentType,
-		Long amountPaid, Long totalPrice) {
+		long amountPaid, long totalPrice) {
 		this.paymentType = paymentType;
 		this.amountPaid = amountPaid;
 		this.totalPrice = totalPrice;

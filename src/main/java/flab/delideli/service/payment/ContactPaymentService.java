@@ -20,7 +20,7 @@ public class ContactPaymentService implements PaymentService {
 
 		PaymentDTO paymentDTO = new PaymentDTO(
 			orderId, userId, PaymentType.CONTACT_PAYMENT,
-			requestPaymentDTO.getAmountPaid(), PaymentStatus.CONFIRMED, LocalDateTime.now()
+			requestPaymentDTO.getAmountPaid(), PaymentStatus.BEFORE_CHECK, LocalDateTime.now()
 		);
 
 		paymentDao.insertPayment(paymentDTO);

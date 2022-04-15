@@ -14,20 +14,20 @@ import lombok.NoArgsConstructor;
 public class PaymentDTO {
 
 	@NotNull
-	private Long orderId;
+	private long orderId;
 	@NotBlank
 	private String userId;
 	@NotNull
 	private PaymentType paymentType;
 	@NotNull
-	private Long amountPaid;
+	private long amountPaid;
 	@NotNull
 	private PaymentStatus paymentStatus;
 	@NotNull
 	private LocalDateTime paymentDate;
 
 	@Builder
-	public PaymentDTO(Long orderId, String userId, PaymentType paymentType, Long amountPaid,
+	public PaymentDTO(Long orderId, String userId, PaymentType paymentType, long amountPaid,
 		PaymentStatus paymentStatus, LocalDateTime paymentDate) {
 		this.orderId = orderId;
 		this.userId = userId;
