@@ -29,14 +29,8 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public int getCartTotalPrice(String userId) {
 
-		int totalprice = 0;
 		List<CartItemDTO> cartDTOS = cartDao.getCartItemAmountAndPrice(userId);
-
-		for (int i = 0; i < cartDTOS.size(); i++) {
-			int amount = cartDTOS.get(i).getItemAmount();
-			int price = cartDTOS.get(i).getItemPrice();
-			totalprice += amount * price;
-		}
+		int totalprice = cartDTOS.stream().mapToInt(x -> x.getItemPrice() * x.getItemAmount()).sum();
 		return totalprice;
 	}
 
