@@ -8,4 +8,25 @@
     VALUES (#{orderId}, #{userId}, #{payType}, #{payDate}, #{payStatus}, #{amountPaid})
   </insert>
 
+  <select id="selectPaymentSummary" resultMap="paymentDTO" resultType="flab.delideli.dto.PaymentDTO">
+    SELECT order_id, user_id, pay_type, amount_paid, pay_status, pay_date
+    FROM payments
+    WHERE payment_id = #{paymentId} AND user_id = #{userId}
+  </select>
+
+  <select id="selectAllPaymentSummariesOfUser" resultType="long">
+    SELECT payment_id
+    FROM payments
+    WHERE user_id = #{userId}
+  </select>
+
+  <resultMap id="paymentDTO" type="flab.delideli.dto.PaymentDTO">
+    <result column="order_id" property="orderId"></result>
+    <result column="user_id" property="userId"></result>
+    <result column="pay_type" property="paymentType"></result>
+    <result column="amount_paid" property="amountPaid"></result>
+    <result column="pay_status" property="paymentStatus"></result>
+    <result column="pay_date" property="paymentDate"></result>
+  </resultMap>
+
 </mapper>
