@@ -16,7 +16,7 @@ public class ContactPaymentService implements PaymentService {
 	private final PaymentDao paymentDao;
 
 	@Override
-	public void pay(Long orderId, String userId, RequestPaymentDTO requestPaymentDTO) {
+	public void pay(long orderId, String userId, RequestPaymentDTO requestPaymentDTO) {
 
 		PaymentDTO paymentDTO = new PaymentDTO(
 			orderId, userId, PaymentType.CONTACT_PAYMENT,
