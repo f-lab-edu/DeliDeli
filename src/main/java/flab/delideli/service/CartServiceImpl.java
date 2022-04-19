@@ -4,6 +4,7 @@ import flab.delideli.dao.CartDao;
 import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartlistDTO;
 import lombok.AllArgsConstructor;
+import org.mapstruct.ObjectFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,25 +20,35 @@ public class CartServiceImpl implements CartService {
 		cartDao.insertCart(addCartDTO, userId);
 	}
 
-    @Override
-    public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
-        if (cartDao.isItemInCart(addCartDTO, userId) != null)
-            return true;
-        return false;
-    }
-
-    @Override
-    public void updateCartItem(AddCartDTO addCartDTO, String userId) {
-        cartDao.updateCartItem(addCartDTO, userId);
-    }
-
-    public List<CartlistDTO> getCartList(String userId) {
-        List<CartlistDTO> cartlist= cartDao.getCartList(userId);
-        return cartlist;
-    }
+	@Override
+	public List<CartlistDTO> getCartList(String userId) {
+		List<CartlistDTO> cartlist = cartDao.getCartList(userId);
+		return cartlist;
+	}
 
 	@Override
-	public void clearCart(String userId) {
-		cartDao.clearCart(userId);
+	public void deleteCartItem(String userId, int cartItemId) {
+		cartDao.deleteCartItem(cartItemId);
+	}
+
+	@Override
+	public boolean confirmUser(String userId, int cartItemId) {
+		return cartDao.getCartOwnerId(cartItemId).equals(userId);
+
+   @Override
+   public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
+       if (cartDao.isItemInCart(addCartDTO, userId) != null)
+           return true;
+       return false;
+   }
+
+   @Override
+   public void updateCartItem(AddCartDTO addCartDTO, String userId) {
+       cartDao.updateCartItem(addCartDTO, userId);
+   }
+
+	 @Override
+	 public void clearCart(String userId) {
+     cartDao.clearCart(userId);
 	}
 }

@@ -5,7 +5,9 @@ import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
+import flab.delideli.util.ResponseEntityCode;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,26 +20,30 @@ public class CartController {
 	private CartService cartService;
 	private LoginService sessionLoginService;
 
+	@PostMapping
+	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
+		cartService.insertCart(addCartDTO, userId);
+	}
 
-    @PostMapping
-    public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
-        if (cartService.isItemInCart(addCartDTO, userId)) {
-            cartService.updateCartItem(addCartDTO, userId);
-        }
-        else {
-            cartService.insertCart(addCartDTO, userId);
-        }
-    }
-  
-    @GetMapping
-    public List<CartlistDTO> getCartList(){
-        String currentUserId = sessionLoginService.getSessionUserId();
-        List<CartlistDTO> cartlist=cartService.getCartList(currentUserId);
-        return cartlist;
-    }
+	@GetMapping
+	public List<CartlistDTO> getCartList() {
+		String currentUserId = sessionLoginService.getSessionUserId();
+		List<CartlistDTO> cartlist = cartService.getCartList(currentUserId);
+		return cartlist;
+	}
 
-    @DeleteMapping()
-    public void clearCart(@CurrentUser String userId) {
-        cartService.clearCart(userId);
-    }
+	@DeleteMapping("/{cartItemId}")
+	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
+		if (cartService.confirmUser(userId, cartItemId)) {
+			cartService.deleteCartItem(userId, cartItemId);
+			return ResponseEntityCode.OK_RESPONSE_ENTITY;
+		} else {
+			return ResponseEntityCode.FORBIDDEN_RESPONSE_ENTITY;
+		}
+	}
+
+  @DeleteMapping()
+  public void clearCart(@CurrentUser String userId) {
+    cartService.clearCart(userId);
+  }
 }

@@ -42,5 +42,16 @@
         FROM carts
         WHERE user_id = #{userId}
     </delete>
+  
+    <delete id="deleteCartItem">
+        DELETE FROM carts
+        WHERE cart_id = #{cartId}
+    </delete>
+
+    <select id="getCartOwnerId" resultType="string">
+        SELECT user_id
+        FROM carts
+        WHERE cart_id = #{cartId}
+    </select>
 
 </mapper>

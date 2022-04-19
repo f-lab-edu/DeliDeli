@@ -14,5 +14,9 @@ public interface CartService {
 
     List getCartList(String userId);
 
-	void clearCart(String userId);
+    void deleteCartItem(String userId, int cartItemId);
+
+    boolean confirmUser(String userId, int cartItemId);
+    
+    void clearCart(String userId);
 }
