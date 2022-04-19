@@ -6,7 +6,9 @@ import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
+import flab.delideli.util.ResponseEntityCode;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,13 +34,18 @@ public class CartController {
 		return cartDTO;
 	}
 
-	@DeleteMapping("/{cartId}")
-	public void deleteCart(@PathVariable int cartId, @CurrentUser String userId) {
-		cartService.deleteCart(userId, cartId);
+	@DeleteMapping("/{cartItemId}")
+	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
+		if (cartService.confirmUser(userId, cartItemId)) {
+			cartService.deleteCartItem(userId, cartItemId);
+			return ResponseEntityCode.OK_RESPONSE_ENTITY;
+		} else {
+			return ResponseEntityCode.FORBIDDEN_RESPONSE_ENTITY;
+		}
 	}
 
-	@DeleteMapping("/{cartItemId}")
-	public void deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
-		cartService.deleteCartItem(userId, cartItemId);
-	}
+  @DeleteMapping()
+  public void clearCart(@CurrentUser String userId) {
+    cartService.clearCart(userId);
+  }
 }

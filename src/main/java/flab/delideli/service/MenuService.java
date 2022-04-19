@@ -15,8 +15,8 @@ public class MenuService {
 
 	public void addMenu(MenuDTO menuDTO) {
 
-		boolean isExistMenu = menuDao.isExistMenu(menuDTO.getMenuName(), menuDTO.getShopId());
-		if(isExistMenu) {
+		boolean isExistMenuName = menuDao.isExistMenuName(menuDTO.getMenuName(), menuDTO.getShopId());
+		if(isExistMenuName) {
 			throw new AlreadyAddedValueException("해당 가게에 이미 등록한 메뉴입니다.");
 		}
 

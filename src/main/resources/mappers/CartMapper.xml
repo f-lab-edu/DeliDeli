@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="flab.delideli.dao.CartDao" >
-    <insert id = "insertCart">
+<mapper namespace="flab.delideli.dao.CartDao">
+    <insert id="insertCart">
         INSERT INTO carts(user_id, menu_id, amount)
         VALUES (#{userid}, #{addCartDTO.menuId}, #{addCartDTO.amount})
     </insert>
 
+    <select id="isItemInCart" resultType="int">
+        SELECT menu_id
+        FROM carts
+        WHERE user_id = #{userId}
+           AND menu_id = #{addCartDTO.menuId}
+    </select>
+    
+    <update id="updateCartItem">
+        UPDATE carts
+        SET amount = amount + 1
+        WHERE user_id = #{userId}
+          AND menu_id = #{addCartDTO.menuId}
+    </update>
+
     <select id="getCartList" resultMap="getCartLists" resultType="flab.delideli.dto.CartlistDTO">
         SELECT carts.cart_id, carts.menu_id, menu_name, menu_price, amount
-        FROM carts, menus
+        FROM carts,
+             menus
         WHERE carts.user_id = #{userId}
           AND menus.menu_id = carts.menu_id
     </select>
@@ -34,14 +49,21 @@
         <result column="amount" property="itemAmount"></result>
     </resultMap>
 
-    <delete id="deleteCart">
-        DELETE FROM carts
-        WHERE cart_id = #{cartId}
-          AND user_id = #{userId}
+    <delete id="clearCart">
+        DELETE
+        FROM carts
+        WHERE user_id = #{userId}
     </delete>
-
+  
     <delete id="deleteCartItem">
         DELETE FROM carts
         WHERE cart_id = #{cartId}
     </delete>
+
+    <select id="getCartOwnerId" resultType="string">
+        SELECT user_id
+        FROM carts
+        WHERE cart_id = #{cartId}
+    </select>
+
 </mapper>

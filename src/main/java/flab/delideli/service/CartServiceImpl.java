@@ -5,6 +5,7 @@ import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartItemDTO;
 import flab.delideli.dto.CartlistDTO;
 import lombok.AllArgsConstructor;
+import org.mapstruct.ObjectFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,19 +29,34 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public int getCartTotalPrice(String userId) {
-
 		List<CartItemDTO> cartDTOS = cartDao.getCartItemAmountAndPrice(userId);
 		int totalprice = cartDTOS.stream().mapToInt(x -> x.getItemPrice() * x.getItemAmount()).sum();
 		return totalprice;
 	}
 
 	@Override
-	public void deleteCart(String userId, int cartId) {
-		cartDao.deleteCart(userId, cartId);
-	}
-
-	@Override
 	public void deleteCartItem(String userId, int cartItemId) {
 		cartDao.deleteCartItem(cartItemId);
+  }
+
+	@Override
+	public boolean confirmUser(String userId, int cartItemId) {
+		return cartDao.getCartOwnerId(cartItemId).equals(userId);
+
+   @Override
+   public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
+       if (cartDao.isItemInCart(addCartDTO, userId) != null)
+           return true;
+       return false;
+   }
+
+   @Override
+   public void updateCartItem(AddCartDTO addCartDTO, String userId) {
+       cartDao.updateCartItem(addCartDTO, userId);
+   }
+
+	 @Override
+	 public void clearCart(String userId) {
+     cartDao.clearCart(userId);
 	}
 }
