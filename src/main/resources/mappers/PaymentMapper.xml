@@ -11,13 +11,7 @@
   <select id="selectPaymentSummary" resultMap="paymentDTO" resultType="flab.delideli.dto.PaymentDTO">
     SELECT order_id, user_id, pay_type, amount_paid, pay_status, pay_date
     FROM payments
-    WHERE payment_id = #{paymentId} AND user_id = #{userId}
-  </select>
-
-  <select id="selectAllPaymentSummariesOfUser" resultType="long">
-    SELECT payment_id
-    FROM payments
-    WHERE user_id = #{userId}
+    WHERE order_id = #{orderId} AND user_id = #{userId}
   </select>
 
   <resultMap id="paymentDTO" type="flab.delideli.dto.PaymentDTO">

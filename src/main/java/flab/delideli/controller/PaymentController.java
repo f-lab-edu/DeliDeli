@@ -8,7 +8,6 @@ import flab.delideli.service.payment.PaymentFactory;
 import flab.delideli.service.payment.PaymentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -41,17 +40,11 @@ public class PaymentController {
 		paymentService.pay(orderId, userId, requestPaymentDTO);
 	}
 
-	@GetMapping("/{paymentId}")
-	@ApiOperation(value = "한 주문에 대한 결제내역 조회")
-	public PaymentDTO getPaymentSummary(@PathVariable("paymentId") @NotNull long paymentId,
+	@GetMapping("/{orderId}")
+	@ApiOperation(value = "나(유저)의 특정 주문에 대한 결제내역 조회")
+	public PaymentDTO getPaymentSummary(@PathVariable("orderId") @NotNull long orderId,
 		@CurrentUser String userId) {
-		return commonPaymentService.getPaymentSummary(paymentId, userId);
-	}
-
-	@GetMapping
-	@ApiOperation(value = "한 회원의 결제내역들 불러오기")
-	public List<Long> getAllPaymentSummariesOfUser(@CurrentUser String userId) {
-		return commonPaymentService.getAllPaymentSummariesOfUser(userId);
+		return commonPaymentService.getPaymentSummary(orderId, userId);
 	}
 
 }
