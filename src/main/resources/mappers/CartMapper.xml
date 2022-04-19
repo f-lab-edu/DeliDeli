@@ -37,6 +37,18 @@
         <result column="amount" property="amount"></result>
     </resultMap>
 
+    <select id="getCartItemAmountAndPrice" resultMap="getCartItemAmountAndPrice" resultType="flab.delideli.dto.CartItemDTO">
+        SELECT amount, menu_price
+        FROM carts RIGHT OUTER JOIN menus
+        ON carts.menu_id = menus.menu_id
+        WHERE carts.user_id = #{userId}
+    </select>
+
+    <resultMap id="getCartItemAmountAndPrice" type="flab.delideli.dto.CartItemDTO">
+        <result column="menu_price" property="itemPrice"></result>
+        <result column="amount" property="itemAmount"></result>
+    </resultMap>
+
     <delete id="clearCart">
         DELETE
         FROM carts
