@@ -2,7 +2,6 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.AddCartDTO;
-import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
@@ -27,11 +26,10 @@ public class CartController {
 	}
 
 	@GetMapping
-	public CartDTO getCartList(@CurrentUser String userId) {
-		List<CartlistDTO> cartlist = cartService.getCartList(userId);
-		int totalPrice = cartService.getCartTotalPrice(userId);
-		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
-		return cartDTO;
+	public List<CartlistDTO> getCartList() {
+		String currentUserId = sessionLoginService.getSessionUserId();
+		List<CartlistDTO> cartlist = cartService.getCartList(currentUserId);
+		return cartlist;
 	}
 
 	@DeleteMapping("/{cartItemId}")
