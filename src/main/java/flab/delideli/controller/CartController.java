@@ -2,6 +2,7 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.AddCartDTO;
+import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
@@ -18,18 +19,21 @@ import java.util.List;
 public class CartController {
 
 	private CartService cartService;
-	private LoginService sessionLoginService;
 
 	@PostMapping
 	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
+		if (cartService.isItemInCart(addCartDTO, userId)) {
+			cartService.updateCartItem(addCartDTO, userId);
+		}
 		cartService.insertCart(addCartDTO, userId);
 	}
 
 	@GetMapping
-	public List<CartlistDTO> getCartList() {
-		String currentUserId = sessionLoginService.getSessionUserId();
-		List<CartlistDTO> cartlist = cartService.getCartList(currentUserId);
-		return cartlist;
+	public CartDTO getCartList(@CurrentUser String userId) {
+		List<CartlistDTO> cartlist = cartService.getCartList(userId);
+		int totalPrice = cartService.getCartTotalPrice(userId);
+		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
+		return cartDTO;
 	}
 
 	@DeleteMapping("/{cartItemId}")
@@ -42,8 +46,8 @@ public class CartController {
 		}
 	}
 
-  @DeleteMapping()
-  public void clearCart(@CurrentUser String userId) {
-    cartService.clearCart(userId);
-  }
+	@DeleteMapping()
+	public void clearCart(@CurrentUser String userId) {
+		cartService.clearCart(userId);
+	}
 }
