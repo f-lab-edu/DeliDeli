@@ -18,10 +18,21 @@ public class CreditCardService implements PaymentService {
 	@Override
 	public void pay(long orderId, String userId, RequestPaymentDTO requestPaymentDTO) {
 
-		PaymentDTO paymentDTO = new PaymentDTO(
-			orderId, userId, PaymentType.CREDIT_CARD,
-			requestPaymentDTO.getAmountPaid(), PaymentStatus.CONFIRMED, LocalDateTime.now()
-		);
+		if (requestPaymentDTO.getCreditCardCorp() == null
+			&& requestPaymentDTO.getCreditCardNumber() == null) {
+			throw new NullPointerException("카드 정보가 누락되었습니다.");
+		}
+
+		PaymentDTO paymentDTO = PaymentDTO.builder()
+			.orderId(orderId)
+			.userId(userId)
+			.paymentType(PaymentType.CREDIT_CARD)
+			.amountPaid(requestPaymentDTO.getAmountPaid())
+			.paymentStatus(PaymentStatus.CONFIRMED)
+			.paymentDate(LocalDateTime.now())
+			.creditCardCorp(requestPaymentDTO.getCreditCardCorp())
+			.creditCardNumber(requestPaymentDTO.getCreditCardNumber())
+			.build();
 
 		paymentDao.insertPayment(paymentDTO);
 

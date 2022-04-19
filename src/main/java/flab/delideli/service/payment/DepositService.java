@@ -23,10 +23,23 @@ public class DepositService implements PaymentService {
 			throw new PaymentFailureException("결제 금액을 다시 확인해주세요.");
 		}
 
-		PaymentDTO paymentDTO = new PaymentDTO(
-			orderId, userId, PaymentType.DEPOSIT,
-			requestPaymentDTO.getAmountPaid(), PaymentStatus.CONFIRMED, LocalDateTime.now()
-		);
+		if (requestPaymentDTO.getDepositor() == null
+			&& requestPaymentDTO.getAccountNumber() == null
+			&& requestPaymentDTO.getDepositBank() == null) {
+			throw new NullPointerException("계좌 정보가 누락되었습니다.");
+		}
+
+		PaymentDTO paymentDTO = PaymentDTO.builder()
+			.orderId(orderId)
+			.userId(userId)
+			.paymentType(PaymentType.DEPOSIT)
+			.amountPaid(requestPaymentDTO.getAmountPaid())
+			.paymentStatus(PaymentStatus.CONFIRMED)
+			.paymentDate(LocalDateTime.now())
+			.depositor(requestPaymentDTO.getDepositor())
+			.accountNumber(requestPaymentDTO.getAccountNumber())
+			.depositBank(requestPaymentDTO.getDepositBank())
+			.build();
 
 		paymentDao.insertPayment(paymentDTO);
 
