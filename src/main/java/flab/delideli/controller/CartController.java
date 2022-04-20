@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class CartController {
 	}
 
 	@DeleteMapping("/{cartItemId}")
-	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable int cartItemId) {
+	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable @NotNull int cartItemId) {
 		if (cartService.confirmUser(userId, cartItemId)) {
 			cartService.deleteCartItem(userId, cartItemId);
 			return ResponseEntityCode.OK_RESPONSE_ENTITY;
