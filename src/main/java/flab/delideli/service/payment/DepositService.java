@@ -26,7 +26,7 @@ public class DepositService implements PaymentService {
 		if (requestPaymentDTO.getDepositor() == null
 			&& requestPaymentDTO.getAccountNumber() == null
 			&& requestPaymentDTO.getDepositBank() == null) {
-			throw new NullPointerException("계좌 정보가 누락되었습니다.");
+			throw new IllegalArgumentException("계좌 정보가 누락되었습니다.");
 		}
 
 		PaymentDTO paymentDTO = PaymentDTO.builder()

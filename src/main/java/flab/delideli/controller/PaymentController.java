@@ -1,7 +1,9 @@
 package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
+import flab.delideli.annotation.LoginUserLevel;
 import flab.delideli.dto.RequestPaymentDTO;
+import flab.delideli.enums.UserLevel;
 import flab.delideli.service.payment.PaymentFactory;
 import flab.delideli.service.payment.PaymentService;
 import io.swagger.annotations.Api;
@@ -27,6 +29,7 @@ public class PaymentController {
 	@PostMapping("/{orderId}")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "결제")
+	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
 	public void pay(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
 		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
 		final PaymentService paymentService = paymentFactory

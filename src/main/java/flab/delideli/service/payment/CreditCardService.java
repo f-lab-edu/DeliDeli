@@ -20,7 +20,7 @@ public class CreditCardService implements PaymentService {
 
 		if (requestPaymentDTO.getCreditCardCorp() == null
 			&& requestPaymentDTO.getCreditCardNumber() == null) {
-			throw new NullPointerException("카드 정보가 누락되었습니다.");
+			throw new IllegalArgumentException("카드 정보가 누락되었습니다.");
 		}
 
 		PaymentDTO paymentDTO = PaymentDTO.builder()
