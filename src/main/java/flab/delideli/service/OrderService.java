@@ -8,6 +8,7 @@ import flab.delideli.dto.OrderDTO;
 import flab.delideli.dto.OrderItemDTO;
 import flab.delideli.dto.RequestOrderDTO;
 import flab.delideli.exception.MenuIdEmptyException;
+import flab.delideli.exception.UnauthorizedException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,6 +79,14 @@ public class OrderService {
 		return cartlistDTOS.stream().map(x ->
 			new OrderItemDTO(x.getMenuName(), x.getPrice(), x.getAmount(), orderId)
 		).collect(Collectors.toList());
+	}
+
+	public boolean doesOrderIdAndUserIdExist(long orderId, String userId) {
+		if (!orderDao.isOrderIdAndUserIdInOrders(orderId, userId)) {
+			throw new UnauthorizedException("해당 아이디로 접근 불가능한 주문 번호입니다.");
+		}
+
+		return true;
 	}
 
 }
