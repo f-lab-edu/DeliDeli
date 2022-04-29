@@ -12,11 +12,11 @@ public class CartlistDTO {
 	@NotNull
 	private long cartId;
 	@NotNull
-	private int menuId;
+	private long menuId;
 	@NotNull
 	private String menuName;
 	@NotNull
-	private int price;
+	private long price;
 	@NotNull
-	private int amount;
+	private long amount;
 }

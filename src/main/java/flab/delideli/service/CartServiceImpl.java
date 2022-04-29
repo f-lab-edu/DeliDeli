@@ -5,6 +5,7 @@ import flab.delideli.dto.AddCartDTO;
 import flab.delideli.dto.CartItemDTO;
 import flab.delideli.dto.CartlistDTO;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +17,11 @@ public class CartServiceImpl implements CartService {
 	private final CartDao cartDao;
 
 	@Override
-	public void insertCart(AddCartDTO addCartDTO, String userId) {
-		cartDao.insertCart(addCartDTO, userId);
+	public void addItemInCart(AddCartDTO addCartDTO, @NotNull String userid) {
+		if (isItemInCart(addCartDTO, userid)) {
+			cartDao.updateCartItem(addCartDTO, userid);
+		}
+		cartDao.insertCart(addCartDTO, userid);
 	}
 
 	@Override
@@ -27,9 +31,9 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public int getCartTotalPrice(String userId) {
+	public long getCartTotalPrice(String userId) {
 		List<CartItemDTO> cartDTOS = cartDao.getCartItemAmountAndPrice(userId);
-		int totalprice = cartDTOS.stream().mapToInt(x -> x.getItemPrice() * x.getItemAmount()).sum();
+		long totalprice = cartDTOS.stream().mapToLong(x -> x.getItemPrice() * x.getItemAmount()).sum();
 		return totalprice;
 	}
 
@@ -49,11 +53,6 @@ public class CartServiceImpl implements CartService {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void updateCartItem(AddCartDTO addCartDTO, String userId) {
-		cartDao.updateCartItem(addCartDTO, userId);
 	}
 
 	@Override

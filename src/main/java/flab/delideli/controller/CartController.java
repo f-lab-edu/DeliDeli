@@ -23,16 +23,13 @@ public class CartController {
 
 	@PostMapping
 	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
-		if (cartService.isItemInCart(addCartDTO, userId)) {
-			cartService.updateCartItem(addCartDTO, userId);
-		}
-		cartService.insertCart(addCartDTO, userId);
+		cartService.addItemInCart(addCartDTO, userId);
 	}
 
 	@GetMapping
 	public CartDTO getCartList(@CurrentUser String userId) {
 		List<CartlistDTO> cartlist = cartService.getCartList(userId);
-		int totalPrice = cartService.getCartTotalPrice(userId);
+		long totalPrice = cartService.getCartTotalPrice(userId);
 		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
 		return cartDTO;
 	}

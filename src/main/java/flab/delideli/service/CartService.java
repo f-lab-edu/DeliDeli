@@ -7,13 +7,11 @@ import java.util.List;
 
 public interface CartService {
 
-	void insertCart(AddCartDTO addCartDTO, String userId);
+	void addItemInCart(AddCartDTO addCartDTO, String userid);
 
 	boolean isItemInCart(AddCartDTO addCartDTO, String userId);
 
-	int getCartTotalPrice(String userId);
-
-	void updateCartItem(AddCartDTO addCartDTO, String userId);
+	long getCartTotalPrice(String userId);
 
 	List getCartList(String userId);
 
