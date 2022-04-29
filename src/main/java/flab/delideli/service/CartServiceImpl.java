@@ -2,6 +2,7 @@ package flab.delideli.service;
 
 import flab.delideli.dao.CartDao;
 import flab.delideli.dto.AddCartDTO;
+import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartItemDTO;
 import flab.delideli.dto.CartlistDTO;
 import lombok.AllArgsConstructor;
@@ -21,20 +22,17 @@ public class CartServiceImpl implements CartService {
 		if (isItemInCart(addCartDTO, userid)) {
 			cartDao.updateCartItem(addCartDTO, userid);
 		}
-		cartDao.insertCart(addCartDTO, userid);
+		else
+			cartDao.insertCart(addCartDTO, userid);
 	}
 
 	@Override
-	public List<CartlistDTO> getCartList(String userId) {
+	public CartDTO getCartList(String userId) {
+		List<CartItemDTO> cartItemDTOS = cartDao.getCartItemAmountAndPrice(userId);
+		long totalPrice = cartItemDTOS.stream().mapToLong(x -> x.getItemPrice() * x.getItemAmount()).sum();
 		List<CartlistDTO> cartlist = cartDao.getCartList(userId);
-		return cartlist;
-	}
-
-	@Override
-	public long getCartTotalPrice(String userId) {
-		List<CartItemDTO> cartDTOS = cartDao.getCartItemAmountAndPrice(userId);
-		long totalprice = cartDTOS.stream().mapToLong(x -> x.getItemPrice() * x.getItemAmount()).sum();
-		return totalprice;
+		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
+		return cartDTO;
 	}
 
 	@Override

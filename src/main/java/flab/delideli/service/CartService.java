@@ -1,6 +1,7 @@
 package flab.delideli.service;
 
 import flab.delideli.dto.AddCartDTO;
+import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartlistDTO;
 
 import java.util.List;
@@ -11,9 +12,7 @@ public interface CartService {
 
 	boolean isItemInCart(AddCartDTO addCartDTO, String userId);
 
-	long getCartTotalPrice(String userId);
-
-	List getCartList(String userId);
+	CartDTO getCartList(String userId);
 
 	void deleteCartItem(String userId, int cartItemId);
 

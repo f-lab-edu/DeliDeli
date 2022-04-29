@@ -28,9 +28,7 @@ public class CartController {
 
 	@GetMapping
 	public CartDTO getCartList(@CurrentUser String userId) {
-		List<CartlistDTO> cartlist = cartService.getCartList(userId);
-		long totalPrice = cartService.getCartTotalPrice(userId);
-		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
+		CartDTO cartDTO = cartService.getCartList(userId);
 		return cartDTO;
 	}
 
