@@ -38,7 +38,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void deleteCartItem(String userId, int cartItemId) {
 		cartDao.deleteCartItem(cartItemId);
-	}
+  }
 
 	@Override
 	public boolean confirmUser(String userId, int cartItemId) {

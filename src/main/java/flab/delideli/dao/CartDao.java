@@ -26,4 +26,5 @@ public interface CartDao {
 	String getCartOwnerId(@Param("cartId") int cartItemId);
 
 	void clearCart(@Param("userId") String userId);
+
 }
