@@ -15,7 +15,7 @@ public interface CartDao {
 
 	List<CartlistDTO> getCartList(@Param("userId") String userId);
 
-	void deleteCartItem(@Param("cartId") int cartItemId);
+	void deleteCartItem(@Param("cartId") long cartItemId);
 
 	List<CartItemDTO> getCartItemAmountAndPrice(@Param("userId") String userId);
 
@@ -23,8 +23,7 @@ public interface CartDao {
 
 	void updateCartItem(@Param("addCartDTO") AddCartDTO addCartDTO, @Param("userId") String userId);
 
-	String getCartOwnerId(@Param("cartId") int cartItemId);
+	String getCartOwnerId(@Param("cartId") long cartItemId);
 
 	void clearCart(@Param("userId") String userId);
-
 }

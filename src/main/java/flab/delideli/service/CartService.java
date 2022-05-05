@@ -14,9 +14,7 @@ public interface CartService {
 
 	CartDTO getCartList(String userId);
 
-	void deleteCartItem(String userId, int cartItemId);
-
-	boolean confirmUser(String userId, int cartItemId);
+	void deleteCartItem(String userId, long cartItemId);
 
 	void clearCart(String userId);
 }

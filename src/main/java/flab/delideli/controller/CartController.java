@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users/carts")
+@RequestMapping("/carts")
 public class CartController {
 
 	private CartService cartService;
@@ -33,13 +33,8 @@ public class CartController {
 	}
 
 	@DeleteMapping("/{cartItemId}")
-	public ResponseEntity deleteCartItem(@CurrentUser String userId, @PathVariable @NotNull int cartItemId) {
-		if (cartService.confirmUser(userId, cartItemId)) {
-			cartService.deleteCartItem(userId, cartItemId);
-			return ResponseEntityCode.OK_RESPONSE_ENTITY;
-		} else {
-			return ResponseEntityCode.FORBIDDEN_RESPONSE_ENTITY;
-		}
+	public void deleteCartItem(@CurrentUser String userId, @PathVariable long cartItemId) {
+		cartService.deleteCartItem(userId, cartItemId);
 	}
 
 	@DeleteMapping()

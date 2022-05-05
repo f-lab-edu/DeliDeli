@@ -7,6 +7,7 @@ import flab.delideli.dto.CartItemDTO;
 import flab.delideli.dto.CartlistDTO;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,14 +37,14 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void deleteCartItem(String userId, int cartItemId) {
-		cartDao.deleteCartItem(cartItemId);
-  }
-
-	@Override
-	public boolean confirmUser(String userId, int cartItemId) {
-		return cartDao.getCartOwnerId(cartItemId).equals(userId);
-	}
+	public void deleteCartItem(String userId, long cartItemId) {
+		if (cartDao.getCartOwnerId(cartItemId).equals(userId)) {
+			cartDao.deleteCartItem(cartItemId);
+		}
+		else {
+			throw new IllegalArgumentException("로그인한 유저가 아닙니다.");
+		}
+    }
 
 	@Override
 	public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
