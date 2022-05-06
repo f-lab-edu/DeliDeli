@@ -8,10 +8,10 @@ import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
 import flab.delideli.util.ResponseEntityCode;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController

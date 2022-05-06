@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -57,5 +58,12 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void clearCart(String userId) {
 		cartDao.clearCart(userId);
+	}
+
+	private void validateMatchCartOwner(long cartItemId, String userId) {
+		// 내 장바구니에 담긴게 아닌 것을 삭제하려고 하는 경우
+		if (!userId.equals(cartDao.getCartOwnerId(cartItemId))) {
+			throw new IllegalArgumentException("잘못된 값을 입력하셨습니다 : " + cartItemId);
+		}
 	}
 }
