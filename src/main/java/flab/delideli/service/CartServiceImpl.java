@@ -36,7 +36,14 @@ public class CartServiceImpl implements CartService {
 		CartDTO cartDTO = new CartDTO(cartlist, totalPrice);
 		return cartDTO;
 	}
-
+	/*
+		장바구니 물품 삭제
+		요구사항 정리
+		1. 삭제하려는 사람이 본인이 맞는지 확인해야합니다.
+		2. 맞으면 원하는 물품을 삭제합니다.
+		3. 본인이 아니면 잘못된접근이라는 예외를 보냅니다.
+		4. cartItemId가 존재하지 않으면 예외를 보냅니다.
+	 */
 	@Override
 	public void deleteCartItem(String userId, long cartItemId) {
 		if (cartDao.getCartOwnerId(cartItemId).equals(userId)) {
