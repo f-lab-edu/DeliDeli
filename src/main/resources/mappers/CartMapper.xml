@@ -16,7 +16,7 @@
     
     <update id="updateCartItem">
         UPDATE carts
-        SET amount = amount + 1
+        SET amount = #{addCartDTO.amount}
         WHERE user_id = #{userId}
           AND menu_id = #{addCartDTO.menuId}
     </update>

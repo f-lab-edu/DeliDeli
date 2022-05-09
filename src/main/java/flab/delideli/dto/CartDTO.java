@@ -10,5 +10,5 @@ import java.util.List;
 public class CartDTO {
 
 	List<CartlistDTO> cartlistDTOS;
-	int totalPrice;
+	long totalPrice;
 }
