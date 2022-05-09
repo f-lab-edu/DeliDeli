@@ -51,16 +51,16 @@ public class CartServiceImpl implements CartService {
 		cartDao.deleteCartItem(cartItemId);
 	}
 
+	@Override
+	public void clearCart(String userId) {
+		cartDao.clearCart(userId);
+	}
+
 	private boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
 		if (cartDao.isItemInCart(addCartDTO, userId) != null) {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void clearCart(String userId) {
-		cartDao.clearCart(userId);
 	}
 
 	private void validateMatchCartOwner(long cartItemId, String userId) {
