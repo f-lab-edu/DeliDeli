@@ -37,18 +37,21 @@ public class CartServiceImpl implements CartService {
 		return cartDTO;
 	}
 
+	/*
+		장바구니 물품 삭제
+		요구사항 정리
+		1. 삭제하려는 사람이 본인이 맞는지 확인해야합니다.
+		2. 맞으면 원하는 물품을 삭제합니다.
+		3. 본인이 아니면 잘못된접근이라는 예외를 보냅니다.
+		4. cartItemId가 존재하지 않으면 예외를 보냅니다.
+	 */
 	@Override
 	public void deleteCartItem(String userId, long cartItemId) {
-		if (cartDao.getCartOwnerId(cartItemId).equals(userId)) {
-			cartDao.deleteCartItem(cartItemId);
-		}
-		else {
-			throw new IllegalArgumentException("로그인한 유저가 아닙니다.");
-		}
-    }
+		validateMatchCartOwner(cartItemId, userId);
+		cartDao.deleteCartItem(cartItemId);
+	}
 
-	@Override
-	public boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
+	private boolean isItemInCart(AddCartDTO addCartDTO, String userId) {
 		if (cartDao.isItemInCart(addCartDTO, userId) != null) {
 			return true;
 		}

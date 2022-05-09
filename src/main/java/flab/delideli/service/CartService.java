@@ -10,8 +10,6 @@ public interface CartService {
 
 	void addItemInCart(AddCartDTO addCartDTO, String userid);
 
-	boolean isItemInCart(AddCartDTO addCartDTO, String userId);
-
 	CartDTO getCartList(String userId);
 
 	void deleteCartItem(String userId, long cartItemId);
