@@ -8,4 +8,6 @@ public interface PaymentDao {
 
 	PaymentDTO selectPaymentSummary(long orderId, String userId);
 
+	void updatePaymentStatusCanceled(long paymentId, String userId);
+
 }
