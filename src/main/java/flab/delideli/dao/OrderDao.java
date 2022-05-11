@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface OrderDao {
 
-	Long insertOrder(OrderDTO orderDTO);
+	long insertOrder(OrderDTO orderDTO);
 
 	void insertOrderMenus(List<OrderItemDTO> orderItemDTOS);
 
