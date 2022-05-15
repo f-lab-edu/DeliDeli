@@ -3,6 +3,8 @@ package flab.delideli.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import flab.delideli.enums.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,8 @@ public class OrderDTO {
 	private Long totalPrice;
 	@NotNull
 	private Long shopId;
+	@NotNull
+	private OrderStatus paymentStatus;
 
 	private String request;
 
@@ -30,7 +34,7 @@ public class OrderDTO {
 
 	@Builder
 	public OrderDTO(String userId, String address, String phoneNumber, String paymentMethod,
-		Long totalPrice, Long shopId, String request, LocalDate orderDate) {
+	                Long totalPrice, Long shopId, String request, LocalDate orderDate) {
 		this.userId = userId;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
