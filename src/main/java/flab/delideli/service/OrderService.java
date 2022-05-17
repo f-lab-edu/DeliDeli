@@ -7,6 +7,7 @@ import flab.delideli.dto.CartlistDTO;
 import flab.delideli.dto.OrderDTO;
 import flab.delideli.dto.OrderItemDTO;
 import flab.delideli.dto.RequestOrderDTO;
+import flab.delideli.enums.OrderStatus;
 import flab.delideli.exception.MenuIdEmptyException;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,7 +28,7 @@ public class OrderService {
 		OrderDTO orderDTO = new OrderDTO(userId, requestOrderDTO.getAddress(),
 			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentMethod(),
 			getTotalPrice(userId), requestOrderDTO.getShopId(),
-			requestOrderDTO.getRequest(), LocalDate.now());
+			requestOrderDTO.getRequest(), LocalDate.now(), OrderStatus.ORDER_COMPLETE);
 
 		Long orderId = orderDao.insertOrder(orderDTO);
 

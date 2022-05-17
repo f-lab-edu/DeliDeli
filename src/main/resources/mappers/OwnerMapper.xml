@@ -9,4 +9,21 @@
         WHERE order_id = #{orderId}
     </update>
 
+    <select id="getShopIdInShops">
+        SELECT shop_id
+        FROM shops
+        WHERE owner_id = #{userId}
+    </select>
+    
+    <select id="getShopIdInOrders">
+        SELECT shop_id
+        FROM orders
+        WHERE order_id = #{orderId}
+    </select>
+
+    <update id="updateOrderStatusCancel">
+        UPDATE orders
+        SET order_status = 'ORDER_CANCEL'
+        WHERE order_id = #{orderId}
+    </update>
 </mapper>

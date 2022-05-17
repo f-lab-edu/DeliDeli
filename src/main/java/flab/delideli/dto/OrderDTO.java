@@ -8,6 +8,7 @@ import flab.delideli.enums.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.core.annotation.Order;
 
 @Getter
 @NoArgsConstructor
@@ -26,7 +27,7 @@ public class OrderDTO {
 	@NotNull
 	private Long shopId;
 	@NotNull
-	private OrderStatus paymentStatus;
+	private OrderStatus orderStatus;
 
 	private String request;
 
@@ -34,7 +35,7 @@ public class OrderDTO {
 
 	@Builder
 	public OrderDTO(String userId, String address, String phoneNumber, String paymentMethod,
-	                Long totalPrice, Long shopId, String request, LocalDate orderDate) {
+	                Long totalPrice, Long shopId, String request, LocalDate orderDate, OrderStatus orderStatus) {
 		this.userId = userId;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
@@ -43,6 +44,7 @@ public class OrderDTO {
 		this.shopId = shopId;
 		this.request = request;
 		this.orderDate = orderDate;
+		this.orderStatus = orderStatus;
 	}
 
 }
