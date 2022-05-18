@@ -26,11 +26,11 @@ public class OrderService {
 	public void registerOrder(RequestOrderDTO requestOrderDTO, String userId) {
 
 		OrderDTO orderDTO = new OrderDTO(userId, requestOrderDTO.getAddress(),
-			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentMethod(),
+			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPayType(),
 			getTotalPrice(userId), requestOrderDTO.getShopId(),
 			requestOrderDTO.getRequest(), LocalDate.now(), OrderStatus.ORDER_COMPLETE);
 
-		Long orderId = orderDao.insertOrder(orderDTO);
+		long orderId = orderDao.insertOrder(orderDTO);
 
 		List<OrderItemDTO> orderItemDTOS =
 			getOrderItemDTO(userId, orderId);

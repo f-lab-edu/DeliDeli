@@ -15,7 +15,7 @@ public class RequestOrderDTO {
 	@NotBlank
 	private String phoneNumber;
 	@NotBlank
-	private String paymentMethod;
+	private String payType;
 	@NotNull
 	private Long shopId;
 
@@ -23,10 +23,10 @@ public class RequestOrderDTO {
 
 	@Builder
 	public RequestOrderDTO(String address, String phoneNumber,
-		String paymentMethod, Long shopId, String request) {
+		String payType, Long shopId, String request) {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.paymentMethod = paymentMethod;
+		this.payType = payType;
 		this.shopId = shopId;
 		this.request = request;
 	}

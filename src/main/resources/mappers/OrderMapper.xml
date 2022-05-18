@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="flab.delideli.dao.MenuDao" >
+<mapper namespace="flab.delideli.dao.OrderDao" >
 
-  <insert id="insertOrder" useGeneratedKeys="true"
-    keyProperty="orders.order_id" parameterType="flab.delideli.dto.OrderDTO">
-    INSERT INTO orders (user_id, address, phone_number, payment_method, total_price, request, order_date, shop_id)
-    VALUES (#{userId}, #{address}, #{phoneNumber}, #{paymentMethod},
-          #{totalPrice}, #{request}, #{orderDate}, #{shopId})
+  <insert id="insertOrder"
+          keyProperty="orders.order_id" parameterType="flab.delideli.dto.OrderDTO">
+    INSERT INTO orders (user_id, address, phone_number, pay_type, total_price, request, order_date, shop_id, order_status)
+    VALUES (#{userId}, #{address}, #{phoneNumber}, #{payType},
+          #{totalPrice}, #{request}, #{orderDate}, #{shopId}, 'ORDER_COMPLETE')
    </insert>
 
   <insert id="insertOrderMenus" parameterType="java.util.List">
