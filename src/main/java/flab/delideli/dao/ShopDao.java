@@ -21,4 +21,5 @@ public interface ShopDao {
 	boolean isCurrentUserMatchingOwnerId(@Param("shopId") Long shopId,
 		@Param("ownerId") String ownerId);
 
+	String getOwnerIdInShops(long shopId);
 }

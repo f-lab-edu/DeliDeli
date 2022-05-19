@@ -6,4 +6,5 @@ public interface OwnerService {
 
 	void updateOrderStatusCancel(long orderId, String userId);
 
+	void updateOrderStatusCookingComplete(long orderId, String userId);
 }

@@ -47,7 +47,7 @@ public class OrderService {
 
 		List<CartlistDTO> cartlistDTOS = cartDao.getCartList(userId);
 		List<Long> cartMenuIds = cartlistDTOS.stream().map(
-			x -> x.getMenuId()).collect(Collectors.toList());
+			CartlistDTO::getMenuId).collect(Collectors.toList());
 
 		int menuCount = menuDao.getMenuCount(cartMenuIds);
 		if (cartMenuIds.size() != menuCount) {
@@ -59,7 +59,7 @@ public class OrderService {
 		long totalPrice = 0;
 
 		List<Long> menuAmountList = cartlistDTOS.stream().map(
-			x -> x.getAmount()).collect(Collectors.toList());
+			CartlistDTO::getAmount).collect(Collectors.toList());
 
 		for (int i = 0; i < menuPriceList.size(); i++) {
 			long menuPrice = menuPriceList.get(i);

@@ -15,44 +15,44 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private LoginService sessionLoginService;
+	private LoginService sessionLoginService;
 
-    public LoginInterceptor(@Qualifier("sessionLoginService") LoginService sessionLoginService) {
-        this.sessionLoginService = sessionLoginService;
-    }
+	public LoginInterceptor(@Qualifier("sessionLoginService") LoginService sessionLoginService) {
+		this.sessionLoginService = sessionLoginService;
+	}
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String currentUserId = sessionLoginService.getSessionUserId();
-        if (currentUserId != null) {
-            return true;
-        }
+		String currentUserId = sessionLoginService.getSessionUserId();
+		if (currentUserId != null) {
+			return true;
+		}
 
-        if (!(handler instanceof HandlerMethod)) {
-            return true;
-        }
+		if (!(handler instanceof HandlerMethod)) {
+			return true;
+		}
 
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        LoginUserLevel loginUserLevel = handlerMethod.getMethodAnnotation(LoginUserLevel.class);
-        String role = loginUserLevel.role().name();
-        String userLevel = sessionLoginService.getSessionUserLevel();
+		HandlerMethod handlerMethod = (HandlerMethod) handler;
+		LoginUserLevel loginUserLevel = handlerMethod.getMethodAnnotation(LoginUserLevel.class);
+		String role = loginUserLevel.role().name();
+		String userLevel = sessionLoginService.getSessionUserLevel();
 
-        if (loginUserLevel == null ||
-            (loginUserLevel != null && role.equals(userLevel))) {
-            return true;
-        }
+		if (loginUserLevel == null ||
+				(loginUserLevel != null && role.equals(userLevel))) {
+			return true;
+		}
 
-        throw new UnauthorizedException("접근 권한이 없습니다.");
+		throw new UnauthorizedException("접근 권한이 없습니다.");
 
-    }
+	}
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-    }
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+	}
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-    }
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+	}
 
 }
