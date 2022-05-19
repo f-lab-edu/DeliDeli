@@ -13,8 +13,8 @@ public class CommonPaymentService {
 
 	private final PaymentDao paymentDao;
 
-	public PaymentDTO getPaymentSummary(long orderId, String userId) {
-		return paymentDao.selectPaymentSummary(orderId, userId);
+	public PaymentDTO getPaymentSummary(long paymentId, String userId) {
+		return paymentDao.selectPaymentSummary(paymentId, userId);
 	}
 
 	@Transactional
