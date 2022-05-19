@@ -12,10 +12,10 @@ import flab.delideli.service.payment.PaymentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +52,14 @@ public class PaymentController {
 		orderService.doesOrderIdAndUserIdExist(orderId, userId);
 
 		return commonPaymentService.getPaymentSummary(orderId, userId);
+	}
+
+	@PatchMapping("/{paymentId}")
+	@ApiOperation(value = "결제 상태를 CANCELED로 업데이트")
+	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
+	public void cancelPayment(@PathVariable("paymentId") long paymentId,
+		@CurrentUser String userId) {
+		commonPaymentService.cancelPayment(paymentId, userId);
 	}
 
 }

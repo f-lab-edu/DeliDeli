@@ -22,5 +22,11 @@
     <result column="pay_status" property="paymentStatus"></result>
     <result column="pay_date" property="paymentDate"></result>
   </resultMap>
+  
+  <update id="updatePaymentStatusCanceled">
+    UPDATE payments
+    SET pay_status = 'CANCELED'
+    WHERE payment_id = #{paymentId} AND user_id = #{userId}
+  </update>
 
 </mapper>
