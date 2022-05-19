@@ -5,7 +5,6 @@ import flab.delideli.annotation.LoginUserLevel;
 import flab.delideli.dto.PaymentDTO;
 import flab.delideli.dto.RequestPaymentDTO;
 import flab.delideli.enums.UserLevel;
-import flab.delideli.service.OrderService;
 import flab.delideli.service.payment.CommonPaymentService;
 import flab.delideli.service.payment.PaymentFactory;
 import flab.delideli.service.payment.PaymentService;
@@ -31,7 +30,6 @@ public class PaymentController {
 
 	private final PaymentFactory paymentFactory;
 	private final CommonPaymentService commonPaymentService;
-	private final OrderService orderService;
 
 	@PostMapping("/{orderId}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -49,8 +47,6 @@ public class PaymentController {
 	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
 	public PaymentDTO getPaymentSummary(@PathVariable("orderId") long orderId,
 		@CurrentUser String userId) {
-		orderService.doesOrderIdAndUserIdExist(orderId, userId);
-
 		return commonPaymentService.getPaymentSummary(orderId, userId);
 	}
 

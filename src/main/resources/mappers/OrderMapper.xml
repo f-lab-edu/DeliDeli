@@ -18,11 +18,4 @@
     </foreach>
   </insert>
 
-  <select id="isOrderIdAndUserIdInOrders" resultType = "boolean">
-    SELECT EXISTS
-        (SELECT 1 FROM orders
-        WHERE order_id = #{orderId}
-          AND user_id = #{userId})
-  </select>
-
 </mapper>

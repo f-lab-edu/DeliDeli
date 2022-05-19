@@ -10,6 +10,4 @@ public interface OrderDao {
 
 	void insertOrderMenus(List<OrderItemDTO> orderItemDTOS);
 
-	boolean isOrderIdAndUserIdInOrders(long orderId, String userId);
-
 }

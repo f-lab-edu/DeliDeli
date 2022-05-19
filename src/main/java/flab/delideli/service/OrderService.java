@@ -81,12 +81,4 @@ public class OrderService {
 		).collect(Collectors.toList());
 	}
 
-	public boolean doesOrderIdAndUserIdExist(long orderId, String userId) {
-		if (!orderDao.isOrderIdAndUserIdInOrders(orderId, userId)) {
-			throw new UnauthorizedException("해당 아이디로 접근 불가능한 주문 번호입니다.");
-		}
-
-		return true;
-	}
-
 }
