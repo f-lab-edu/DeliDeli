@@ -18,10 +18,14 @@ public class KakaoPayService implements PaymentService {
 	@Override
 	public void pay(long orderId, String userId, RequestPaymentDTO requestPaymentDTO) {
 
-		PaymentDTO paymentDTO = new PaymentDTO(
-			orderId, userId, PaymentType.KAKAO_PAY,
-			requestPaymentDTO.getAmountPaid(), PaymentStatus.CONFIRMED, LocalDateTime.now()
-		);
+		PaymentDTO paymentDTO = PaymentDTO.builder()
+			.orderId(orderId)
+			.userId(userId)
+			.paymentType(PaymentType.KAKAO_PAY)
+			.amountPaid(requestPaymentDTO.getAmountPaid())
+			.paymentStatus(PaymentStatus.CONFIRMED)
+			.paymentDate(LocalDateTime.now())
+			.build();
 
 		paymentDao.insertPayment(paymentDTO);
 

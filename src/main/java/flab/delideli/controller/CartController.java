@@ -2,42 +2,43 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.AddCartDTO;
+import flab.delideli.dto.CartDTO;
 import flab.delideli.dto.CartlistDTO;
 import flab.delideli.service.CartService;
 import flab.delideli.service.LoginService;
+import flab.delideli.util.ResponseEntityCode;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users/{userid}/carts")
+@RequestMapping("/carts")
 public class CartController {
 
 	private CartService cartService;
-	private LoginService sessionLoginService;
 
+	@PostMapping
+	public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId) {
+		cartService.addItemInCart(addCartDTO, userId);
+	}
 
-    @PostMapping
-    public void addCart(@RequestBody AddCartDTO addCartDTO, @CurrentUser String userId){
-        if (cartService.isItemInCart(addCartDTO, userId)) {
-            cartService.updateCartItem(addCartDTO, userId);
-        }
-        else {
-            cartService.insertCart(addCartDTO, userId);
-        }
-    }
-  
-    @GetMapping
-    public List<CartlistDTO> getCartList(){
-        String currentUserId = sessionLoginService.getSessionUserId();
-        List<CartlistDTO> cartlist=cartService.getCartList(currentUserId);
-        return cartlist;
-    }
+	@GetMapping
+	public CartDTO getCartList(@CurrentUser String userId) {
+		CartDTO cartDTO = cartService.getCartList(userId);
+		return cartDTO;
+	}
 
-    @DeleteMapping()
-    public void clearCart(@CurrentUser String userId) {
-        cartService.clearCart(userId);
-    }
+	@DeleteMapping("/{cartItemId}")
+	public void deleteCartItem(@CurrentUser String userId, @PathVariable long cartItemId) {
+		cartService.deleteCartItem(userId, cartItemId);
+	}
+
+	@DeleteMapping()
+	public void clearCart(@CurrentUser String userId) {
+		cartService.clearCart(userId);
+	}
 }

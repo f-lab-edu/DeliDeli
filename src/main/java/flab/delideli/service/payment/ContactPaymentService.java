@@ -18,10 +18,14 @@ public class ContactPaymentService implements PaymentService {
 	@Override
 	public void pay(long orderId, String userId, RequestPaymentDTO requestPaymentDTO) {
 
-		PaymentDTO paymentDTO = new PaymentDTO(
-			orderId, userId, PaymentType.CONTACT_PAYMENT,
-			requestPaymentDTO.getAmountPaid(), PaymentStatus.BEFORE_CHECK, LocalDateTime.now()
-		);
+		PaymentDTO paymentDTO = PaymentDTO.builder()
+			.orderId(orderId)
+			.userId(userId)
+			.paymentType(PaymentType.CONTACT_PAYMENT)
+			.amountPaid(requestPaymentDTO.getAmountPaid())
+			.paymentStatus(PaymentStatus.BEFORE_CHECK)
+			.paymentDate(LocalDateTime.now())
+			.build();
 
 		paymentDao.insertPayment(paymentDTO);
 

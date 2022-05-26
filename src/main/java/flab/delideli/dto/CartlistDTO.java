@@ -3,13 +3,20 @@ package flab.delideli.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @NoArgsConstructor
 public class CartlistDTO {
 
-	private int cartId;
-	private int menuId;
+	@NotNull
+	private long cartId;
+	@NotNull
+	private long menuId;
+	@NotNull
 	private String menuName;
-	private int price;
-	private int amount;
+	@NotNull
+	private long price;
+	@NotNull
+	private long amount;
 }

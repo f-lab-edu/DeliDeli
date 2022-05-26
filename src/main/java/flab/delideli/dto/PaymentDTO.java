@@ -26,15 +26,31 @@ public class PaymentDTO {
 	@NotNull
 	private LocalDateTime paymentDate;
 
+	private String creditCardCorp;
+
+	private String creditCardNumber;
+
+	private String depositor;
+
+	private String accountNumber;
+
+	private String depositBank;
+
 	@Builder
-	public PaymentDTO(Long orderId, String userId, PaymentType paymentType, long amountPaid,
-		PaymentStatus paymentStatus, LocalDateTime paymentDate) {
+	public PaymentDTO(long orderId, String userId, PaymentType paymentType, long amountPaid,
+		PaymentStatus paymentStatus, LocalDateTime paymentDate, String creditCardCorp,
+		String creditCardNumber, String depositor, String accountNumber, String depositBank) {
 		this.orderId = orderId;
 		this.userId = userId;
 		this.paymentType = paymentType;
 		this.amountPaid = amountPaid;
 		this.paymentStatus = paymentStatus;
 		this.paymentDate = paymentDate;
+		this.creditCardCorp = creditCardCorp;
+		this.creditCardNumber = creditCardNumber;
+		this.depositor = depositor;
+		this.accountNumber = accountNumber;
+		this.depositBank = depositBank;
 	}
 
 }
