@@ -2,8 +2,10 @@ package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
 import flab.delideli.annotation.LoginUserLevel;
+import flab.delideli.dto.PaymentDTO;
 import flab.delideli.dto.RequestPaymentDTO;
 import flab.delideli.enums.UserLevel;
+import flab.delideli.service.payment.CommonPaymentService;
 import flab.delideli.service.payment.PaymentFactory;
 import flab.delideli.service.payment.PaymentService;
 import io.swagger.annotations.Api;
@@ -11,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,17 +29,35 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
 
 	private final PaymentFactory paymentFactory;
+	private final CommonPaymentService commonPaymentService;
 
 	@PostMapping("/{orderId}")
 	@ResponseStatus(HttpStatus.CREATED)
-	@ApiOperation(value = "결제")
-	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
-	public void pay(@PathVariable("orderId") Long orderId, @CurrentUser String userId,
+
+	@ApiOperation(value = "주문에 대한 결제")
+  @LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
+	public void pay(@PathVariable("orderId") long orderId, @CurrentUser String userId,
 		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
 		final PaymentService paymentService = paymentFactory
 			.getType(requestPaymentDTO.getPaymentType());
 
 		paymentService.pay(orderId, userId, requestPaymentDTO);
+	}
+
+	@GetMapping("/{paymentId}")
+	@ApiOperation(value = "결제 번호로 결제내역 조회")
+	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
+	public PaymentDTO getPaymentSummary(@PathVariable("paymentId") long paymentId,
+		@CurrentUser String userId) {
+		return commonPaymentService.getPaymentSummary(paymentId, userId);
+	}
+
+	@PatchMapping("/{paymentId}")
+	@ApiOperation(value = "결제 상태를 CANCELED로 업데이트")
+	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
+	public void cancelPayment(@PathVariable("paymentId") long paymentId,
+		@CurrentUser String userId) {
+		commonPaymentService.cancelPayment(paymentId, userId);
 	}
 
 }
