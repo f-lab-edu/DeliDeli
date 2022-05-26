@@ -36,7 +36,7 @@
     <resultMap id="selectOrderDTOs" type="flab.delideli.dto.OrderDTO">
         <result column="user_id" property="userId"></result>
         <result column="phone_number" property="phoneNumber"></result>
-        <result column="pay_type" property="payType"></result>
+        <result column="pay_type" property="paymentType"></result>
         <result column="total_price" property="totalPrice"></result>
         <result column="order_date" property="orderDate"></result>
         <result column="shop_id" property="shopId"></result>

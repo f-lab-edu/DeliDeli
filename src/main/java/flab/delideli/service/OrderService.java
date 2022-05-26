@@ -9,6 +9,7 @@ import flab.delideli.dto.OrderItemDTO;
 import flab.delideli.dto.RequestOrderDTO;
 import flab.delideli.enums.OrderStatus;
 import flab.delideli.exception.MenuIdEmptyException;
+import flab.delideli.exception.UnauthorizedException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class OrderService {
 	public void registerOrder(RequestOrderDTO requestOrderDTO, String userId) {
 
 		OrderDTO orderDTO = new OrderDTO(userId, requestOrderDTO.getAddress(),
-			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPayType(),
+			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentType(),
 			getTotalPrice(userId), requestOrderDTO.getShopId(),
 			requestOrderDTO.getRequest(), LocalDate.now(), OrderStatus.ORDER_COMPLETE);
 

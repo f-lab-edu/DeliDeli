@@ -6,7 +6,7 @@
   <insert id="insertOrder"
           keyProperty="orders.order_id" parameterType="flab.delideli.dto.OrderDTO">
     INSERT INTO orders (user_id, address, phone_number, pay_type, total_price, request, order_date, shop_id, order_status)
-    VALUES (#{userId}, #{address}, #{phoneNumber}, #{payType},
+    VALUES (#{userId}, #{address}, #{phoneNumber}, #{paymentType},
           #{totalPrice}, #{request}, #{orderDate}, #{shopId}, 'ORDER_COMPLETE')
    </insert>
 

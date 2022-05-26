@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import flab.delideli.enums.OrderStatus;
+import flab.delideli.enums.PaymentType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class OrderDTO {
 	@NotBlank
 	private String phoneNumber;
 	@NotBlank
-	private String payType;
+	private PaymentType paymentType;
 
 	private long totalPrice;
 
@@ -35,12 +36,12 @@ public class OrderDTO {
 	private LocalDate orderDate;
 
 	@Builder
-	public OrderDTO(String userId, String address, String phoneNumber, String payType,
+	public OrderDTO(String userId, String address, String phoneNumber, PaymentType paymentType,
 	                long totalPrice, long shopId, String request, LocalDate orderDate, OrderStatus orderStatus) {
 		this.userId = userId;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.payType = payType;
+		this.paymentType = paymentType;
 		this.totalPrice = totalPrice;
 		this.shopId = shopId;
 		this.request = request;
