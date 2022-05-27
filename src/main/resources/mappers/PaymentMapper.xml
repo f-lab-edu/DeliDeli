@@ -46,4 +46,11 @@
         SET pay_status = 'CONFIRMED_UNABLE_TO_CANCEL'
         WHERE order_id = #{orderId}
     </update>
+
+    <update id="updatePaymentStatusCanceledByOwner">
+        UPDATE payments
+        SET pay_status = 'CANCELED'
+        WHERE order_id = #{orderId}
+    </update>
+
 </mapper>

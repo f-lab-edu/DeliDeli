@@ -16,5 +16,6 @@ public interface PaymentDao {
 
 	void updatePaymentStatusUnableCancel(long orderId);
 
+	void updatePaymentStatusCanceledByOwner(long orderId);
 }
 
