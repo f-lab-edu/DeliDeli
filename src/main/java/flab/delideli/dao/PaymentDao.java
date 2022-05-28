@@ -12,8 +12,6 @@ public interface PaymentDao {
 
 	void updatePaymentStatusCanceled(long paymentId, String userId);
 
-	PaymentDTO selectPaymentDTO(long orderId);
-
 	void updatePaymentStatusUnableCancel(long orderId);
 
 	void updatePaymentStatusCanceledByOwner(long orderId);
