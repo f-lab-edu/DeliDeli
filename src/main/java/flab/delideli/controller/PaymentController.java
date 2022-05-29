@@ -51,12 +51,4 @@ public class PaymentController {
 		return commonPaymentService.getPaymentSummary(paymentId, userId);
 	}
 
-	@PatchMapping("/{paymentId}")
-	@ApiOperation(value = "결제 상태를 CANCELED로 업데이트")
-	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
-	public void cancelPayment(@PathVariable("paymentId") long paymentId,
-		@CurrentUser String userId) {
-		commonPaymentService.cancelPayment(paymentId, userId);
-	}
-
 }
