@@ -27,8 +27,7 @@ public class OrderController {
 	@PostMapping(value = "/{userId}")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "주문 등록")
-	public void registerOrder(@RequestBody @Valid RequestOrderDTO requestOrderDTO,
-		@PathVariable("userId") @CurrentUser String userId) {
+	public void registerOrder(@RequestBody @Valid RequestOrderDTO requestOrderDTO, @CurrentUser String userId) {
 		orderService.registerOrder(requestOrderDTO, userId);
 	}
 

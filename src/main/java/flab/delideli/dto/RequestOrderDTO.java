@@ -2,6 +2,8 @@ package flab.delideli.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import flab.delideli.enums.PaymentType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,8 @@ public class RequestOrderDTO {
 	private String address;
 	@NotBlank
 	private String phoneNumber;
-	@NotBlank
-	private String paymentMethod;
+	@NotNull
+	private PaymentType paymentType;
 	@NotNull
 	private Long shopId;
 
@@ -23,10 +25,10 @@ public class RequestOrderDTO {
 
 	@Builder
 	public RequestOrderDTO(String address, String phoneNumber,
-		String paymentMethod, Long shopId, String request) {
+		PaymentType paymentType, Long shopId, String request) {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.paymentMethod = paymentMethod;
+		this.paymentType = paymentType;
 		this.shopId = shopId;
 		this.request = request;
 	}

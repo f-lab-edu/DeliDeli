@@ -34,6 +34,12 @@
     WHERE owner_id = #{ownerId} AND shop_id = #{shopId}
   </select>
 
+  <select id="getOwnerIdInShops" resultType="String">
+    SELECT owner_id
+    FROM shops
+    WHERE shop_id = #{shopId}
+  </select>
+
   <resultMap id="selectShop" type="flab.delideli.dto.ShopDTO">
     <result column="shop_name" property="shopName"/>
     <result column="shop_tel" property="shopTel"/>

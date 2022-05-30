@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="flab.delideli.dao.MenuDao" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.PaymentDao">
 
-  <insert id="insertPayment" parameterType="flab.delideli.dto.PaymentDTO">
-    INSERT INTO payments
+    <insert id="insertPayment" parameterType="flab.delideli.dto.PaymentDTO">
+        INSERT INTO payments
         (order_id, user_id, pay_type, pay_date, pay_status, amount_paid,
          card_corp, card_number, depositor, account_number, deposit_bank)
-    VALUES
-        (#{orderId}, #{userId}, #{payType}, #{payDate}, #{payStatus}, #{amountPaid},
-         #{card_corp, jdbcType=VARCHAR}, #{card_number, jdbcType=VARCHAR},
-         #{depositor, jdbcType=VARCHAR}, #{account_number, jdbcType=VARCHAR},
-         #{deposit_bank, jdbcType=VARCHAR})
-  </insert>
+        VALUES (#{orderId}, #{userId}, #{payType}, #{payDate}, #{payStatus}, #{amountPaid},
+                #{card_corp, jdbcType=VARCHAR}, #{card_number, jdbcType=VARCHAR},
+                #{depositor, jdbcType=VARCHAR}, #{account_number, jdbcType=VARCHAR},
+                #{deposit_bank, jdbcType=VARCHAR})
+    </insert>
 
-  <select id="selectPaymentSummary" resultMap="paymentDTO" resultType="flab.delideli.dto.PaymentDTO">
-    SELECT order_id, user_id, pay_type, amount_paid, pay_status, pay_date
-    FROM payments
-    WHERE payment_id = #{paymentId} AND user_id = #{userId}
-  </select>
+    <select id="selectPaymentSummary" resultMap="paymentDTO" resultType="flab.delideli.dto.PaymentDTO">
+        SELECT order_id, user_id, pay_type, amount_paid, pay_status, pay_date
+        FROM payments
+        WHERE payment_id = #{paymentId}
+          AND user_id = #{userId}
+    </select>
 
-  <resultMap id="paymentDTO" type="flab.delideli.dto.PaymentDTO">
-    <result column="order_id" property="orderId"></result>
-    <result column="user_id" property="userId"></result>
-    <result column="pay_type" property="paymentType"></result>
-    <result column="amount_paid" property="amountPaid"></result>
-    <result column="pay_status" property="paymentStatus"></result>
-    <result column="pay_date" property="paymentDate"></result>
-  </resultMap>
-  
-  <update id="updatePaymentStatusCanceled">
-    UPDATE payments
-    SET pay_status = 'CANCELED'
-    WHERE payment_id = #{paymentId} AND user_id = #{userId}
-  </update>
+    <resultMap id="paymentDTO" type="flab.delideli.dto.PaymentDTO">
+        <result column="order_id" property="orderId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="pay_type" property="paymentType"></result>
+        <result column="amount_paid" property="amountPaid"></result>
+        <result column="pay_status" property="paymentStatus"></result>
+        <result column="pay_date" property="paymentDate"></result>
+    </resultMap>
+
+    <update id="updatePaymentStatusCanceled">
+        UPDATE payments
+        SET pay_status = 'CANCELED'
+        WHERE payment_id = #{paymentId}
+          AND user_id = #{userId}
+    </update>
+
+    <update id="updatePaymentStatusUnableCancel">
+        UPDATE payments
+        SET pay_status = 'CONFIRMED_UNABLE_TO_CANCEL'
+        WHERE order_id = #{orderId}
+    </update>
+
+    <update id="updatePaymentStatusCanceledByOwner">
+        UPDATE payments
+        SET pay_status = 'CANCELED'
+        WHERE order_id = #{orderId}
+    </update>
 
 </mapper>

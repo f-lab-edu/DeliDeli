@@ -1,7 +1,7 @@
 package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
-import flab.delideli.annotation.LoginUserLevel;
+import flab.delideli.annotation.UserAuthorization;
 import flab.delideli.dto.MenuDTO;
 import flab.delideli.dto.UpdateMenuDTO;
 import flab.delideli.enums.UserLevel;
@@ -33,7 +33,7 @@ public class MenuController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "메뉴 등록")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
 	public void addMenu(@RequestBody @Valid MenuDTO menuDTO,
 		@PathVariable Long shopId, @CurrentUser String ownerId) {
 
@@ -44,7 +44,7 @@ public class MenuController {
 
 	@PatchMapping
 	@ApiOperation(value = "메뉴 수정")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
 	public void updateMenu(@RequestBody @Valid UpdateMenuDTO updateMenuDTO,
 		@PathVariable Long shopId, @CurrentUser String ownerId) {
 
@@ -55,7 +55,7 @@ public class MenuController {
 
 	@DeleteMapping(value = "/{menuId}")
 	@ApiOperation(value = "메뉴 삭제")
-	@LoginUserLevel(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
 	public void deleteMenu(@RequestBody @PathVariable("menuId") Long menuId,
 		@PathVariable Long shopId, @CurrentUser String ownerId) {
 

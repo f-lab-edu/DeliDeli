@@ -17,19 +17,19 @@
     SELECT count(*)
     FROM menus
     WHERE menu_id IN
-        <foreach collection="list" item="i" index="idx"
+        <foreach collection="list" item="i"
           open="(" close=")" separator=",">
-          #{i[idx]}
+          #{i}
         </foreach>
   </select>
 
-  <select id="getMenuPriceList" resultType="list">
+  <select id="getMenuPriceList" parameterType="java.util.List" resultType="java.lang.Long">
     SELECT menu_price
     FROM menus
     WHERE menu_id IN
-        <foreach collection="list" item="i" index="idx"
+        <foreach collection="list" item="i"
           open="(" close=")" separator=",">
-          #{i[idx]}
+         #{i}
         </foreach>
   </select>
 

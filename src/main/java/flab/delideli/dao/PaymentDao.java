@@ -1,6 +1,9 @@
 package flab.delideli.dao;
 
 import flab.delideli.dto.PaymentDTO;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 
 public interface PaymentDao {
 
@@ -10,4 +13,7 @@ public interface PaymentDao {
 
 	void updatePaymentStatusCanceled(long paymentId, String userId);
 
+	void updatePaymentStatusUnableCancel(long orderId);
+
+	void updatePaymentStatusCanceledByOwner(long orderId);
 }

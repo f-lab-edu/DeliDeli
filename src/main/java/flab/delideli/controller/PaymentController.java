@@ -1,7 +1,7 @@
 package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
-import flab.delideli.annotation.LoginUserLevel;
+import flab.delideli.annotation.UserAuthorization;
 import flab.delideli.dto.PaymentDTO;
 import flab.delideli.dto.RequestPaymentDTO;
 import flab.delideli.enums.UserLevel;
@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +32,8 @@ public class PaymentController {
 
 	@PostMapping("/{orderId}")
 	@ResponseStatus(HttpStatus.CREATED)
-
 	@ApiOperation(value = "주문에 대한 결제")
-  @LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
+	@UserAuthorization(role = UserLevel.MEMBER_LEVEL)
 	public void pay(@PathVariable("orderId") long orderId, @CurrentUser String userId,
 		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
 		final PaymentService paymentService = paymentFactory
@@ -46,18 +44,9 @@ public class PaymentController {
 
 	@GetMapping("/{paymentId}")
 	@ApiOperation(value = "결제 번호로 결제내역 조회")
-	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
+	@UserAuthorization(role = UserLevel.MEMBER_LEVEL)
 	public PaymentDTO getPaymentSummary(@PathVariable("paymentId") long paymentId,
 		@CurrentUser String userId) {
 		return commonPaymentService.getPaymentSummary(paymentId, userId);
 	}
-
-	@PatchMapping("/{paymentId}")
-	@ApiOperation(value = "결제 상태를 CANCELED로 업데이트")
-	@LoginUserLevel(role = UserLevel.MEMBER_LEVEL)
-	public void cancelPayment(@PathVariable("paymentId") long paymentId,
-		@CurrentUser String userId) {
-		commonPaymentService.cancelPayment(paymentId, userId);
-	}
-
 }

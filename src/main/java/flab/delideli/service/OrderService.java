@@ -7,6 +7,7 @@ import flab.delideli.dto.CartlistDTO;
 import flab.delideli.dto.OrderDTO;
 import flab.delideli.dto.OrderItemDTO;
 import flab.delideli.dto.RequestOrderDTO;
+import flab.delideli.enums.OrderStatus;
 import flab.delideli.exception.MenuIdEmptyException;
 import flab.delideli.exception.UnauthorizedException;
 import java.time.LocalDate;
@@ -26,11 +27,11 @@ public class OrderService {
 	public void registerOrder(RequestOrderDTO requestOrderDTO, String userId) {
 
 		OrderDTO orderDTO = new OrderDTO(userId, requestOrderDTO.getAddress(),
-			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentMethod(),
+			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentType(),
 			getTotalPrice(userId), requestOrderDTO.getShopId(),
-			requestOrderDTO.getRequest(), LocalDate.now());
+			requestOrderDTO.getRequest(), LocalDate.now(), OrderStatus.ORDER_COMPLETE);
 
-		Long orderId = orderDao.insertOrder(orderDTO);
+		long orderId = orderDao.insertOrder(orderDTO);
 
 		List<OrderItemDTO> orderItemDTOS =
 			getOrderItemDTO(userId, orderId);
@@ -47,7 +48,7 @@ public class OrderService {
 
 		List<CartlistDTO> cartlistDTOS = cartDao.getCartList(userId);
 		List<Long> cartMenuIds = cartlistDTOS.stream().map(
-			x -> x.getMenuId()).collect(Collectors.toList());
+			CartlistDTO::getMenuId).collect(Collectors.toList());
 
 		int menuCount = menuDao.getMenuCount(cartMenuIds);
 		if (cartMenuIds.size() != menuCount) {
@@ -59,7 +60,7 @@ public class OrderService {
 		long totalPrice = 0;
 
 		List<Long> menuAmountList = cartlistDTOS.stream().map(
-			x -> x.getAmount()).collect(Collectors.toList());
+			CartlistDTO::getAmount).collect(Collectors.toList());
 
 		for (int i = 0; i < menuPriceList.size(); i++) {
 			long menuPrice = menuPriceList.get(i);
