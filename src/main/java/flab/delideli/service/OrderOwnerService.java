@@ -6,6 +6,7 @@ import flab.delideli.dao.ShopDao;
 import flab.delideli.dto.OrderDTO;
 import flab.delideli.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +22,7 @@ public class OrderOwnerService implements OwnerService {
 	@Transactional
 	public void updateOrderStatusCooking(long orderId, String userId) {
 		validateCorrectOwnerShop(userId, orderId);
-		OrderDTO orderDTO = getOrderDTO(orderId);
-		if (orderDTO.getOrderStatus() == OrderStatus.ORDER_CANCEL) {
-			throw new IllegalStateException("고객에 의해 취소된 주문입니다.");
-		} else if (orderDTO.getOrderStatus() != OrderStatus.ORDER_COMPLETE) {
-			throw new IllegalStateException("조리시작할 수 없는 주문입니다.");
-		}
+		validateCorrectOrderStatus(orderId);
 		ownerDao.updateOrderStatusCooking(orderId);
 		paymentDao.updatePaymentStatusUnableCancel(orderId);
 	}
@@ -35,12 +31,7 @@ public class OrderOwnerService implements OwnerService {
 	@Transactional
 	public void updateOrderStatusCancel(long orderId, String userId) {
 		validateCorrectOwnerShop(userId, orderId);
-		OrderDTO orderDTO = getOrderDTO(orderId);
-		if (orderDTO.getOrderStatus() == OrderStatus.ORDER_CANCEL) {
-			throw new IllegalStateException("고객요청에 의해 이미 취소된 주문입니다..");
-		} else if (orderDTO.getOrderStatus() != OrderStatus.ORDER_COMPLETE) {
-			throw new IllegalStateException("조리시작할 수 없는 주문입니다.");
-		}
+		validateCorrectOrderStatus(orderId);
 		ownerDao.updateOrderStatusCancel(orderId);
 		paymentDao.updatePaymentStatusCanceledByOwner(orderId);
 	}
@@ -60,6 +51,15 @@ public class OrderOwnerService implements OwnerService {
 		long shopId = ownerDao.getShopIdInOrders(orderId);
 		if (!userId.equals(shopDao.getOwnerIdInShops(shopId))) {
 			throw new IllegalArgumentException("잘못된 값이 들어왔습니다.");
+		}
+	}
+
+	private void validateCorrectOrderStatus(long orderId) {
+		OrderDTO orderDTO = getOrderDTO(orderId);
+		if (orderDTO.getOrderStatus() == OrderStatus.ORDER_CANCEL) {
+			throw new IllegalStateException("고객 요청에 의해 이미 취소된 주문입니다.");
+		} else if (orderDTO.getOrderStatus() != OrderStatus.ORDER_COMPLETE) {
+			throw new IllegalStateException("변경 불가능한 주문입니다.");
 		}
 	}
 
