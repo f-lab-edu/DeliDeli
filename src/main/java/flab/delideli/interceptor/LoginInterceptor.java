@@ -1,6 +1,6 @@
 package flab.delideli.interceptor;
 
-import flab.delideli.annotation.LoginUserLevel;
+import flab.delideli.annotation.UserAuthorization;
 import flab.delideli.exception.UnauthorizedException;
 import flab.delideli.service.LoginService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,12 +34,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 		}
 
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
-		LoginUserLevel loginUserLevel = handlerMethod.getMethodAnnotation(LoginUserLevel.class);
-		String role = loginUserLevel.role().name();
+		UserAuthorization userAuthorization = handlerMethod.getMethodAnnotation(UserAuthorization.class);
+		String role = userAuthorization.role().name();
 		String userLevel = sessionLoginService.getSessionUserLevel();
 
-		if (loginUserLevel == null ||
-				(loginUserLevel != null && role.equals(userLevel))) {
+		if (userAuthorization == null || (userAuthorization != null && role.equals(userLevel))) {
 			return true;
 		}
 
