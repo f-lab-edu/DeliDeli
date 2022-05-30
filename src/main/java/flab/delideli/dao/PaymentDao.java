@@ -4,6 +4,7 @@ import flab.delideli.dto.PaymentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
+
 public interface PaymentDao {
 
 	void insertPayment(PaymentDTO paymentDTO);
@@ -16,4 +17,3 @@ public interface PaymentDao {
 
 	void updatePaymentStatusCanceledByOwner(long orderId);
 }
-

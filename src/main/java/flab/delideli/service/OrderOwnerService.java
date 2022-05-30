@@ -22,7 +22,8 @@ public class OrderOwnerService implements OwnerService {
 	@Transactional
 	public void updateOrderStatusCooking(long orderId, String userId) {
 		validateCorrectOwnerShop(userId, orderId);
-		validateCorrectOrderStatus(orderId);
+		OrderDTO orderDTO = getOrderDTO(orderId);
+		validateCorrectOrderStatus(orderDTO);
 		ownerDao.updateOrderStatusCooking(orderId);
 		paymentDao.updatePaymentStatusUnableCancel(orderId);
 	}
@@ -31,7 +32,8 @@ public class OrderOwnerService implements OwnerService {
 	@Transactional
 	public void updateOrderStatusCancel(long orderId, String userId) {
 		validateCorrectOwnerShop(userId, orderId);
-		validateCorrectOrderStatus(orderId);
+		OrderDTO orderDTO = getOrderDTO(orderId);
+		validateCorrectOrderStatus(orderDTO);
 		ownerDao.updateOrderStatusCancel(orderId);
 		paymentDao.updatePaymentStatusCanceledByOwner(orderId);
 	}
@@ -54,8 +56,7 @@ public class OrderOwnerService implements OwnerService {
 		}
 	}
 
-	private void validateCorrectOrderStatus(long orderId) {
-		OrderDTO orderDTO = getOrderDTO(orderId);
+	private void validateCorrectOrderStatus(OrderDTO orderDTO) {
 		if (orderDTO.getOrderStatus() == OrderStatus.ORDER_CANCEL) {
 			throw new IllegalStateException("고객 요청에 의해 이미 취소된 주문입니다.");
 		} else if (orderDTO.getOrderStatus() != OrderStatus.ORDER_COMPLETE) {

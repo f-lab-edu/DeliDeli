@@ -49,5 +49,4 @@ public class PaymentController {
 		@CurrentUser String userId) {
 		return commonPaymentService.getPaymentSummary(paymentId, userId);
 	}
-
 }
