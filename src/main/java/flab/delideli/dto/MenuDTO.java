@@ -15,9 +15,9 @@ public class MenuDTO {
 	@NotBlank
 	private String menuName;
 	@NotNull
-	private Long menuPrice;
+	private long menuPrice;
 	@NotNull
-	private Long shopId;
+	private long shopId;
 	@NotNull
 	private MenuStock menuStock;
 
@@ -26,7 +26,7 @@ public class MenuDTO {
 	private FoodCategory menuCategory;
 
 	@Builder
-	public MenuDTO(String menuName, Long menuPrice, Long shopId,
+	public MenuDTO(String menuName, long menuPrice, long shopId,
 		MenuStock menuStock, String menuInfo, FoodCategory menuCategory) {
 		this.menuName = menuName;
 		this.menuPrice = menuPrice;
