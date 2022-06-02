@@ -4,6 +4,6 @@ public enum UserLevel {
 
 		ADMIN_LEVEL,
 		OWNER_LEVEL,
-		MEMBER_LEVEL
-
+		MEMBER_LEVEL,
+		RIDER_LEVEL
 }
