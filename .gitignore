@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+**/src/main/resources/mappers/TestMapper.xml
+**/src/main/java/flab/delideli/dao/test
 
 ###OS Files###
 .DS_Store

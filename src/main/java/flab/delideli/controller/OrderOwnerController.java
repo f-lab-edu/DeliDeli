@@ -15,19 +15,19 @@ public class OrderOwnerController {
 	private final OwnerService ownerService;
 
 	@PatchMapping
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void updateOrderStatusOK(@PathVariable long orderId, @CurrentUser String userId) {
 		ownerService.updateOrderStatusCooking(orderId, userId);
 	}
 
 	@PatchMapping("/cancel")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void updateOrderStatusCancel(@PathVariable long orderId, @CurrentUser String userId) {
 		ownerService.updateOrderStatusCancel(orderId, userId);
 	}
 
 	@PatchMapping("/complete")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void updateOrderStatusComplete(@PathVariable long orderId, @CurrentUser String userId) {
 		ownerService.updateOrderStatusCookingComplete(orderId, userId);
 	}
