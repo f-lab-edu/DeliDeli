@@ -1,18 +1,19 @@
 package flab.delideli.service;
 
 import flab.delideli.dao.MenuDao;
+import flab.delideli.dao.test.TestDao;
 import flab.delideli.dto.MenuDTO;
+import flab.delideli.dto.UpdateMenuDTO;
 import flab.delideli.enums.FoodCategory;
 import flab.delideli.enums.MenuStock;
 import flab.delideli.exception.AlreadyAddedValueException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -20,6 +21,8 @@ class MenuServiceTest {
 
 	@Autowired
 	private MenuService menuService;
+	@Autowired
+	private TestDao testDao;
 	@Autowired
 	private MenuDao menuDao;
 
@@ -37,18 +40,43 @@ class MenuServiceTest {
 
 	@AfterEach
 	void tearDown() {
-		menuDao.deleteMenuDTO(menuDTO1);
-		menuDao.deleteMenuDTO(menuDTO3);
+		menuDTO1 = testDao.selectMenuDTO("라면", 1);
+		testDao.deleteMenuDTO(menuDTO1);
+		testDao.deleteMenuDTO(menuDTO3);
 	}
 
-	@Test //이미 존재하는 메뉴일때 예외를 출력하는지 확인하는 테스트. 이미 존재하는 메뉴를 넣으면 예외를 불러온다.
-	void PuttingAlreadyExistingMenuCreatesException() {
+	@Test
+	@DisplayName("이미 존재하는 메뉴일 때 예외를 출력")
+	void puttingAlreadyExistingMenuCreatesException() {
 		assertThrows(AlreadyAddedValueException.class, () -> menuService.addMenu(menuDTO2));
 	}
 
-	@Test // 존재하지않으면 등록하는 테스트
-	void AddIfMenuDoesNotExist() {
+	@Test
+	@DisplayName("기존에 없던 메뉴라면 메뉴등록")
+	void addIfMenuDoesNotExist() {
 		menuService.addMenu(menuDTO3);
 	}
 
+	@Test
+	@DisplayName("기존에 없던 메뉴를 수정하려고 한다면 예외를 출력")
+	void editingNotExistingMenuCreatesException() {
+		assertThrows(IllegalArgumentException.class, () -> menuService.updateMenu(new UpdateMenuDTO
+				(1000, 0, MenuStock.DEFAULT, "열라면", FoodCategory.KOREAN_FOOD, Boolean.TRUE)));
+	}
+
+	@Test
+	@DisplayName("메인메뉴의 가격을 0원으로 변경하려고 할 때 예외를 출력")
+	void changingMenuPriceToZeroCreatesException() {
+		assertThrows(IllegalArgumentException.class, () -> menuService.updateMenu(UpdateMenuDTO.builder()
+				.menuId(1).menuPrice(0).build()
+		));
+	}
+
+	@Test
+	@DisplayName("기존에 있는 메뉴이고, 가격을 0으로 바꾸는 경우가 아닐 때 메뉴를 수정")
+	void updateMenu() {
+		menuService.updateMenu(UpdateMenuDTO.builder()
+				.menuId(testDao.selectMenuId(menuDTO1.getMenuName(), menuDTO1.getShopId())).menuPrice(12400).build());
+
+	}
 }

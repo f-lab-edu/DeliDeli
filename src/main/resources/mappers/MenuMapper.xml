@@ -65,10 +65,4 @@
     WHERE menu_id = #{menuId} AND shop_id = #{shopId}
   </delete>
 
-  <delete id="deleteMenuDTO">
-    DELETE FROM menus
-    WHERE menu_name = #{menuName} AND menu_price = #{menuPrice}
-     AND shop_id = #{shopId} AND menu_stock = #{menuStock}
-      AND menu_info = #{menuInfo} AND menu_category = #{menuCategory}
-  </delete>
 </mapper>

@@ -21,5 +21,4 @@ public interface MenuDao {
 
 	void deleteMenu(@Param("menuId") Long menuId, @Param("shopId") Long shopId);
 
-	void deleteMenuDTO(MenuDTO menuDTO);
 }
