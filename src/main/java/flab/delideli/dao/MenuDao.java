@@ -11,7 +11,7 @@ public interface MenuDao {
 
 	void insertMenu(MenuDTO menuDTO);
 
-	boolean isExistMenuName(@Param("menuName") String menuName, @Param("shopId") Long shopId);
+	boolean isExistMenuName(@Param("menuName") String menuName, @Param("shopId") long shopId);
 
 	int getMenuCount(List<Long> cartMenuIds);
 
@@ -19,7 +19,7 @@ public interface MenuDao {
 
 	void updateMenu(@Param("updateMenuDTO") UpdateMenuDTO updateMenuDTO);
 
-	void deleteMenu(@Param("menuId") Long menuId, @Param("shopId") Long shopId);
+	void deleteMenu(@Param("menuId") long menuId);
 
 	boolean isExistMenuId(long menuId);
 

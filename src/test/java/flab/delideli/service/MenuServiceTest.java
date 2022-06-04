@@ -32,10 +32,10 @@ class MenuServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		menuDTO1 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE, "신라면", FoodCategory.KOREAN_FOOD);
+		menuDTO1 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE, Boolean.TRUE, "신라면", FoodCategory.KOREAN_FOOD);
 		menuDao.insertMenu(menuDTO1);
-		menuDTO2 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE,"신라면", FoodCategory.KOREAN_FOOD);
-		menuDTO3 = new MenuDTO("스파게티", 16000, 1, MenuStock.DEFAULT, Boolean.TRUE, "토마토", FoodCategory.WESTERN_FOOD);
+		menuDTO2 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE, Boolean.TRUE,"신라면", FoodCategory.KOREAN_FOOD);
+		menuDTO3 = new MenuDTO("스파게티", 16000, 1, MenuStock.DEFAULT, Boolean.TRUE, Boolean.TRUE, "토마토", FoodCategory.WESTERN_FOOD);
 	}
 
 	@AfterEach
@@ -79,4 +79,15 @@ class MenuServiceTest {
 				.menuId(testDao.selectMenuId(menuDTO1.getMenuName(), menuDTO1.getShopId())).menuPrice(12400).build());
 	}
 
+	@Test
+	@DisplayName("기존에 없던 메뉴를 삭제하려고 한다면 예외를 출력")
+	void deletingNotExistingMenuCreatesException() {
+		assertThrows(IllegalArgumentException.class, () -> menuService.deleteMenu(100000));
+	}
+	
+	@Test
+	@DisplayName("기존에 있는 메뉴 삭제")
+	void deleteMenu() {
+		menuService.deleteMenu(testDao.selectMenuId("라면", 1));
+	}
 }
