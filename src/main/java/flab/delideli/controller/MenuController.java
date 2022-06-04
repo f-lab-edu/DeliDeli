@@ -42,16 +42,16 @@ public class MenuController {
 
 	}
 
-	@PatchMapping
-	@ApiOperation(value = "메뉴 수정")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
-	public void updateMenu(@RequestBody @Valid UpdateMenuDTO updateMenuDTO,
-		@PathVariable Long shopId, @CurrentUser String ownerId) {
-
-		shopService.verifyShopOwner(shopId, ownerId);
-		menuService.updateMenu(updateMenuDTO);
-
-	}
+//	@PatchMapping
+//	@ApiOperation(value = "메뉴 수정")
+//	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+//	public void updateMenu(@RequestBody @Valid UpdateMenuDTO updateMenuDTO,
+//		@PathVariable Long shopId, @CurrentUser String ownerId) {
+//
+//		shopService.verifyShopOwner(shopId, ownerId);
+//		menuService.updateMenu(updateMenuDTO);
+//
+//	}
 
 	@DeleteMapping(value = "/{menuId}")
 	@ApiOperation(value = "메뉴 삭제")

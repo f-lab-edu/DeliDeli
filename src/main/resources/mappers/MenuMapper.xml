@@ -4,8 +4,8 @@
 <mapper namespace="flab.delideli.dao.MenuDao" >
 
   <insert id="insertMenu">
-    INSERT INTO menus (menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category)
-    VALUES (#{menuName}, #{menuPrice}, #{shopId}, #{menuStock}, #{menuInfo}, #{menuCategory})
+    INSERT INTO menus (menu_name, menu_price, shop_id, menu_stock, is_main_menu, menu_info, menu_category)
+    VALUES (#{menuName}, #{menuPrice}, #{shopId}, #{menuStock}, #{isMainMenu}, #{menuInfo}, #{menuCategory})
   </insert>
 
   <select id="isExistMenuName" resultType="boolean">
@@ -65,4 +65,13 @@
     WHERE menu_id = #{menuId} AND shop_id = #{shopId}
   </delete>
 
+  <select id="isExistMenuId" resultType="boolean">
+    SELECT EXISTS (SELECT 1 FROM menus WHERE menu_id = #{menuId})
+  </select>
+
+  <select id="selectIsMainMenu" resultType="boolean">
+    SELECT is_main_menu
+    FROM menus
+    WHERE menu_id = #{menuId}
+  </select>
 </mapper>

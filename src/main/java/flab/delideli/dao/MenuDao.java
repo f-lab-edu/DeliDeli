@@ -21,4 +21,7 @@ public interface MenuDao {
 
 	void deleteMenu(@Param("menuId") Long menuId, @Param("shopId") Long shopId);
 
+	boolean isExistMenuId(long menuId);
+
+	Boolean selectIsMainMenu(long menuId);
 }

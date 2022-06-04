@@ -32,10 +32,10 @@ class MenuServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		menuDTO1 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, "신라면", FoodCategory.KOREAN_FOOD);
+		menuDTO1 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE, "신라면", FoodCategory.KOREAN_FOOD);
 		menuDao.insertMenu(menuDTO1);
-		menuDTO2 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, "신라면", FoodCategory.KOREAN_FOOD);
-		menuDTO3 = new MenuDTO("스파게티", 16000, 1, MenuStock.DEFAULT, "토마토", FoodCategory.WESTERN_FOOD);
+		menuDTO2 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE,"신라면", FoodCategory.KOREAN_FOOD);
+		menuDTO3 = new MenuDTO("스파게티", 16000, 1, MenuStock.DEFAULT, Boolean.TRUE, "토마토", FoodCategory.WESTERN_FOOD);
 	}
 
 	@AfterEach
@@ -67,8 +67,8 @@ class MenuServiceTest {
 	@Test
 	@DisplayName("메인메뉴의 가격을 0원으로 변경하려고 할 때 예외를 출력")
 	void changingMenuPriceToZeroCreatesException() {
-		assertThrows(IllegalArgumentException.class, () -> menuService.updateMenu(UpdateMenuDTO.builder()
-				.menuId(1).menuPrice(0).build()
+		assertThrows(IllegalStateException.class, () -> menuService.updateMenu(UpdateMenuDTO.builder()
+				.menuId(testDao.selectMenuId("라면", 1)).menuPrice(0).build()
 		));
 	}
 
@@ -77,6 +77,6 @@ class MenuServiceTest {
 	void updateMenu() {
 		menuService.updateMenu(UpdateMenuDTO.builder()
 				.menuId(testDao.selectMenuId(menuDTO1.getMenuName(), menuDTO1.getShopId())).menuPrice(12400).build());
-
 	}
+
 }
