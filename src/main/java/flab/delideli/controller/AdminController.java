@@ -21,7 +21,7 @@ public class AdminController {
 
 	@PutMapping(value = "/owners/{ownerId}/submission")
 	@ApiOperation(value = "사장님 서류 제출 시 제출 완료로 업데이트")
-	@UserAuthorization(role = UserLevel.ADMIN_LEVEL)
+	@UserAuthorization(role = UserLevel.ADMIN)
 	public void setOwnerDocsSubmission(
 		@PathVariable("ownerId") String ownerId) {
 		memberService.setOwnerDocsSubmission(ownerId);
@@ -29,7 +29,7 @@ public class AdminController {
 
 	@PutMapping(value = "/owners/{ownerId}/approval")
 	@ApiOperation(value = "사장님 서류 통과 시 로그인 승인으로 업데이트")
-	@UserAuthorization(role = UserLevel.ADMIN_LEVEL)
+	@UserAuthorization(role = UserLevel.ADMIN)
 	public void setOwnerLoginApproval(
 		@PathVariable("ownerId") String ownerId) {
 		memberService.setOwnerLoginApproval(ownerId);

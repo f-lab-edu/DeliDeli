@@ -33,7 +33,7 @@ public class PaymentController {
 	@PostMapping("/{orderId}")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "주문에 대한 결제")
-	@UserAuthorization(role = UserLevel.MEMBER_LEVEL)
+	@UserAuthorization(role = UserLevel.MEMBER)
 	public void pay(@PathVariable("orderId") long orderId, @CurrentUser String userId,
 		@RequestBody @Valid RequestPaymentDTO requestPaymentDTO) {
 		final PaymentService paymentService = paymentFactory
@@ -44,7 +44,7 @@ public class PaymentController {
 
 	@GetMapping("/{paymentId}")
 	@ApiOperation(value = "결제 번호로 결제내역 조회")
-	@UserAuthorization(role = UserLevel.MEMBER_LEVEL)
+	@UserAuthorization(role = UserLevel.MEMBER)
 	public PaymentDTO getPaymentSummary(@PathVariable("paymentId") long paymentId,
 		@CurrentUser String userId) {
 		return commonPaymentService.getPaymentSummary(paymentId, userId);
