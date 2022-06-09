@@ -21,7 +21,7 @@ public class MenuDTO {
 	@NotNull
 	private MenuStock menuStock;
 	@NotNull
-	private Boolean isMainMenu;
+	private boolean mainMenu;
 	@NotNull
 	private Boolean menuActivation;
 
@@ -31,12 +31,12 @@ public class MenuDTO {
 
 	@Builder
 	public MenuDTO(String menuName, long menuPrice, long shopId,
-		MenuStock menuStock, Boolean isMainMenu, Boolean menuActivation, String menuInfo, FoodCategory menuCategory) {
+		MenuStock menuStock, boolean mainMenu, Boolean menuActivation, String menuInfo, FoodCategory menuCategory) {
 		this.menuName = menuName;
 		this.menuPrice = menuPrice;
 		this.shopId = shopId;
 		this.menuStock = menuStock;
-		this.isMainMenu = isMainMenu;
+		this.mainMenu = mainMenu;
 		this.menuActivation = menuActivation;
 		this.menuInfo = menuInfo;
 		this.menuCategory = menuCategory;

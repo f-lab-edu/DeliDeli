@@ -23,5 +23,5 @@ public interface MenuDao {
 
 	boolean isExistMenuId(long menuId);
 
-	Boolean selectIsMainMenu(long menuId);
+	boolean isMainMenu(long menuId);
 }
