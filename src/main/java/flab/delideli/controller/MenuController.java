@@ -33,7 +33,7 @@ public class MenuController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "메뉴 등록")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void addMenu(@RequestBody @Valid MenuDTO menuDTO,
 		@PathVariable long shopId, @CurrentUser String ownerId) {
 
@@ -44,7 +44,7 @@ public class MenuController {
 
 	@PatchMapping
 	@ApiOperation(value = "메뉴 수정")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void updateMenu(@RequestBody @Valid UpdateMenuDTO updateMenuDTO,
 		@PathVariable long shopId, @CurrentUser String ownerId) {
 
