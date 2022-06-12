@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
+
 @Service
 @RequiredArgsConstructor
 public class OrderUserService implements OrderService {
@@ -29,10 +31,16 @@ public class OrderUserService implements OrderService {
 	@Transactional
 	public void registerOrder(RequestOrderDTO requestOrderDTO, String userId) {
 
-		OrderDTO orderDTO = new OrderDTO(userId, requestOrderDTO.getAddress(),
-			requestOrderDTO.getPhoneNumber(), requestOrderDTO.getPaymentType(),
-			getTotalPrice(userId), requestOrderDTO.getShopId(),
-			requestOrderDTO.getRequest(), LocalDate.now(), OrderStatus.ORDER_COMPLETE);
+		OrderDTO orderDTO = OrderDTO.builder()
+				.userId(userId)
+				.address(requestOrderDTO.getAddress())
+				.phoneNumber(requestOrderDTO.getPhoneNumber())
+				.paymentType(requestOrderDTO.getPaymentType())
+				.totalPrice(getTotalPrice(userId))
+				.shopId(requestOrderDTO.getShopId())
+				.request(requestOrderDTO.getRequest())
+				.orderDate(LocalDate.now())
+				.orderStatus(OrderStatus.ORDER_COMPLETE).build();
 
 		long orderId = orderDao.insertOrder(orderDTO);
 

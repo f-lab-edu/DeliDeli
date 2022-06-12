@@ -34,7 +34,7 @@ public class OrderController {
 
 	@PostMapping(value = "/{orderId}/cancel")
 	@ApiOperation(value = "주문 취소")
-	public void cancelOrder(@CurrentUser String userId, @PathVariable  long orderId) {
+	public void cancelOrder(@CurrentUser String userId, @PathVariable long orderId) {
 		orderService.isCorrectUserOrder(orderId, userId);
 		orderService.cancelOrder(orderId, userId);
 		commonPaymentService.cancelPayment(commonPaymentService.getPaymentId(orderId), userId);

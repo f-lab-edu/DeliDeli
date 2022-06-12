@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.test.TestDao">
+
+    <delete id="deleteMenuDTO">
+        DELETE
+        FROM menus
+        WHERE menu_name = #{menuName}
+          AND menu_price = #{menuPrice}
+          AND shop_id = #{shopId}
+          AND menu_stock = #{menuStock}
+          AND menu_info = #{menuInfo}
+          AND menu_category = #{menuCategory}
+    </delete>
+
+    <select id="selectMenuId" resultType="_long">
+        SELECT menu_id
+        FROM menus
+        WHERE menu_name = #{menuName} AND shop_id = #{shopId}
+    </select>
+
+    <select id="selectMenuDTO" resultMap="menuDTO">
+        SELECT menu_name, menu_price, shop_id, menu_stock, menu_info, menu_category
+        FROM menus
+        WHERE menu_name = #{menuName} AND shop_id = #{shopId}
+    </select>
+
+    <resultMap id="menuDTO" type="flab.delideli.dto.MenuDTO">
+        <result column="menu_name" property="menuName"></result>
+        <result column="menu_price" property="menuPrice"></result>
+        <result column="shop_id" property="shopId"></result>
+        <result column="menu_stock" property="menuStock"></result>
+        <result column="menu_info" property="menuInfo"></result>
+        <result column="menu_category" property="menuCategory"></result>
+    </resultMap>
+</mapper>
