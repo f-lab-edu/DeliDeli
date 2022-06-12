@@ -32,10 +32,10 @@ class MenuServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		menuDTO1 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE, Boolean.TRUE, "신라면", FoodCategory.KOREAN_FOOD);
+		menuDTO1 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, true, true, "신라면", FoodCategory.KOREAN_FOOD);
 		menuDao.insertMenu(menuDTO1);
-		menuDTO2 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, Boolean.TRUE, Boolean.TRUE,"신라면", FoodCategory.KOREAN_FOOD);
-		menuDTO3 = new MenuDTO("스파게티", 16000, 1, MenuStock.DEFAULT, Boolean.TRUE, Boolean.TRUE, "토마토", FoodCategory.WESTERN_FOOD);
+		menuDTO2 = new MenuDTO("라면", 15000, 1, MenuStock.DEFAULT, true, true,"신라면", FoodCategory.KOREAN_FOOD);
+		menuDTO3 = new MenuDTO("스파게티", 16000, 1, MenuStock.DEFAULT, true, true, "토마토", FoodCategory.WESTERN_FOOD);
 	}
 
 	@AfterEach

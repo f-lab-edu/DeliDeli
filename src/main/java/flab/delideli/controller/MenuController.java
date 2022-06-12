@@ -55,7 +55,7 @@ public class MenuController {
 
 	@DeleteMapping(value = "/{menuId}")
 	@ApiOperation(value = "메뉴 삭제")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void deleteMenu(@RequestBody @PathVariable("menuId") long menuId,
 		@PathVariable long shopId, @CurrentUser String ownerId) {
 
