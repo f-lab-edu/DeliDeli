@@ -17,7 +17,7 @@ public class ShopService {
 
 	public void addShop(ShopDTO shopDTO) {
 
-		boolean duplicatedShop = isDuplicatedShop(shopDTO.getShopName(), shopDTO.getOwnerId());
+		boolean duplicatedShop = isDuplicatedShopName(shopDTO.getShopName(), shopDTO.getShopLocation());
 
 		if (duplicatedShop) {
 			throw new AlreadyAddedValueException("해당 아이디로 이미 등록된 가게입니다.");
@@ -27,8 +27,8 @@ public class ShopService {
 
 	}
 
-	public boolean isDuplicatedShop(String shopName, String ownerId) {
-		return shopDao.isExistShop(shopName, ownerId);
+	private boolean isDuplicatedShopName(String shopName, String shopLocation) {
+		return shopDao.isExistShop(shopName, shopLocation);
 	}
 
 	public ShopDTO getShopByNameAndOwnerId(String shopName, String ownerId) {
@@ -49,5 +49,6 @@ public class ShopService {
 		}
 
 	}
+
 
 }
