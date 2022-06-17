@@ -7,7 +7,6 @@ import flab.delideli.exception.UnauthorizedException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import springfox.documentation.annotations.Cacheable;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +30,15 @@ public class ShopService {
 		return shopDao.isExistShop(shopName, shopLocation);
 	}
 
-	public ShopDTO getShopByNameAndOwnerId(String shopName, String ownerId) {
-		return shopDao.selectShopByNameAndOwnerId(shopName, ownerId);
+	public ShopDTO getShopByShopIdAndOwnerId(long shopId, String ownerId) {
+		validateShopOwner(shopId, ownerId);
+		return shopDao.selectShopByShopIdAndOwnerId(shopId, ownerId);
+	}
+
+	private void validateShopOwner(long shopId, String ownerId) {
+		if(!ownerId.equals(shopDao.getOwnerIdInShops(shopId))) {
+			throw new IllegalArgumentException("잘못된 값입니다");
+		}
 	}
 
 	public List<ShopDTO> getShopListByOwnerId(String ownerId) {

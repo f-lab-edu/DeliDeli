@@ -52,28 +52,34 @@ class ShopServiceTest {
 		testDao.deleteShopDTO(shopDTO1);
 		testDao.deleteShopDTO(shopDTO4);
 	}
-	/*
-	가게 등록
-	1. 사장님권한일 때만 가게등록을 할 수 있다
-	2. 매개변수로 shopDTO을 받아서 가게를 등록한다
-	3. 이미 등록된 가게일경우(가게이름과 가게위치) 예외를 던진다 -> 한 동네에 같은 이름의 매장을 내지 못하도록
-    */
 
 	@Test
-	@DisplayName("사장님 계정으로 이미 등록되어 있는 매장일 경우에 AlreadyAddedValueException을 던진다")
+	@DisplayName("이미 등록되어 있는 매장의 이름으로 등록하려고 할 경우에 AlreadyAddedValueException을 던진다")
 	void registeringAlreadyExistingShopCreatesException() {
 		assertThrows(AlreadyAddedValueException.class, () -> shopService.addShop(shopDTO2));
-	}
-
-	@Test
-	@DisplayName("다른 사장님이 같은 이름의 매장을 등록하려고 할 때 AlreadyAddedValueException을 던진다")
-	void registeringAlreadyExistingShopByOtherOwnerCreatesException() {
-		assertThrows(AlreadyAddedValueException.class, () -> shopService.addShop(shopDTO3));
 	}
 
 	@Test
 	@DisplayName("같은 이름으로 등록하는 경우가 아닐 때 가게 등록을 성공한다")
 	void addShop() {
 		shopService.addShop(shopDTO4);
+	}
+
+	/* 하나의 가게 조회
+	1. 사장님 권한일 때만 가게를 조회할 수 있다.
+	2. 해당가게의 주인이 맞는지 확인해준다 ->shopid로 불러오는 ownerid랑 들어오는 ownerid가 같은지 확인
+	3. 다르면 IllegalArgumentException을 던진다
+	4. shopid와 ownerid를 해당가게를 조회할 수 있게한다
+	 */
+	@Test
+	@DisplayName("해당 가게의 주인이 아닌 사람이 조회하려고 할 때 IllegalArgumentException을 던진다")
+	void nonOwnerAccessCreatesException() {
+		assertThrows(IllegalArgumentException.class, () -> shopService.getShopByShopIdAndOwnerId(testDao.selectShopId(shopDTO1.getShopName(),shopDTO1.getOwnerId()), "ddaad"));
+	}
+
+	@Test
+	@DisplayName("해당 가게의 주인이 맞다면 가게 조회가 성공한다.")
+	void getShop() {
+		shopService.getShopByShopIdAndOwnerId(testDao.selectShopId(shopDTO1.getShopName(), shopDTO1.getOwnerId()),"suykim");
 	}
 }

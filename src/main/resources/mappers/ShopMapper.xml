@@ -16,7 +16,7 @@
                       WHERE shop_name = #{shopName} AND shop_location = #{shopLocation})
     </select>
 
-    <select id="selectShopByShopNameAndOwnerId" resultMap="selectShop">
+    <select id="selectShopByShopIdAndOwnerId" resultMap="selectShop">
         SELECT shop_name,
                shop_tel,
                shop_location,
@@ -28,7 +28,7 @@
                business_num,
                owner_id
         FROM shops
-        WHERE shop_name = #{shopName}
+        WHERE shop_id = #{shopId}
           AND owner_id = #{ownerId}
     </select>
 
