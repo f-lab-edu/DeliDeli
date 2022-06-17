@@ -30,6 +30,7 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+TES
 
 ### NetBeans ###
 /nbproject/private/

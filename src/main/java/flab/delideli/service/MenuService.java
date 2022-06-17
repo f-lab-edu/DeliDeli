@@ -25,11 +25,28 @@ public class MenuService {
 	}
 
 	public void updateMenu(UpdateMenuDTO updateMenuDTO) {
+		validateExistMenu(updateMenuDTO.getMenuId());
+		validateMainMenuPriceNotZero(updateMenuDTO.getMenuId(), updateMenuDTO.getMenuPrice());
 		menuDao.updateMenu(updateMenuDTO);
 	}
 
-	public void deleteMenu(Long menuId, Long shopId) {
-		menuDao.deleteMenu(menuId, shopId);
+	public void deleteMenu(long menuId) {
+		validateExistMenu(menuId);
+		menuDao.deleteMenu(menuId);
+	}
+
+	private void validateExistMenu(long menuId) {
+		boolean isExistMenuId = menuDao.isExistMenuId(menuId);
+		if (!isExistMenuId) {
+			throw new IllegalArgumentException("잘못된 입력입니다.");
+		}
+	}
+
+	private void validateMainMenuPriceNotZero(long menuId, long menuPrice) {
+		boolean isMainMenu = menuDao.isMainMenu(menuId);
+		if(isMainMenu && menuPrice == 0) {
+			throw new IllegalStateException("메인메뉴는 0원이 될 수 없습니다.");
+		}
 	}
 
 }

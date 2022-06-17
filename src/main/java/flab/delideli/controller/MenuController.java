@@ -35,7 +35,7 @@ public class MenuController {
 	@ApiOperation(value = "메뉴 등록")
 	@UserAuthorization(role = UserLevel.OWNER)
 	public void addMenu(@RequestBody @Valid MenuDTO menuDTO,
-		@PathVariable Long shopId, @CurrentUser String ownerId) {
+		@PathVariable long shopId, @CurrentUser String ownerId) {
 
 		shopService.verifyShopOwner(shopId, ownerId);
 		menuService.addMenu(menuDTO);
@@ -46,7 +46,7 @@ public class MenuController {
 	@ApiOperation(value = "메뉴 수정")
 	@UserAuthorization(role = UserLevel.OWNER)
 	public void updateMenu(@RequestBody @Valid UpdateMenuDTO updateMenuDTO,
-		@PathVariable Long shopId, @CurrentUser String ownerId) {
+		@PathVariable long shopId, @CurrentUser String ownerId) {
 
 		shopService.verifyShopOwner(shopId, ownerId);
 		menuService.updateMenu(updateMenuDTO);
@@ -56,11 +56,11 @@ public class MenuController {
 	@DeleteMapping(value = "/{menuId}")
 	@ApiOperation(value = "메뉴 삭제")
 	@UserAuthorization(role = UserLevel.OWNER)
-	public void deleteMenu(@RequestBody @PathVariable("menuId") Long menuId,
-		@PathVariable Long shopId, @CurrentUser String ownerId) {
+	public void deleteMenu(@RequestBody @PathVariable("menuId") long menuId,
+		@PathVariable long shopId, @CurrentUser String ownerId) {
 
 		shopService.verifyShopOwner(shopId, ownerId);
-		menuService.deleteMenu(menuId, shopId);
+		menuService.deleteMenu(menuId);
 
 	}
 
