@@ -15,11 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - name: install jdk
-        run:
-        apt-get install openjdk-11-jdk
-        
-      - name : install mysql
-        run:
-        apt-get install mysql-server
+        uses: actions/setup-jdk@v1
+        with:
+          jdk-version : '11.x'
