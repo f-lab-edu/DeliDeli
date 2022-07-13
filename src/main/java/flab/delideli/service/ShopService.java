@@ -19,7 +19,7 @@ public class ShopService {
 		boolean duplicatedShop = isDuplicatedShopName(shopDTO.getShopName(), shopDTO.getShopLocation());
 
 		if (duplicatedShop) {
-			throw new AlreadyAddedValueException("해당 아이디로 이미 등록된 가게입니다.");
+			throw new AlreadyAddedValueException("해당 매장이름으로 이미 등록된 가게가 존재합니다.");
 		}
 
 		shopDao.insertShop(shopDTO);
