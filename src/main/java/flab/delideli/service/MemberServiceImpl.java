@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
         memberDao.joinMember(encodeMember);
 
-        if(member.getUserLevel() == UserLevel.OWNER_LEVEL) {
+        if(member.getUserLevel() == UserLevel.OWNER) {
             memberDao.insertOwnerId(member.getUserId());
         }
 

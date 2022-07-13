@@ -1,9 +1,9 @@
 package flab.delideli.controller;
 
 import flab.delideli.annotation.CurrentUser;
-import flab.delideli.dto.OrderDTO;
 import flab.delideli.dto.RequestOrderDTO;
-import flab.delideli.service.OrderService;
+import flab.delideli.service.OrderUserService;
+import flab.delideli.service.payment.CommonPaymentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -22,13 +22,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orders")
 public class OrderController {
 
-	private OrderService orderService;
+	private OrderUserService orderService;
+	private CommonPaymentService commonPaymentService;
 
-	@PostMapping(value = "/{userId}")
+	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "주문 등록")
 	public void registerOrder(@RequestBody @Valid RequestOrderDTO requestOrderDTO, @CurrentUser String userId) {
 		orderService.registerOrder(requestOrderDTO, userId);
 	}
 
+	@PostMapping(value = "/{orderId}/cancel")
+	@ApiOperation(value = "주문 취소")
+	public void cancelOrder(@CurrentUser String userId, @PathVariable long orderId) {
+		orderService.isCorrectUserOrder(orderId, userId);
+		orderService.cancelOrder(orderId, userId);
+		commonPaymentService.cancelPayment(commonPaymentService.getPaymentId(orderId), userId);
+	}
 }

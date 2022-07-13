@@ -31,21 +31,21 @@ public class ShopController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "가게 등록")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public void addShop(@RequestBody @Valid ShopDTO shopDTO) {
 		shopService.addShop(shopDTO);
 	}
 
 	@GetMapping(value = "/{shopId}")
 	@ApiOperation(value = "shopId로 가게 조회")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public ShopDTO getShop(@PathVariable long shopId, @CurrentUser String ownerId) {
 		return shopService.getShopByShopIdAndOwnerId(shopId, ownerId);
 	}
 
 	@GetMapping(value = "/{ownerId}")
 	@ApiOperation(value = "사장님 ID로 가게 리스트 조회")
-	@UserAuthorization(role = UserLevel.OWNER_LEVEL)
+	@UserAuthorization(role = UserLevel.OWNER)
 	public List<ShopDTO> getShopList(
 			@PathVariable("ownerId") String ownerId) {
 		return shopService.getShopListByOwnerId(ownerId);

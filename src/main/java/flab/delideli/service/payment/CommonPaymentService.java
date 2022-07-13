@@ -25,6 +25,10 @@ public class CommonPaymentService {
 		paymentDao.updatePaymentStatusCanceled(paymentId, userId);
 	}
 
+	public long getPaymentId(long orderId) {
+		return paymentDao.selectPaymentId(orderId);
+	}
+
 	private void validateUnableToCancelPayment(PaymentDTO dto) {
 		if (dto.getPaymentStatus() == PaymentStatus.CONFIRMED_UNABLE_TO_CANCEL) {
 			throw new IllegalStateException("결제를 취소할 수 없습니다.");

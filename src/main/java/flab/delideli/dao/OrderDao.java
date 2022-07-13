@@ -13,4 +13,14 @@ public interface OrderDao {
 
 	void insertOrderMenus(List<OrderItemDTO> orderItemDTOS);
 
+	OrderDTO selectOrderDTO(long orderId);
+
+	void updateOrderStatusCancel(long orderId);
+
+	void updateOrderStatusCooking(long orderId);
+
+	long getShopIdInOrders(long orderId);
+
+	void updateOrderStatusCookingComplete(long orderId);
+
 }
