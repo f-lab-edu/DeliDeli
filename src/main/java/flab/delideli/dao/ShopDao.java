@@ -11,9 +11,9 @@ public interface ShopDao {
 	void insertShop(ShopDTO shopDTO);
 
 	boolean isExistShop(@Param("shopName") String shopName,
-		@Param("ownerId") String ownerId);
+		@Param("shopLocation") String shopLocation);
 
-	ShopDTO selectShopByNameAndOwnerId(@Param("shopName") String shopName,
+	ShopDTO selectShopByShopIdAndOwnerId(@Param("shopId") long shopId,
 		@Param("ownerId") String ownerId);
 
 	List<ShopDTO> selectShopListByOwnerId(String ownerId);

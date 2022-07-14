@@ -1,6 +1,7 @@
 package flab.delideli.controller;
 
 
+import flab.delideli.annotation.CurrentUser;
 import flab.delideli.dto.ShopDTO;
 import flab.delideli.annotation.UserAuthorization;
 import flab.delideli.enums.UserLevel;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,13 +36,11 @@ public class ShopController {
 		shopService.addShop(shopDTO);
 	}
 
-	@GetMapping
-	@ApiOperation(value = "가게 이름과 사장님 ID로 가게 조회")
+	@GetMapping(value = "/{shopId}")
+	@ApiOperation(value = "shopId로 가게 조회")
 	@UserAuthorization(role = UserLevel.OWNER)
-	public ShopDTO getShop(
-			@RequestParam(value = "name", required = false, defaultValue = "shop") String shopName,
-			@RequestParam(value = "owner", required = false, defaultValue = "owner") String ownerId) {
-		return shopService.getShopByNameAndOwnerId(shopName, ownerId);
+	public ShopDTO getShop(@PathVariable long shopId, @CurrentUser String ownerId) {
+		return shopService.getShopByShopIdAndOwnerId(shopId, ownerId);
 	}
 
 	@GetMapping(value = "/{ownerId}")

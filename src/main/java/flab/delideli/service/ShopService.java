@@ -7,7 +7,6 @@ import flab.delideli.exception.UnauthorizedException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import springfox.documentation.annotations.Cacheable;
 
 @Service
 @RequiredArgsConstructor
@@ -17,22 +16,29 @@ public class ShopService {
 
 	public void addShop(ShopDTO shopDTO) {
 
-		boolean duplicatedShop = isDuplicatedShop(shopDTO.getShopName(), shopDTO.getOwnerId());
+		boolean duplicatedShop = isDuplicatedShopName(shopDTO.getShopName(), shopDTO.getShopLocation());
 
 		if (duplicatedShop) {
-			throw new AlreadyAddedValueException("해당 아이디로 이미 등록된 가게입니다.");
+			throw new AlreadyAddedValueException("해당 매장이름으로 이미 등록된 가게가 존재합니다.");
 		}
 
 		shopDao.insertShop(shopDTO);
 
 	}
 
-	public boolean isDuplicatedShop(String shopName, String ownerId) {
-		return shopDao.isExistShop(shopName, ownerId);
+	private boolean isDuplicatedShopName(String shopName, String shopLocation) {
+		return shopDao.isExistShop(shopName, shopLocation);
 	}
 
-	public ShopDTO getShopByNameAndOwnerId(String shopName, String ownerId) {
-		return shopDao.selectShopByNameAndOwnerId(shopName, ownerId);
+	public ShopDTO getShopByShopIdAndOwnerId(long shopId, String ownerId) {
+		validateShopOwner(shopId, ownerId);
+		return shopDao.selectShopByShopIdAndOwnerId(shopId, ownerId);
+	}
+
+	private void validateShopOwner(long shopId, String ownerId) {
+		if(!ownerId.equals(shopDao.getOwnerIdInShops(shopId))) {
+			throw new IllegalArgumentException("잘못된 값입니다");
+		}
 	}
 
 	public List<ShopDTO> getShopListByOwnerId(String ownerId) {
@@ -49,5 +55,6 @@ public class ShopService {
 		}
 
 	}
+
 
 }

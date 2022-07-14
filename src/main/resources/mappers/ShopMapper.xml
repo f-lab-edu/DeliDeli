@@ -1,56 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="flab.delideli.dao.ShopDao" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flab.delideli.dao.ShopDao">
 
-  <insert id="insertShop">
-    INSERT INTO shops (shop_name, shop_tel, shop_location, shop_info, delivery_area,
-                food_category, notice, operating_time, business_num, owner_id)
-    VALUES (#{shopName}, #{shopTel}, #{shopLocation}, #{shopInfo}, #{deliveryArea},
-            #{foodCategory}, #{notice}, #{operatingTime}, #{businessNum}, #{ownerId})
-  </insert>
+    <insert id="insertShop">
+        INSERT INTO shops (shop_name, shop_tel, shop_location, shop_info, delivery_area,
+                           food_category, notice, operating_time, business_num, owner_id)
+        VALUES (#{shopName}, #{shopTel}, #{shopLocation}, #{shopInfo}, #{deliveryArea},
+                #{foodCategory}, #{notice}, #{operatingTime}, #{businessNum}, #{ownerId})
+    </insert>
 
-  <select id="isExistShop" resultType="boolean">
-    SELECT IF(COUNT(*) > 0, 1, 0) FROM shops
-    WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
-  </select>
+    <select id="isExistShop" resultType="boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM shops
+                      WHERE shop_name = #{shopName} AND shop_location = #{shopLocation})
+    </select>
 
-  <select id="selectShopByShopNameAndOwnerId" resultMap="selectShop">
-    SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
-           food_category, notice, operating_time, business_num, owner_id
-    FROM shops
-    WHERE shop_name = #{shopName} AND owner_id = #{ownerId}
-  </select>
+    <select id="selectShopByShopIdAndOwnerId" resultMap="selectShop">
+        SELECT shop_name,
+               shop_tel,
+               shop_location,
+               shop_info,
+               delivery_area,
+               food_category,
+               notice,
+               operating_time,
+               business_num,
+               owner_id
+        FROM shops
+        WHERE shop_id = #{shopId}
+          AND owner_id = #{ownerId}
+    </select>
 
-  <select id="selectShopListByOwnerId" resultMap="selectShop">
-    SELECT shop_name, shop_tel, shop_location, shop_info, delivery_area,
-           food_category, notice, operating_time, business_num, owner_id
-    FROM shops
-    WHERE owner_id = #{ownerId}
-  </select>
+    <select id="selectShopListByOwnerId" resultMap="selectShop">
+        SELECT shop_name,
+               shop_tel,
+               shop_location,
+               shop_info,
+               delivery_area,
+               food_category,
+               notice,
+               operating_time,
+               business_num,
+               owner_id
+        FROM shops
+        WHERE owner_id = #{ownerId}
+    </select>
 
-  <select id="isCurrentUserMatchingOwnerId" resultType="boolean">
-    SELECT IF(COUNT(*) > 0, 1, 0) FROM shops
-    WHERE owner_id = #{ownerId} AND shop_id = #{shopId}
-  </select>
+    <select id="isCurrentUserMatchingOwnerId" resultType="boolean">
+        SELECT IF(COUNT(*) > 0, 1, 0)
+        FROM shops
+        WHERE owner_id = #{ownerId}
+          AND shop_id = #{shopId}
+    </select>
 
-  <select id="getOwnerIdInShops" resultType="String">
-    SELECT owner_id
-    FROM shops
-    WHERE shop_id = #{shopId}
-  </select>
+    <select id="getOwnerIdInShops" resultType="String">
+        SELECT owner_id
+        FROM shops
+        WHERE shop_id = #{shopId}
+    </select>
 
-  <resultMap id="selectShop" type="flab.delideli.dto.ShopDTO">
-    <result column="shop_name" property="shopName"/>
-    <result column="shop_tel" property="shopTel"/>
-    <result column="shop_location" property="shopLocation"/>
-    <result column="shop_info" property="shopInfo"/>
-    <result column="delivery_area" property="deliveryArea"/>
-    <result column="food_category" property="foodCategory"/>
-    <result column="notice" property="notice"/>
-    <result column="operating_time" property="operatingTime"/>
-    <result column="business_num" property="businessNum"/>
-    <result column="owner_id" property="ownerId"/>
-  </resultMap>
+    <resultMap id="selectShop" type="flab.delideli.dto.ShopDTO">
+        <result column="shop_name" property="shopName"/>
+        <result column="shop_tel" property="shopTel"/>
+        <result column="shop_location" property="shopLocation"/>
+        <result column="shop_info" property="shopInfo"/>
+        <result column="delivery_area" property="deliveryArea"/>
+        <result column="food_category" property="foodCategory"/>
+        <result column="notice" property="notice"/>
+        <result column="operating_time" property="operatingTime"/>
+        <result column="business_num" property="businessNum"/>
+        <result column="owner_id" property="ownerId"/>
+    </resultMap>
 
 </mapper>
