@@ -1,0 +1,33 @@
+name: Deploy CI
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.4.1
+          with:
+            distribution: 'corretto'
+            java-version: '11'
+
+      - name: build jar
+        run: ./gradlew bootJar
+
+      - name: move jar
+        run: scp -P 10122 delideli-0.0.1-SNAPSHOT.jar root@101.101.166.158:~/
+
+      - name: connect to server
+        uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USERNAME }}
+            password: ${{ secrets.SSH_PASSWORD }}
+            port: ${{ secrets.SSH_PORT }}
+            script: bash run_delideli.sh
