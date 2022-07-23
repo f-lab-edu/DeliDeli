@@ -2,7 +2,7 @@
 name: Deploy
 
 # develop브랜치에 push될 때마다 워크플로우가 실행됨
- on:
+on:
   push:
     branches: [ "develop" ]
   #수동으로 트리거되게 함
