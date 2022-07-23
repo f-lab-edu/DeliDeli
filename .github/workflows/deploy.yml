@@ -1,0 +1,39 @@
+# 워크플로우 이름 지정함
+name: Deploy
+
+# develop브랜치에 push될 때마다 워크플로우가 실행됨
+on:
+  push:
+    branches: [ "develop" ]
+  #수동으로 트리거되게 함
+  workflow_dispatch: {}
+
+#워크플로우의 작업을 설정함
+jobs:
+  build:
+    #최신의 우분투 서버에서 실행됨
+    runs-on: ubuntu-latest
+    #delideli코드를 깃허브에서 제공해주는 서버에 내려받고 특정브랜치로 전환해줌
+    steps:
+      - uses: actions/checkout@v3
+      #JDK설치함 (아마존에서 무료로 제공하는 jdk버전 11설치)
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.4.1
+        with:
+          distribution: 'corretto'
+          java-version: '11'
+      #jar파일 생성함
+      - name: build jar
+        run: ./gradlew bootJar
+      #jar파일을 다른 서버에 옮김
+      - name: move jar
+        run: scp -P ${{secrets.SSH_UPLOAD_PORT}} delideli-0.0.1-SNAPSHOT.jar ${{secrets.SSH_UPLOAD_USER}}@${{secrets.SSH_UPLOAD_IP}}:~/
+      #파일 옮긴 서버에 접속
+      - name: connect to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: bash run_delideli.sh
